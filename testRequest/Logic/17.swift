@@ -123,8 +123,8 @@ func test17_4(for request: [Mechanism]) ->  [Mechanism] {
         return [.bakeDh]
     }
     
-    guard request.contains(.beltKeyrep) else {
-        return [.beltKeyrep]
+    guard request.contains(.beltHash) || request.contains(.beltKeyrep) else {
+        return [.beltHash, .beltKeyrep]
     }
     
     guard request.contains(.bignCurves) else {
