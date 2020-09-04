@@ -9,97 +9,149 @@ import UIKit
 
 class TestRequestVC: UIViewController {
     
-    let scrollView      = UIScrollView()
-    let choiceStackView = UIStackView()
-    let actionButton    = UIButton()
+    var chosenMechanisms: [Mechanism]   = []
+    var leftMechanisms                  = Mechanism.allCases
 
-    
+    let tableView                       = UITableView(frame: CGRect.zero, style: .grouped)
+    let actionButton                    = UIButton()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        configureViewController()
-        configureActionButton()
-        configureScrollView()
-        configureStackView()
-        configureChoices()
-    }
-    
-    
-    func configureViewController() {
-        view.backgroundColor    = .systemBackground
-        title                   = "Choose mechanisms"
+        view.backgroundColor = .secondarySystemGroupedBackground
         navigationController?.navigationBar.prefersLargeTitles = true
+        
+        configureSearchController()
+        configureTableView()
+        configureActionButton()
+        layoutUI()
     }
-    
+
     
     func configureActionButton() {
-        view.addSubview(actionButton)
-        actionButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            actionButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            actionButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            actionButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            actionButton.heightAnchor.constraint(equalToConstant: 70)
-        ])
-        
-        actionButton.backgroundColor    = .systemGray5
-        actionButton.layer.cornerRadius = 15
-        actionButton.layer.borderWidth  = 2
-        actionButton.layer.borderColor  = UIColor.secondaryLabel.cgColor
-    
-        actionButton.setTitleColor(.secondaryLabel, for: .normal)
-        actionButton.setTitle("Test", for: .normal)
+        actionButton.backgroundColor = UIColor.secondarySystemBackground.withAlphaComponent(0.9)
+        actionButton.setTitleColor(.label, for: .normal)
+        actionButton.setTitle("GO!", for: .normal)
         actionButton.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
+        
+        actionButton.layer.cornerRadius = 40
+        actionButton.layer.borderWidth  = 2
+        actionButton.layer.borderColor  = UIColor.tertiaryLabel.cgColor
     }
     
     
-    func configureScrollView() {
-        view.addSubview(scrollView)
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
+    func configureTableView() {
+        tableView.rowHeight         = 60
+        tableView.separatorStyle    = .singleLine
+        tableView.allowsSelection   = false
+        tableView.setEditing(true, animated: true)
         
-        NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: actionButton.topAnchor)
-        ])
-    }
-    
-    
-    private func configureStackView() {
-        choiceStackView.axis            = .vertical
-        choiceStackView.distribution    = .equalSpacing
-        choiceStackView.spacing         = 5
-        
-        scrollView.addSubview(choiceStackView)
-        choiceStackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        choiceStackView.pinToEdges(of: scrollView)
-        NSLayoutConstraint.activate([
-            choiceStackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            choiceStackView.heightAnchor.constraint(equalToConstant: CGFloat(Mechanism.allCases.count * (34 + 40)))
-        ])
-    }
-    
-    
-    func configureChoices() {
-        for mechanism in Mechanism.allCases {
-            let choiceView = TRChoiceView()
-            choiceView.set(with: mechanism)
-            choiceStackView.addArrangedSubview(choiceView)
-        }
+        tableView.dataSource        = self
+        tableView.delegate          = self
+        tableView.register(TRMechanismCell.self, forCellReuseIdentifier: TRMechanismCell.reuseID)
     }
     
     
     @objc func actionButtonTapped() {
-        var chosenMechanisms: [Mechanism] = []
-        
-        for choiceView in choiceStackView.arrangedSubviews {
-            guard let choiceView = choiceView as? TRChoiceView, choiceView.toggle.isOn else { continue }
-            chosenMechanisms.append(choiceView.mechanism)
-        }
-        
         navigationController?.pushViewController(TestResultVC(mechanisms: chosenMechanisms), animated: true)
+    }
+    
+    
+    func configureSearchController() {
+        let searchController                                    = UISearchController()
+        searchController.searchResultsUpdater                   = self
+        searchController.searchBar.placeholder                  = "Найти механизм"
+        searchController.obscuresBackgroundDuringPresentation   = false
+        navigationItem.searchController                         = searchController
+    }
+    
+    
+    func layoutUI() {
+        view.addSubview(actionButton)
+        actionButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            actionButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            actionButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            actionButton.widthAnchor.constraint(equalToConstant: 80),
+            actionButton.heightAnchor.constraint(equalToConstant: 80)
+        ])
+        
+        view.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            //tableView.bottomAnchor.constraint(equalTo: actionButton.topAnchor)
+        ])
+        
+        self.view.bringSubviewToFront(self.actionButton)
+    }
+}
+
+
+extension TestRequestVC: UITableViewDataSource, UITableViewDelegate {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return section == 0 ? "Выбранные механизмы" : "Оставшиеся механизмы"
+    }
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return section == 0 ? chosenMechanisms.count : leftMechanisms.count
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell        = tableView.dequeueReusableCell(withIdentifier: TRMechanismCell.reuseID, for: indexPath) as! TRMechanismCell
+        let mechanisms  = indexPath.section == 0 ? chosenMechanisms: leftMechanisms
+        let mechanism   = mechanisms[indexPath.row]
+        cell.set(for: mechanism)
+   
+        return cell
+    }
+    
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .insert {
+            chosenMechanisms.append(leftMechanisms[indexPath.row])
+            leftMechanisms.remove(at: indexPath.row)
+            tableView.moveRow(at: indexPath, to: IndexPath(row: chosenMechanisms.count - 1, section: 0))
+            
+        } else if editingStyle == .delete {
+            leftMechanisms.insert(chosenMechanisms[indexPath.row], at: 0)
+            chosenMechanisms.remove(at: indexPath.row)
+            tableView.moveRow(at: indexPath, to: IndexPath(row: 0, section: 1))
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return indexPath.section == 0 ? .delete : .insert
+    }
+}
+
+
+extension TestRequestVC: UISearchResultsUpdating {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        // filter leftMechanisms
+        
+//        guard let filter = searchController.searchBar.text, !filter.isEmpty else {
+//            filteredFollowers.removeAll()
+//            isSearching = false
+//            updateData(on: followers)
+//            return
+//        }
+//
+//        isSearching = true
+//        filteredFollowers = followers.filter({ $0.login.lowercased().contains(filter.lowercased()) })
+//        updateData(on: filteredFollowers)
     }
 }

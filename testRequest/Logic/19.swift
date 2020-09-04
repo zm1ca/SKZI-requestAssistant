@@ -27,8 +27,12 @@ func test19(for request: [Mechanism]) ->  [Mechanism]? {
     }
     
     //Требования к протоколам
-    guard request.contains(.bakeBpace) && request.contains(.btokBpace) else {
-        return [.bakeBpace, .btokBpace]
+    guard request.contains(.bakeBpace) else {
+        return [.bakeBpace]
+    }
+    
+    guard request.contains(.btokBpace) else {
+        return [.btokBpace]
     }
     
     guard request.contains(.cryptoki) else {

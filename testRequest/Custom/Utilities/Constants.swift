@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TableViewConstants {
+struct ResultsTableViewConstants {
     static let numberOfSections = 7
     static let sectionSizes     = [2, 4, 2, 1, 1, 1, 3]
     static let sectionHeaders   = ["Предварительное шифрование",

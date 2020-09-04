@@ -9,7 +9,7 @@ import UIKit
 
 class TestResultVC: UIViewController {
     
-    let tableView = UITableView(frame: CGRect.zero, style: .grouped)
+    let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
     var mechanisms: [Mechanism]!
     
     
@@ -27,27 +27,25 @@ class TestResultVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewController()
-        setupTableView()
+        configureTableView()
     }
     
     
     func configureViewController() {
-        view.backgroundColor = .systemGray6
-        title = "Result"
+        view.backgroundColor = .secondarySystemBackground
+        title = "Результаты"
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     
-    func setupTableView(){
+    func configureTableView(){
         view.addSubview(tableView)
-        tableView.frame         = view.bounds
-        tableView.rowHeight     = 60
-        tableView.dataSource    = self
-        tableView.removeAccessCells()
-        #warning("TableView doesn't allow selection!")
+        tableView.frame           = view.bounds
+        tableView.rowHeight       = 80
         tableView.allowsSelection = false
-        tableView.separatorStyle = .none
+        tableView.separatorStyle  = .singleLine
         
+        tableView.dataSource      = self
         tableView.register(TRPointCell.self, forCellReuseIdentifier: TRPointCell.reuseID)
     }
 }
@@ -56,23 +54,23 @@ class TestResultVC: UIViewController {
 extension TestResultVC: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return TableViewConstants.numberOfSections
+        return ResultsTableViewConstants.numberOfSections
     }
     
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return TableViewConstants.sectionHeaders[section]
+        return ResultsTableViewConstants.sectionHeaders[section]
     }
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return TableViewConstants.sectionSizes[section]
+        return ResultsTableViewConstants.sectionSizes[section]
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TRPointCell.reuseID, for: indexPath) as! TRPointCell
-        cell.configure(for: indexPath, with: mechanisms)
+        cell.set(for: indexPath, with: mechanisms)
         
         return cell
     }
