@@ -7,17 +7,17 @@
 
 import Foundation
 
-func test22_1(for request: [Mechanism]) ->  [Mechanism] {
+func test22_1(for request: [Mechanism]) ->  [Mechanism]? {
     
     guard request.contains(.beltHash) || request.contains(.bashHash) else {
         return [.beltHash, .bashHash]
     }
     
-    return []
+    return nil
 }
 
 
-func test22_2(for request: [Mechanism]) ->  [Mechanism] {
+func test22_2(for request: [Mechanism]) ->  [Mechanism]? {
     
     guard request.contains(.beltMac) || request.contains(.brngHmac) else {
         return [.beltMac, .brngHmac]
@@ -35,11 +35,11 @@ func test22_2(for request: [Mechanism]) ->  [Mechanism] {
         return [.hardware, .software]
     }
     
-    return []
+    return nil
 }
 
 
-func test22_3(for request: [Mechanism]) ->  [Mechanism] {
+func test22_3(for request: [Mechanism]) ->  [Mechanism]? {
     
     guard request.contains(.bignSign) else {
         return [.bignSign]
@@ -61,6 +61,6 @@ func test22_3(for request: [Mechanism]) ->  [Mechanism] {
         return [.hardware, .software]
     }
     
-    return []
+    return nil
 }
 

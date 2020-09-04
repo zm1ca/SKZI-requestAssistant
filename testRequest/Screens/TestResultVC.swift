@@ -9,6 +9,7 @@ import UIKit
 
 class TestResultVC: UIViewController {
     
+    let tableView = UITableView(frame: CGRect.zero, style: .grouped)
     var mechanisms: [Mechanism]!
     
     
@@ -26,7 +27,7 @@ class TestResultVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewController()
-        performTests()
+        setupTableView()
     }
     
     
@@ -37,15 +38,42 @@ class TestResultVC: UIViewController {
     }
     
     
-    func performTests() {
-        test16_1(for: mechanisms) { self.failureMessage(for: "16.1", $0) }
+    func setupTableView(){
+        view.addSubview(tableView)
+        tableView.frame         = view.bounds
+        tableView.rowHeight     = 60
+        tableView.dataSource    = self
+        tableView.removeAccessCells()
+        #warning("TableView doesn't allow selection!")
+        tableView.allowsSelection = false
+        tableView.separatorStyle = .none
+        
+        tableView.register(TRPointCell.self, forCellReuseIdentifier: TRPointCell.reuseID)
+    }
+}
+
+
+extension TestResultVC: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return TableViewConstants.numberOfSections
     }
     
     
-    func failureMessage(for test: String, _ mechanisms: [Mechanism]) {
-        print("Test \(test) not passed. Try adding any of following mechanisms: ")
-        for mechanism in mechanisms {
-            print(mechanism.rawValue)
-        }
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return TableViewConstants.sectionHeaders[section]
+    }
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return TableViewConstants.sectionSizes[section]
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: TRPointCell.reuseID, for: indexPath) as! TRPointCell
+        cell.configure(for: indexPath, with: mechanisms)
+        
+        return cell
     }
 }

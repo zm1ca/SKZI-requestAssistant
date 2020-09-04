@@ -13,6 +13,9 @@
 		406A269424F402D90040C599 /* 20.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406A269324F402D90040C599 /* 20.swift */; };
 		406A269624F404280040C599 /* 21.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406A269524F404280040C599 /* 21.swift */; };
 		406A269824F405070040C599 /* 22.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406A269724F405070040C599 /* 22.swift */; };
+		40911C89250216BB009A1A14 /* TRPointCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40911C88250216BB009A1A14 /* TRPointCell.swift */; };
+		40911C8B250219A5009A1A14 /* UITableView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40911C8A250219A4009A1A14 /* UITableView+Ext.swift */; };
+		40911C8E25022892009A1A14 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40911C8D25022892009A1A14 /* Constants.swift */; };
 		40C3DC0C2500CC95008E04EC /* TRTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C3DC0B2500CC95008E04EC /* TRTabBarController.swift */; };
 		40C3DC0F2500CCF3008E04EC /* MakeRequestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C3DC0E2500CCF3008E04EC /* MakeRequestVC.swift */; };
 		40C3DC112500CD00008E04EC /* TestRequestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C3DC102500CD00008E04EC /* TestRequestVC.swift */; };
@@ -35,6 +38,9 @@
 		406A269324F402D90040C599 /* 20.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 20.swift; sourceTree = "<group>"; };
 		406A269524F404280040C599 /* 21.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 21.swift; sourceTree = "<group>"; };
 		406A269724F405070040C599 /* 22.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 22.swift; sourceTree = "<group>"; };
+		40911C88250216BB009A1A14 /* TRPointCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TRPointCell.swift; sourceTree = "<group>"; };
+		40911C8A250219A4009A1A14 /* UITableView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Ext.swift"; sourceTree = "<group>"; };
+		40911C8D25022892009A1A14 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		40C3DC0B2500CC95008E04EC /* TRTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TRTabBarController.swift; sourceTree = "<group>"; };
 		40C3DC0E2500CCF3008E04EC /* MakeRequestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeRequestVC.swift; sourceTree = "<group>"; };
 		40C3DC102500CD00008E04EC /* TestRequestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestRequestVC.swift; sourceTree = "<group>"; };
@@ -77,6 +83,22 @@
 			path = Logic;
 			sourceTree = "<group>";
 		};
+		40911C8725021688009A1A14 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				40911C88250216BB009A1A14 /* TRPointCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		40911C8C25022885009A1A14 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				40911C8D25022892009A1A14 /* Constants.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		40C3DC0D2500CCD9008E04EC /* Screens */ = {
 			isa = PBXGroup;
 			children = (
@@ -91,6 +113,8 @@
 		40C3DC142500D1C1008E04EC /* Custom */ = {
 			isa = PBXGroup;
 			children = (
+				40911C8C25022885009A1A14 /* Utilities */,
+				40911C8725021688009A1A14 /* Cells */,
 				40C3DC162500DBBE008E04EC /* Extensions */,
 				40FE8DAA24F3E6200082CB19 /* Views */,
 				40C3DC152500D1DD008E04EC /* TabBars */,
@@ -110,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				40C3DC172500DBCB008E04EC /* UIView+Ext.swift */,
+				40911C8A250219A4009A1A14 /* UITableView+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -239,11 +264,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40911C89250216BB009A1A14 /* TRPointCell.swift in Sources */,
 				40C3DC182500DBCB008E04EC /* UIView+Ext.swift in Sources */,
 				40C3DC0F2500CCF3008E04EC /* MakeRequestVC.swift in Sources */,
 				40C3DC27250139DE008E04EC /* 16.swift in Sources */,
 				40C3DC21250122C2008E04EC /* TestResultVC.swift in Sources */,
 				406A269224F3FFE80040C599 /* 19.swift in Sources */,
+				40911C8B250219A5009A1A14 /* UITableView+Ext.swift in Sources */,
 				406A269424F402D90040C599 /* 20.swift in Sources */,
 				40FE8D8F24F3D9E70082CB19 /* AppDelegate.swift in Sources */,
 				406A269024F3FDED0040C599 /* 18.swift in Sources */,
@@ -252,6 +279,7 @@
 				40FE8D9124F3D9E70082CB19 /* SceneDelegate.swift in Sources */,
 				40FE8DA324F3DB140082CB19 /* Mechanism.swift in Sources */,
 				406A269624F404280040C599 /* 21.swift in Sources */,
+				40911C8E25022892009A1A14 /* Constants.swift in Sources */,
 				40C3DC132500CE34008E04EC /* ListVC.swift in Sources */,
 				40C3DC112500CD00008E04EC /* TestRequestVC.swift in Sources */,
 				406A269824F405070040C599 /* 22.swift in Sources */,

@@ -7,7 +7,7 @@
 
 import Foundation
 
-func test21(for request: [Mechanism]) ->  [Mechanism] {
+func test21(for request: [Mechanism]) ->  [Mechanism]? {
     //ГСЧ и Безопасность
     guard request.contains(.brng) || request.contains(.bignGenkeypair) else {
         return [.brng, .bignSign]
@@ -17,5 +17,5 @@ func test21(for request: [Mechanism]) ->  [Mechanism] {
         return [.hardware, .software]
     }
     
-    return []
+    return nil
 }

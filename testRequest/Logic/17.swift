@@ -7,7 +7,7 @@
 
 import Foundation
 
-func test17_1(for request: [Mechanism]) ->  [Mechanism] {
+func test17_1(for request: [Mechanism]) ->  [Mechanism]? {
     //Требования к криптографическим алгоритмам
     guard request.contains(.beltModes) else {
         return [.beltModes]
@@ -31,11 +31,11 @@ func test17_1(for request: [Mechanism]) ->  [Mechanism] {
         return [.bakeBpace, .dhePskBign, .beltKeyrep, .bignKeyt]
     }
     
-    return []
+    return nil
 }
 
 
-func test17_2(for request: [Mechanism]) ->  [Mechanism] {
+func test17_2(for request: [Mechanism]) ->  [Mechanism]? {
     //Требования к криптографическим алгоритмам
     guard request.contains(.beltModes) else {
         return [.beltModes]
@@ -67,11 +67,11 @@ func test17_2(for request: [Mechanism]) ->  [Mechanism] {
         return [.x509Crl, .ocsp]
     }
     
-    return []
+    return nil
 }
 
 
-func test17_3(for request: [Mechanism]) ->  [Mechanism] {
+func test17_3(for request: [Mechanism]) ->  [Mechanism]? {
     //Требования к криптографическим алгоритмам
     guard request.contains(.beltModes) else {
         return [.beltModes]
@@ -95,11 +95,11 @@ func test17_3(for request: [Mechanism]) ->  [Mechanism] {
         return [.btls]
     }
     
-    return []
+    return nil
 }
 
 
-func test17_4(for request: [Mechanism]) ->  [Mechanism] {
+func test17_4(for request: [Mechanism]) ->  [Mechanism]? {
     //Требования к криптографическим алгоритмам
     guard request.contains(.beltModes) else {
         return [.beltModes]
@@ -131,5 +131,5 @@ func test17_4(for request: [Mechanism]) ->  [Mechanism] {
         return [.bignCurves]
     }
     
-    return []
+    return nil
 }

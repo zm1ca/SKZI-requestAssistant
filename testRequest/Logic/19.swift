@@ -7,7 +7,7 @@
 
 import Foundation
 
-func test19(for request: [Mechanism]) ->  [Mechanism] {
+func test19(for request: [Mechanism]) ->  [Mechanism]? {
     //Требования к криптографическим алгоритмам
     guard request.contains(.bignSign) else {
         return [.bignSign]
@@ -43,5 +43,5 @@ func test19(for request: [Mechanism]) ->  [Mechanism] {
         return [.csr, .x509]
     }
     
-    return []
+    return nil
 }

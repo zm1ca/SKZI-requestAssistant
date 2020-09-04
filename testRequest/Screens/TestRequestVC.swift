@@ -22,7 +22,6 @@ class TestRequestVC: UIViewController {
         configureScrollView()
         configureStackView()
         configureChoices()
-    //ToDo: -- TableView with 2 sections instead of StackView
     }
     
     
