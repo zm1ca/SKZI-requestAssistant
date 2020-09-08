@@ -29,7 +29,7 @@ class TRMechanismCell: UITableViewCell {
     
     
     func set(for mechanism: Mechanism) {
-        textLabel?.text         = String(describing: mechanism)
+        textLabel?.text         = mechanism.shortName
         detailTextLabel?.text   = mechanism.rawValue
     }
 }

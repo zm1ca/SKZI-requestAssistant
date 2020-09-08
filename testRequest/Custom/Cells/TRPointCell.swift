@@ -31,7 +31,7 @@ class TRPointCell: UITableViewCell {
         
         if let restMechanisms = testFunc(mechanisms) {
             textLabel?.text         = "Не соответствует"
-            detailTextLabel?.text   = restMechanisms.reduce("Добавьте что-то из:", { $0 + " " + String(describing: $1) })
+            detailTextLabel?.text   = restMechanisms.reduce("Добавьте что-то из:", { $0 + " " + $1.shortName })
             
             backgroundColor         = UIColor.systemRed.withAlphaComponent(0.75)
         } else {

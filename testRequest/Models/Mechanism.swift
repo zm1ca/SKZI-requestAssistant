@@ -53,4 +53,8 @@ enum Mechanism: String, CaseIterable {
     case dvcs           = "СТБ 34.101.81-2019, СТБ 34.101.78-2019 (п. 8.10)"
     case tsp            = "СТБ 34.101.82-2019, СТБ 34.101.78-2019 (п. 8.9)"
     case bignCurves     = "СТБ 34.101.45-2013 (таблица Б1 или Б2 или БЗ, приложение Д)"
+    
+    var shortName: String {
+        return String(describing: self)
+    }
 }

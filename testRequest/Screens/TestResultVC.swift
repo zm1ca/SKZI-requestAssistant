@@ -7,15 +7,21 @@
 
 import UIKit
 
+protocol TestResultVCDismissDelegate {
+    func scrollToTop()
+}
+
 class TestResultVC: UIViewController {
     
     let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
     var mechanisms: [Mechanism]!
+    var delegate: TestResultVCDismissDelegate!
     
     
-    init(mechanisms: [Mechanism]) {
+    init(mechanisms: [Mechanism], _ delegate: TestResultVCDismissDelegate) {
         super.init(nibName: nil, bundle: nil)
         self.mechanisms = mechanisms
+        self.delegate = delegate
     }
     
     
@@ -28,6 +34,11 @@ class TestResultVC: UIViewController {
         super.viewDidLoad()
         configureViewController()
         configureTableView()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        delegate.scrollToTop()
     }
     
     
