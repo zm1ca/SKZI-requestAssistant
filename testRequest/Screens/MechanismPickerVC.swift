@@ -1,5 +1,5 @@
 //
-//  TestRequestVC.swift
+//  MechanismPickerVC.swift
 //  testRequest
 //
 //  Created by Źmicier Fiedčanka on 3.09.20.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TestRequestVC: UIViewController {
+class MechanismPickerVC: UIViewController {
 
     var chosenMechanisms: [Mechanism]       = []
     var leftMechanisms                      = Mechanism.allCases
@@ -55,6 +55,7 @@ class TestRequestVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        updateActionButtonVisibility()
     }
     
     
@@ -65,7 +66,9 @@ class TestRequestVC: UIViewController {
 
     
     func configureActionButton() {
-        actionButton.backgroundColor = UIColor.secondarySystemBackground.withAlphaComponent(0.9)
+        actionButton.alpha              = 0
+        
+        actionButton.backgroundColor    = UIColor.secondarySystemBackground.withAlphaComponent(0.9)
         actionButton.setTitleColor(.label, for: .normal)
         actionButton.setTitle("GO!", for: .normal)
         actionButton.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
@@ -92,7 +95,7 @@ class TestRequestVC: UIViewController {
     
     @objc func actionButtonTapped() {
         guard !chosenMechanisms.isEmpty else { return }
-        navigationController?.pushViewController(TestResultVC(mechanisms: chosenMechanisms), animated: true)
+        navigationController?.pushViewController(ResultsVC(mechanisms: Set(chosenMechanisms)), animated: true)
     }
     
     
@@ -122,10 +125,17 @@ class TestRequestVC: UIViewController {
             tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
         }
     }
+    
+    
+    func updateActionButtonVisibility() {
+        UIView.animate(withDuration: 0.5) {
+            self.actionButton.alpha = self.chosenMechanisms.isEmpty ? 0 : 1
+        }
+    }
 }
 
 
-extension TestRequestVC: UITableViewDataSource {
+extension MechanismPickerVC: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return isSearching ? 1 : 2
@@ -169,7 +179,7 @@ extension TestRequestVC: UITableViewDataSource {
 }
 
 
-extension TestRequestVC: UITableViewDelegate {
+extension MechanismPickerVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if !isSearching {
@@ -192,6 +202,8 @@ extension TestRequestVC: UITableViewDelegate {
             
             tableView.deleteRows(at: [indexPath], with: .right)
         }
+        
+        updateActionButtonVisibility()
     }
     
     
@@ -205,7 +217,7 @@ extension TestRequestVC: UITableViewDelegate {
 }
 
 
-extension TestRequestVC: UISearchResultsUpdating {
+extension MechanismPickerVC: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
         guard let filter = searchController.searchBar.text, !filter.isEmpty else {

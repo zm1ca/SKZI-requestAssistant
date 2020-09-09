@@ -1,5 +1,5 @@
 //
-//  TestResultVC.swift
+//  ResultsVC.swift
 //  testRequest
 //
 //  Created by Źmicier Fiedčanka on 3.09.20.
@@ -11,12 +11,12 @@ import UIKit
 class ResultsVC: UIViewController {
     
     let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
-    var mechanisms: [Mechanism]!
+    var request: Request!
     
     
-    init(mechanisms: [Mechanism]) {
+    init(mechanisms: Set<Mechanism>) {
         super.init(nibName: nil, bundle: nil)
-        self.mechanisms = mechanisms
+        self.request = Request(named: nil, by: nil, with: mechanisms)
     }
     
     
@@ -43,9 +43,9 @@ class ResultsVC: UIViewController {
     
     
     @objc func saveButtonTapped() {
-        let request = Request(named: "Product", by: "Company", with: mechanisms)
+        //TODO: Check if request needs a name
         
-        PersistenceManager.updateWith(request: request, actionType: .add) { error in
+        PersistenceManager.updateWith(request: self.request, actionType: .add) { error in
             guard let error = error else {
                 self.presentTRAlertOnMainThread(title: TRAlertConstants.noErrorsTitle, message: TRAlertConstants.requsetSavedMessage)
                 return
@@ -64,7 +64,7 @@ class ResultsVC: UIViewController {
         tableView.separatorStyle  = .singleLine
         
         tableView.dataSource      = self
-        tableView.register(TRPointCell.self, forCellReuseIdentifier: TRPointCell.reuseID)
+        tableView.register(TRParagraphCell.self, forCellReuseIdentifier: TRParagraphCell.reuseID)
     }
 }
 
@@ -87,9 +87,29 @@ extension ResultsVC: UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TRPointCell.reuseID, for: indexPath) as! TRPointCell
-        cell.set(for: indexPath, with: mechanisms)
+        let cell = tableView.dequeueReusableCell(withIdentifier: TRParagraphCell.reuseID, for: indexPath) as! TRParagraphCell
         
+        let shortNameForIndexPath = "p\(indexPath.section + 16)_\(indexPath.row + 1)"
+        guard let paragraph = Paragraph.allCases.filter({ $0.shortName == shortNameForIndexPath }).first else {
+            fatalError(TRAlertConstants.paragraphError)
+        }
+        
+        //TODO: Программа должна производить ВСЕ проверки при загрузке экрана и класть результаты в request
+        //request должен хранить словать <Paragraph, Set<Mechanism>>
+        //пару (paragraph, neededMechanisms) нужно получать фильтруя request.СЛОВАРЬ
+        //needed mechanisms for Paragraph это дело Request'a при формировании словаря
+        let baseTitle = "\(indexPath.row + 1). "
+        if let neededMechanisms = paragraph.getNeededMechanisms(for: request.mechanisms) {
+            let details = neededMechanisms.reduce("Добавьте что-то из:", { $0 + " " + $1.shortName })
+            cell.set(title: baseTitle + "Не соответствует", details: details, backgroundColor: UIColor.systemRed.withAlphaComponent(0.75))
+            request.matchingParagraphs.filter{ $0 != paragraph }
+        } else {
+            cell.set(title: baseTitle + "Соответствует", details: "", backgroundColor: UIColor.systemGreen.withAlphaComponent(0.75))
+            if !request.matchingParagraphs.contains(paragraph) {
+                request.matchingParagraphs.insert(paragraph)
+            }
+        }
+
         return cell
     }
 }

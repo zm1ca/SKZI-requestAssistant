@@ -1,5 +1,5 @@
 //
-//  TRPointCell.swift
+//  TRParagraphCell.swift
 //  testRequest
 //
 //  Created by Źmicier Fiedčanka on 4.09.20.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TRPointCell: UITableViewCell {
+class TRParagraphCell: UITableViewCell {
     
     static let reuseID  = "PointCell"
     var testFunc: (([Mechanism]) -> [Mechanism]?)?

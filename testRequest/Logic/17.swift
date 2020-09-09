@@ -7,7 +7,7 @@
 
 import Foundation
 
-func test17_1(for request: [Mechanism]) ->  [Mechanism]? {
+func test17_1(for request: Set<Mechanism>) ->  Set<Mechanism>? {
     //Требования к криптографическим алгоритмам
     guard request.contains(.beltModes) else {
         return [.beltModes]
@@ -35,7 +35,7 @@ func test17_1(for request: [Mechanism]) ->  [Mechanism]? {
 }
 
 
-func test17_2(for request: [Mechanism]) ->  [Mechanism]? {
+func test17_2(for request: Set<Mechanism>) ->  Set<Mechanism>? {
     //Требования к криптографическим алгоритмам
     guard request.contains(.beltModes) else {
         return [.beltModes]
@@ -71,7 +71,7 @@ func test17_2(for request: [Mechanism]) ->  [Mechanism]? {
 }
 
 
-func test17_3(for request: [Mechanism]) ->  [Mechanism]? {
+func test17_3(for request: Set<Mechanism>) ->  Set<Mechanism>? {
     //Требования к криптографическим алгоритмам
     guard request.contains(.beltModes) else {
         return [.beltModes]
@@ -99,7 +99,7 @@ func test17_3(for request: [Mechanism]) ->  [Mechanism]? {
 }
 
 
-func test17_4(for request: [Mechanism]) ->  [Mechanism]? {
+func test17_4(for request: Set<Mechanism>) ->  Set<Mechanism>? {
     //Требования к криптографическим алгоритмам
     guard request.contains(.beltModes) else {
         return [.beltModes]

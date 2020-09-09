@@ -7,7 +7,7 @@
 
 import Foundation
 
-func test20(for request: [Mechanism]) ->  [Mechanism]? {
+func test20_1(for request: Set<Mechanism>) ->  Set<Mechanism>? {
     //Требования к криптографическим алгоритмам
     guard request.contains(.bignSign) else {
         return [.bignSign]

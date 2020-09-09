@@ -8,21 +8,23 @@
 import Foundation
 
 struct Request: Codable, Hashable {
-    let productName:        String
-    let organizationName:   String
+    var productName:        String?
+    var organizationName:   String?
     
     var mechanisms:         Set<Mechanism>
+    var matchingParagraphs: Set<Paragraph>
     
     
-    init(named productName: String, by organization: String, with mechanisms: [Mechanism]) {
+    init(named productName: String?, by organization: String?, with mechanisms: Set<Mechanism>) {
         self.productName        = productName
         self.organizationName   = organization
-        self.mechanisms         = Set(mechanisms)
+        self.mechanisms         = mechanisms
+        self.matchingParagraphs = []
     }
     
     
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(productName)
-        hasher.combine(organizationName)
+    mutating func set(productName: String, organizationName: String) {
+        self.productName        = productName
+        self.organizationName   = organizationName
     }
 }

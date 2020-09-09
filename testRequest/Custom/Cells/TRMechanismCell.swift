@@ -13,6 +13,7 @@ class TRMechanismCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+        //TODO Transfer to TRLabels
         textLabel?.font                             = UIFont.systemFont(ofSize: 20, weight: .semibold)
         
         detailTextLabel?.font                       = UIFont.systemFont(ofSize: 12, weight: .light)

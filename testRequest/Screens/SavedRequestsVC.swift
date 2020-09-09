@@ -1,5 +1,5 @@
 //
-//  ListVC.swift
+//  SavedRequestsVC.swift
 //  testRequest
 //
 //  Created by Źmicier Fiedčanka on 3.09.20.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ListVC: UIViewController {
+class SavedRequestsVC: UIViewController {
     
     let tableView           = UITableView()
     var requests: [Request] = []
@@ -35,6 +35,7 @@ class ListVC: UIViewController {
     
     
     func configureTableView() {
+        //TODO: Исправить ячейку для заявки
         view.addSubview(tableView)
         tableView.frame         = view.bounds
         tableView.rowHeight     = 60
@@ -65,7 +66,7 @@ class ListVC: UIViewController {
 }
 
 
-extension ListVC: UITableViewDataSource, UITableViewDelegate {
+extension SavedRequestsVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return requests.count
@@ -97,7 +98,7 @@ extension ListVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let request = requests[indexPath.row]
-        let destinationVC  = TestRequestVC(mechanisms: Array(request.mechanisms))
+        let destinationVC  = MechanismPickerVC(mechanisms: Array(request.mechanisms))
         navigationController?.pushViewController(destinationVC, animated: true)
     }
 }

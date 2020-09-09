@@ -22,9 +22,15 @@ class TRRequestCell: UITableViewCell {
     
     
     func set(for request: Request) {
-        textLabel?.text = "\(request.productName) by \(request.organizationName)"
-        #warning("Пункты приказа вместо механизмов")
-        detailTextLabel?.text = request.mechanisms.reduce("", { $0 + " " + $1.shortName })
+        textLabel?.text = "\(request.productName ?? "Unnamed") by \(request.organizationName ?? "John Doe")"
+
+        //TODO: Сортировать пункты приказа
+        if !request.matchingParagraphs.isEmpty {
+            detailTextLabel?.text = request.matchingParagraphs.reduce("Соответствует:", { $0 + " " + $1.shortName })
+        } else {
+            detailTextLabel?.text = "Не соответствует приказу №77 ОАЦ."
+        }
+        
         accessoryType = .disclosureIndicator
     }
 }

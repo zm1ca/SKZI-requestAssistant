@@ -7,7 +7,7 @@
 
 import Foundation
 
-func test21(for request: [Mechanism]) ->  [Mechanism]? {
+func test21_1(for request: Set<Mechanism>) ->  Set<Mechanism>? {
     //ГСЧ и Безопасность
     guard request.contains(.brng) || request.contains(.bignGenkeypair) else {
         return [.brng, .bignSign]

@@ -16,7 +16,7 @@ class TRTabBarController: UITabBarController {
     
     
     func createTestRequestNC() -> UINavigationController {
-        let testRequestVC = TestRequestVC(mechanisms: [])
+        let testRequestVC = MechanismPickerVC(mechanisms: [])
         testRequestVC.tabBarItem = UITabBarItem(title: "Проверить", image: .strokedCheckmark, tag: 0)
         
         return UINavigationController(rootViewController: testRequestVC)
@@ -24,7 +24,7 @@ class TRTabBarController: UITabBarController {
     
 
     func createMakeRequestNC() -> UINavigationController {
-        let makeRequestVC = MakeRequestVC()
+        let makeRequestVC = RequestCreatorVC()
         makeRequestVC.title = "Составление"
         makeRequestVC.tabBarItem = UITabBarItem(title: "Составить", image: .add, tag: 1)
 
@@ -33,7 +33,7 @@ class TRTabBarController: UITabBarController {
     
     
     func createListVC() -> UINavigationController {
-        let listVC = ListVC()
+        let listVC = SavedRequestsVC()
         listVC.tabBarItem = UITabBarItem(title: "История", image: .actions, tag: 2)
 
         return UINavigationController(rootViewController: listVC)
