@@ -18,12 +18,33 @@ class TestRequestVC: UIViewController {
     
     var filteredLeftMechanisms: [Mechanism] = []
     var isSearching = false
+    
+    
+    init(mechanisms: [Mechanism]) {
+        super.init(nibName: nil, bundle: nil)
+        
+        self.chosenMechanisms = mechanisms
+        
+        leftMechanisms.removeAll()
+        for mechanism in Mechanism.allCases {
+            if !chosenMechanisms.contains(mechanism) {
+                self.leftMechanisms.append(mechanism)
+            }
+        }
+    }
+    
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .secondarySystemGroupedBackground
+        
         navigationController?.navigationBar.prefersLargeTitles = true
+        title = "Проверка"
         
         configureSearchController()
         configureTableView()
@@ -97,19 +118,17 @@ class TestRequestVC: UIViewController {
     }
     
     func scrollToTop() {
-        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+        if !chosenMechanisms.isEmpty {
+            tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+        }
     }
 }
 
 
-extension TestRequestVC: UITableViewDataSource, UITableViewDelegate {
+extension TestRequestVC: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        if isSearching {
-            return 1
-        } else {
-            return 2
-        }
+        return isSearching ? 1 : 2
     }
     
     
@@ -147,7 +166,10 @@ extension TestRequestVC: UITableViewDataSource, UITableViewDelegate {
    
         return cell
     }
-    
+}
+
+
+extension TestRequestVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if !isSearching {
@@ -168,9 +190,10 @@ extension TestRequestVC: UITableViewDataSource, UITableViewDelegate {
             leftMechanisms = leftMechanisms.filter { $0.shortName != chosenMechanismName }
             chosenMechanisms.append(getMechanism(for: chosenMechanismName)!)
             
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.deleteRows(at: [indexPath], with: .right)
         }
     }
+    
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         if isSearching {

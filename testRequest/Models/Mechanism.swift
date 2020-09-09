@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum Mechanism: String, CaseIterable {
+enum Mechanism: String, CaseIterable, Codable {
     case software       = "СТБ 34.101.27-2011 (класс 1 или 2)"
     case hardware       = "СТБ 34.101.1-2014, СТБ 34.101.2-2014, СТБ 34.101.3-2014"
     case beltModes      = "СТБ 34.101.31-2011 (пп. 6.3 или 6.4 или 6.5)"

@@ -29,13 +29,14 @@ class TRPointCell: UITableViewCell {
     func set(for indexPath: IndexPath, with mechanisms: [Mechanism]) {
         guard let testFunc = getTestFunction(for: indexPath) else { return }
         
+        textLabel?.text = "\(indexPath.row + 1). "
         if let restMechanisms = testFunc(mechanisms) {
-            textLabel?.text         = "Не соответствует"
+            textLabel?.text!         += "Не соответствует"
             detailTextLabel?.text   = restMechanisms.reduce("Добавьте что-то из:", { $0 + " " + $1.shortName })
             
             backgroundColor         = UIColor.systemRed.withAlphaComponent(0.75)
         } else {
-            textLabel?.text         = "Соответствует"
+            textLabel?.text!         += "Соответствует"
             detailTextLabel?.text   = ""
             backgroundColor         = UIColor.systemGreen.withAlphaComponent(0.75)
         }

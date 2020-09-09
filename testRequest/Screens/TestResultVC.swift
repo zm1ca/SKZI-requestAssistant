@@ -7,9 +7,6 @@
 
 import UIKit
 
-protocol TestResultVCDismissDelegate {
-    func scrollToTop()
-}
 
 class TestResultVC: UIViewController {
     
@@ -39,6 +36,23 @@ class TestResultVC: UIViewController {
         view.backgroundColor = .secondarySystemBackground
         title = "Результаты"
         navigationController?.navigationBar.prefersLargeTitles = true
+        
+        let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButtonTapped))
+        navigationItem.rightBarButtonItem = saveButton
+    }
+    
+    
+    @objc func saveButtonTapped() {
+        let request = Request(named: "Product", by: "Company", with: mechanisms)
+        
+        PersistenceManager.updateWith(request: request, actionType: .add) { error in
+            guard let error = error else {
+                self.presentTRAlertOnMainThread(title: TRAlertConstants.noErrorsTitle, message: TRAlertConstants.requsetSavedMessage)
+                return
+            }
+            
+            self.presentTRAlertOnMainThread(title: TRAlertConstants.sadErrorTitle, message: error.rawValue)
+        }
     }
     
     
@@ -63,7 +77,7 @@ extension TestResultVC: UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return ResultsTableViewConstants.sectionHeaders[section]
+        return "\(16 + section). \(ResultsTableViewConstants.sectionHeaders[section])"
     }
     
     

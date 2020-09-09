@@ -18,3 +18,16 @@ struct ResultsTableViewConstants {
                                    "Выработка ключей",
                                    "Контроль целостности"]
 }
+
+
+struct TRAlertConstants {
+    static let sadErrorTitle        = "Что-то не так 😔."
+    static let noErrorsTitle        = "Успех 🎉."
+    static let requsetSavedMessage  = "Ваша заявка была успешно сохранена. Все сохраненные заявки можно найти на вкладке История."
+    static let cantOpenWebsite      = "Не удаётся открыть веб-сайт. Возможно, ссылка устарела."
+}
+
+
+struct URLConstants {
+    static let order77Table = URL(string: "https://github.com/bcryptoregulatory/skzi-requirements/blob/master/skzi-requirements.md")
+}
