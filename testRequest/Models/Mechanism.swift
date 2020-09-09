@@ -58,3 +58,13 @@ enum Mechanism: String, CaseIterable {
         return String(describing: self)
     }
 }
+
+
+func getMechanism(for name: String) -> Mechanism? {
+    for mechanism in Mechanism.allCases {
+        if mechanism.shortName == name {
+            return mechanism
+        }
+    }
+    return nil
+}

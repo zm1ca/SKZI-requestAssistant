@@ -15,13 +15,11 @@ class TestResultVC: UIViewController {
     
     let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
     var mechanisms: [Mechanism]!
-    var delegate: TestResultVCDismissDelegate!
     
     
-    init(mechanisms: [Mechanism], _ delegate: TestResultVCDismissDelegate) {
+    init(mechanisms: [Mechanism]) {
         super.init(nibName: nil, bundle: nil)
         self.mechanisms = mechanisms
-        self.delegate = delegate
     }
     
     
@@ -34,11 +32,6 @@ class TestResultVC: UIViewController {
         super.viewDidLoad()
         configureViewController()
         configureTableView()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        delegate.scrollToTop()
     }
     
     

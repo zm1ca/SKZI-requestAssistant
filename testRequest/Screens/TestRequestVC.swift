@@ -18,9 +18,7 @@ class TestRequestVC: UIViewController {
     
     var filteredLeftMechanisms: [Mechanism] = []
     var isSearching = false
-    var correctLeftMechanisms: [Mechanism] {
-        return isSearching ? self.filteredLeftMechanisms : self.leftMechanisms
-    }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +34,12 @@ class TestRequestVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+    }
+    
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        scrollToTop()
     }
 
     
@@ -66,7 +70,8 @@ class TestRequestVC: UIViewController {
     
     
     @objc func actionButtonTapped() {
-        navigationController?.pushViewController(TestResultVC(mechanisms: chosenMechanisms, self), animated: true)
+        guard !chosenMechanisms.isEmpty else { return }
+        navigationController?.pushViewController(TestResultVC(mechanisms: chosenMechanisms), animated: true)
     }
     
     
@@ -90,30 +95,54 @@ class TestRequestVC: UIViewController {
             actionButton.heightAnchor.constraint(equalToConstant: 80)
         ])
     }
+    
+    func scrollToTop() {
+        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+    }
 }
 
 
 extension TestRequestVC: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        if isSearching {
+            return 1
+        } else {
+            return 2
+        }
     }
     
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 0 ? "Выбранные механизмы" : "Оставшиеся механизмы"
+        if isSearching {
+            return "Оставшиеся механизмы"
+        } else {
+            return section == 0 ? "Выбранные механизмы" : "Оставшиеся механизмы"
+        }
+            
     }
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? chosenMechanisms.count : correctLeftMechanisms.count
+        if isSearching {
+            return filteredLeftMechanisms.count
+        } else {
+            return section == 0 ? chosenMechanisms.count : leftMechanisms.count
+        }
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell        = tableView.dequeueReusableCell(withIdentifier: TRMechanismCell.reuseID, for: indexPath) as! TRMechanismCell
-        let mechanisms  = indexPath.section == 0 ? chosenMechanisms: correctLeftMechanisms
-        let mechanism   = mechanisms[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: TRMechanismCell.reuseID, for: indexPath) as! TRMechanismCell
+        
+        var mechanisms: [Mechanism] = []
+        if isSearching {
+            mechanisms = filteredLeftMechanisms
+        } else {
+            mechanisms = indexPath.section == 0 ? chosenMechanisms: leftMechanisms
+        }
+        
+        let mechanism = mechanisms[indexPath.row]
         cell.set(for: mechanism)
    
         return cell
@@ -121,7 +150,6 @@ extension TestRequestVC: UITableViewDataSource, UITableViewDelegate {
     
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        #warning("Adding elements due searching isn't implemented yet")
         if !isSearching {
             if editingStyle == .insert {
                 chosenMechanisms.append(leftMechanisms[indexPath.row])
@@ -132,11 +160,24 @@ extension TestRequestVC: UITableViewDataSource, UITableViewDelegate {
                 chosenMechanisms.remove(at: indexPath.row)
                 tableView.moveRow(at: indexPath, to: IndexPath(row: leftMechanisms.count - 1, section: 1))
             }
+        } else {
+            guard editingStyle == .insert else { return }
+            let chosenMechanismName = filteredLeftMechanisms[indexPath.row].shortName
+        
+            filteredLeftMechanisms = filteredLeftMechanisms.filter { $0.shortName != chosenMechanismName }
+            leftMechanisms = leftMechanisms.filter { $0.shortName != chosenMechanismName }
+            chosenMechanisms.append(getMechanism(for: chosenMechanismName)!)
+            
+            tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        return indexPath.section == 0 ? .delete : .insert
+        if isSearching {
+            return .insert
+        } else {
+            return indexPath.section == 0 ? .delete : .insert
+        }
     }
 }
 
@@ -145,21 +186,14 @@ extension TestRequestVC: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
         guard let filter = searchController.searchBar.text, !filter.isEmpty else {
+            filteredLeftMechanisms.removeAll()
             isSearching = false
             tableView.reloadData()
             return
         }
 
         isSearching = true
-        filteredLeftMechanisms = leftMechanisms.filter({ $0.shortName.lowercased().contains(filter.lowercased()) })
+        filteredLeftMechanisms = leftMechanisms.filter({ $0.shortName.lowercased().contains(filter.lowercased()) || $0.rawValue.lowercased().contains(filter.lowercased()) })
         tableView.reloadData()
-    }
-}
-
-
-extension TestRequestVC: TestResultVCDismissDelegate {
-    
-    func scrollToTop() {
-        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
     }
 }
