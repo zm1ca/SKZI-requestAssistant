@@ -20,6 +20,16 @@ extension UIViewController {
     }
     
     
+    func presentTRNamingOnMainThread(productName: String?, organizationName: String?) {
+        DispatchQueue.main.async {
+            let alertVC = TRNamingVC(productName: productName, organizationName: organizationName)
+            alertVC.modalPresentationStyle = .overFullScreen
+            alertVC.modalTransitionStyle = .crossDissolve
+            self.present(alertVC, animated: true)
+        }
+    }
+    
+    
     func presentSafariVC(with url: URL) {
         let safariVC = SFSafariViewController(url: url)
         present(safariVC, animated: true)

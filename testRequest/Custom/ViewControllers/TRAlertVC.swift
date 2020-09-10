@@ -8,7 +8,7 @@
 import UIKit
 
 class TRAlertVC: UIViewController {
-    
+
     let containerView   = TRAlertContainerView()
     let titleLabel      = TRTitleLabel(textAlignment: .center, fontSize: 20)
     let messageLabel    = TRBodyLabel(textAlignment: .center)

@@ -11,8 +11,10 @@ enum Paragraph: String, CaseIterable, Codable {
     case p16_1, p16_2, p17_1, p17_2, p17_3, p17_4, p18_1, p18_2, p19_1, p20_1, p21_1, p22_1, p22_2, p22_3
         
     var shortName: String {
-        //TODO: Красиво представление Paragraph
-        return String(describing: self)
+        var latin = String(describing: self)
+        latin = latin.replacingOccurrences(of: "_", with: ".")
+        latin = latin.replacingOccurrences(of: "p", with: "")
+        return latin
     }
     
     func getNeededMechanisms(for mechanisms: Set<Mechanism>) -> Set<Mechanism>? {

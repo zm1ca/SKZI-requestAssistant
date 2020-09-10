@@ -35,7 +35,6 @@ class SavedRequestsVC: UIViewController {
     
     
     func configureTableView() {
-        //TODO: Исправить ячейку для заявки
         view.addSubview(tableView)
         tableView.frame         = view.bounds
         tableView.rowHeight     = 60
@@ -98,7 +97,7 @@ extension SavedRequestsVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let request = requests[indexPath.row]
-        let destinationVC  = MechanismPickerVC(mechanisms: Array(request.mechanisms))
+        let destinationVC  = MechanismPickerVC(request: request)
         navigationController?.pushViewController(destinationVC, animated: true)
     }
 }

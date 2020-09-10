@@ -9,28 +9,28 @@ import UIKit
 
 class MechanismPickerVC: UIViewController {
 
-    var chosenMechanisms: [Mechanism]       = []
-    var leftMechanisms                      = Mechanism.allCases
+    let tableView               = UITableView(frame: CGRect.zero, style: .grouped)
+    let actionButton            = UIButton()
     
-    let tableView                           = UITableView(frame: CGRect.zero, style: .grouped)
-    let actionButton                        = UIButton()
+    var request: Request?
+    var chosenMechanisms: [Mechanism]!
+    var leftMechanisms:  [Mechanism]!
+    
+    var filteredLeftMechanisms  = [Mechanism]()
+    var isSearching             = false
     
     
-    var filteredLeftMechanisms: [Mechanism] = []
-    var isSearching = false
-    
-    
-    init(mechanisms: [Mechanism]) {
+    init() {
         super.init(nibName: nil, bundle: nil)
-        
-        self.chosenMechanisms = mechanisms
-        
-        leftMechanisms.removeAll()
-        for mechanism in Mechanism.allCases {
-            if !chosenMechanisms.contains(mechanism) {
-                self.leftMechanisms.append(mechanism)
-            }
-        }
+        self.request = Request(named: nil, by: nil, with: [])
+        updateMechanisms()
+    }
+    
+    
+    init(request: Request) {
+        super.init(nibName: nil, bundle: nil)
+        self.request = request
+        updateMechanisms()
     }
     
     
@@ -62,6 +62,17 @@ class MechanismPickerVC: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         scrollToTop()
+    }
+    
+    
+    func updateMechanisms() {
+        if let request = request {
+            chosenMechanisms    = Array(request.mechanisms)
+            leftMechanisms      = Mechanism.allCases.filter{ !self.chosenMechanisms.contains($0) }
+        } else {
+            chosenMechanisms = []
+            leftMechanisms = Mechanism.allCases
+        }
     }
 
     
@@ -95,7 +106,17 @@ class MechanismPickerVC: UIViewController {
     
     @objc func actionButtonTapped() {
         guard !chosenMechanisms.isEmpty else { return }
-        navigationController?.pushViewController(ResultsVC(mechanisms: Set(chosenMechanisms)), animated: true)
+        var destVC: ResultsVC
+        
+        if request != nil {
+            request!.mechanisms = Set(chosenMechanisms)
+            destVC = ResultsVC(request: request!)
+        } else {
+            let newRequest = Request(named: nil, by: nil, with: Set(chosenMechanisms))
+            destVC = ResultsVC(request: newRequest)
+        }
+        
+        navigationController?.pushViewController(destVC, animated: true)
     }
     
     

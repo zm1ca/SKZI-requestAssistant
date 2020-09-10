@@ -8,7 +8,7 @@
 import UIKit
 
 class TRRequestCell: UITableViewCell {
-    
+    //TODO: Исправить ячейку для заявки
     static let reuseID  = "RequestCell"
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -22,9 +22,8 @@ class TRRequestCell: UITableViewCell {
     
     
     func set(for request: Request) {
-        textLabel?.text = "\(request.productName ?? "Unnamed") by \(request.organizationName ?? "John Doe")"
+        textLabel?.text = "\(request.productName ?? "Unnamed") by \(request.organizationName ?? "Unknown")"
 
-        //TODO: Сортировать пункты приказа
         if !request.matchingParagraphs.isEmpty {
             detailTextLabel?.text = request.matchingParagraphs.reduce("Соответствует:", { $0 + " " + $1.shortName })
         } else {

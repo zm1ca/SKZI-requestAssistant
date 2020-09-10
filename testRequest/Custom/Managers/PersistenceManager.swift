@@ -24,10 +24,7 @@ enum PersistenceManager {
 
                 switch actionType {
                 case .add:
-                    guard !requests.contains(request) else {
-                        completed(.alreadySaved)
-                        return
-                    }
+                    requests = requests.filter({ $0.productName != request.productName || $0.organizationName != request.organizationName })
                     
                     requests.append(request)
                     

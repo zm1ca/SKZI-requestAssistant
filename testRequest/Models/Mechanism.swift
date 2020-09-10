@@ -61,10 +61,9 @@ enum Mechanism: String, CaseIterable, Codable {
 
 
 func getMechanism(for name: String) -> Mechanism? {
-    for mechanism in Mechanism.allCases {
-        if mechanism.shortName == name {
-            return mechanism
-        }
+    guard let mechanism = Mechanism.allCases.filter({ $0.shortName == name }).first else {
+        return  nil
     }
-    return nil
+
+    return mechanism
 }

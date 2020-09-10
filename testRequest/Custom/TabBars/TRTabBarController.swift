@@ -16,7 +16,7 @@ class TRTabBarController: UITabBarController {
     
     
     func createTestRequestNC() -> UINavigationController {
-        let testRequestVC = MechanismPickerVC(mechanisms: [])
+        let testRequestVC = MechanismPickerVC()
         testRequestVC.tabBarItem = UITabBarItem(title: "Проверить", image: .strokedCheckmark, tag: 0)
         
         return UINavigationController(rootViewController: testRequestVC)
