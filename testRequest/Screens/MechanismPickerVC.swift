@@ -69,8 +69,7 @@ class MechanismPickerVC: UIViewController {
     
     
     @objc func resetBarButtonTapped() {
-        //TODO: REFACTOR
-        self.request = Request(named: self.request?.productName, by: self.request?.organizationName, with: [])
+        self.request?.mechanisms.removeAll()
         updateMechanisms()
         updateButtonsVisibility()
         tableView.reloadDataOnMainThread()

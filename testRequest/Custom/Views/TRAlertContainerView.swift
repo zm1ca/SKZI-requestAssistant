@@ -25,7 +25,7 @@ class TRAlertContainerView: UIView {
         backgroundColor       = .tertiarySystemBackground
         layer.cornerRadius    = 10
         layer.borderWidth     = 2
-        layer.borderColor     = UIColor.white.cgColor
+        layer.borderColor     = UIColor.secondaryLabel.cgColor
         translatesAutoresizingMaskIntoConstraints = false
     }
 }

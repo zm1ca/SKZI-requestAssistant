@@ -37,6 +37,6 @@ class TRTextField: UITextField {
         
         backgroundColor             = .tertiarySystemBackground
         autocorrectionType          = .no
-        clearButtonMode             = .whileEditing
+        //clearButtonMode             = .whileEditing
     }
 }

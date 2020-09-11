@@ -180,7 +180,7 @@ class TRNamingVC: UIViewController {
 
         let scView = SuccessCheck(frame: CGRect(x: 40, y: 14, width: 200, height: 200))
         self.containerView.addSubview(scView)
-        scView.initWithTime(withDuration: 0.001, bgCcolor: UIColor.green.withAlphaComponent(0), colorOfStroke: UIColor.green.withAlphaComponent(8), widthOfTick: 5) {
+        scView.initWithTime(withDuration: 0.001, bgCcolor: UIColor.green.withAlphaComponent(0), colorOfStroke: UIColor.systemGreen.withAlphaComponent(0.8), widthOfTick: 5) {
             self.dismiss(animated: true, completion: nil)
             //TODO: перейти на SavedRequestsVC вместо ResultsVC
         }
