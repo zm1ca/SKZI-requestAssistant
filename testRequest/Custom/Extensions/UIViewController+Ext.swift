@@ -20,11 +20,11 @@ extension UIViewController {
     }
     
     
-    func presentTRNamingOnMainThread(productName: String?, organizationName: String?) {
+    func presentTRNamingOnMainThread(productName: String?, organizationName: String?, delegate: TRNamingVCDelegate) {
         DispatchQueue.main.async {
-            let alertVC = TRNamingVC(productName: productName, organizationName: organizationName)
-            alertVC.modalPresentationStyle = .overFullScreen
-            alertVC.modalTransitionStyle = .crossDissolve
+            let alertVC = TRNamingVC(productName: productName, organizationName: organizationName, delegate: delegate)
+            alertVC.modalPresentationStyle  = .overFullScreen
+            alertVC.modalTransitionStyle    = .crossDissolve
             self.present(alertVC, animated: true)
         }
     }

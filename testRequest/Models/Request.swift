@@ -7,6 +7,7 @@
 
 import Foundation
 
+//TODO: Add date created and date modified
 struct Request: Codable, Hashable {
     
     var productName:        String?

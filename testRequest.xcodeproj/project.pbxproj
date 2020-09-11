@@ -25,6 +25,7 @@
 		406A269424F402D90040C599 /* 20.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406A269324F402D90040C599 /* 20.swift */; };
 		406A269624F404280040C599 /* 21.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406A269524F404280040C599 /* 21.swift */; };
 		406A269824F405070040C599 /* 22.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406A269724F405070040C599 /* 22.swift */; };
+		407D4D83250B551D00CB1EA8 /* TRTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407D4D82250B551D00CB1EA8 /* TRTextField.swift */; };
 		40911C89250216BB009A1A14 /* TRParagraphCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40911C88250216BB009A1A14 /* TRParagraphCell.swift */; };
 		40911C8B250219A5009A1A14 /* UITableView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40911C8A250219A4009A1A14 /* UITableView+Ext.swift */; };
 		40911C8E25022892009A1A14 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40911C8D25022892009A1A14 /* Constants.swift */; };
@@ -62,6 +63,7 @@
 		406A269324F402D90040C599 /* 20.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 20.swift; sourceTree = "<group>"; };
 		406A269524F404280040C599 /* 21.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 21.swift; sourceTree = "<group>"; };
 		406A269724F405070040C599 /* 22.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 22.swift; sourceTree = "<group>"; };
+		407D4D82250B551D00CB1EA8 /* TRTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TRTextField.swift; sourceTree = "<group>"; };
 		40911C88250216BB009A1A14 /* TRParagraphCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TRParagraphCell.swift; sourceTree = "<group>"; };
 		40911C8A250219A4009A1A14 /* UITableView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Ext.swift"; sourceTree = "<group>"; };
 		40911C8D25022892009A1A14 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -149,6 +151,14 @@
 			path = Logic;
 			sourceTree = "<group>";
 		};
+		407D4D81250B550E00CB1EA8 /* TextFields */ = {
+			isa = PBXGroup;
+			children = (
+				407D4D82250B551D00CB1EA8 /* TRTextField.swift */,
+			);
+			path = TextFields;
+			sourceTree = "<group>";
+		};
 		40911C8725021688009A1A14 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -182,6 +192,7 @@
 		40C3DC142500D1C1008E04EC /* Custom */ = {
 			isa = PBXGroup;
 			children = (
+				407D4D81250B550E00CB1EA8 /* TextFields */,
 				402DF22F2508D97F00799D47 /* Buttons */,
 				402DF22A2508D93100799D47 /* Labels */,
 				402DF2252508D70400799D47 /* ViewControllers */,
@@ -366,6 +377,7 @@
 				40C3DC27250139DE008E04EC /* 16.swift in Sources */,
 				40C3DC21250122C2008E04EC /* ResultsVC.swift in Sources */,
 				406A269224F3FFE80040C599 /* 19.swift in Sources */,
+				407D4D83250B551D00CB1EA8 /* TRTextField.swift in Sources */,
 				40911C8B250219A5009A1A14 /* UITableView+Ext.swift in Sources */,
 				402DF21C2508C39300799D47 /* PersistenceManager.swift in Sources */,
 				402DF22E2508D96800799D47 /* TRBodyLabel.swift in Sources */,

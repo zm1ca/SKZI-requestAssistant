@@ -43,16 +43,7 @@ class ResultsVC: UIViewController {
     
     
     @objc func saveButtonTapped() { 
-        self.presentTRNamingOnMainThread(productName: request.productName, organizationName: request.organizationName)
-        
-        PersistenceManager.updateWith(request: self.request, actionType: .add) { error in
-            guard let error = error else {
-                self.presentTRAlertOnMainThread(title: TRAlertConstants.noErrorsTitle, message: TRAlertConstants.requsetSavedMessage)
-                return
-            }
-            
-            self.presentTRAlertOnMainThread(title: TRAlertConstants.sadErrorTitle, message: error.rawValue)
-        }
+        self.presentTRNamingOnMainThread(productName: request.productName, organizationName: request.organizationName, delegate: self)
     }
     
     
@@ -103,5 +94,25 @@ extension ResultsVC: UITableViewDataSource {
         }
 
         return cell
+    }
+}
+
+
+extension ResultsVC: TRNamingVCDelegate {
+    
+    func updateRequest(with productName: String, organizationName: String) {
+        request.set(productName: productName, organizationName: organizationName)
+    }
+    
+    
+    func saveRequest() {
+        PersistenceManager.updateWith(request: self.request, actionType: .add) { error in
+            guard let error = error else {
+                self.presentTRAlertOnMainThread(title: TRAlertConstants.noErrorsTitle, message: TRAlertConstants.requsetSavedMessage)
+                return
+            }
+            
+            self.presentTRAlertOnMainThread(title: TRAlertConstants.sadErrorTitle, message: error.rawValue)
+        }
     }
 }

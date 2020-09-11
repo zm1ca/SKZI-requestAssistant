@@ -7,6 +7,8 @@
 
 import UIKit
 
+//TODO: Make TRAlertVC just a visualizaiton
+//of checkmark or cross for 1 second, instead of VC with button to press
 class TRAlertVC: UIViewController {
 
     let containerView   = TRAlertContainerView()
