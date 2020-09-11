@@ -12,8 +12,6 @@
 		402DF21F2508C56A00799D47 /* TRError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402DF21E2508C56A00799D47 /* TRError.swift */; };
 		402DF2212508CCE900799D47 /* TRRequestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402DF2202508CCE900799D47 /* TRRequestCell.swift */; };
 		402DF2242508D6C300799D47 /* TRAlertContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402DF2232508D6C300799D47 /* TRAlertContainerView.swift */; };
-		402DF2272508D71C00799D47 /* TRAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402DF2262508D71C00799D47 /* TRAlertVC.swift */; };
-		402DF2292508D7F200799D47 /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402DF2282508D7F100799D47 /* UIViewController+Ext.swift */; };
 		402DF22C2508D95A00799D47 /* TRTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402DF22B2508D95A00799D47 /* TRTitleLabel.swift */; };
 		402DF22E2508D96800799D47 /* TRBodyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402DF22D2508D96800799D47 /* TRBodyLabel.swift */; };
 		402DF2312508D9A100799D47 /* TRButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402DF2302508D9A100799D47 /* TRButton.swift */; };
@@ -30,6 +28,7 @@
 		40911C8B250219A5009A1A14 /* UITableView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40911C8A250219A4009A1A14 /* UITableView+Ext.swift */; };
 		40911C8E25022892009A1A14 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40911C8D25022892009A1A14 /* Constants.swift */; };
 		40911C902502717B009A1A14 /* TRMechanismCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40911C8F2502717B009A1A14 /* TRMechanismCell.swift */; };
+		40A1EB80250BB166002E6F06 /* SuccessCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A1EB7F250BB166002E6F06 /* SuccessCheck.swift */; };
 		40C3DC0C2500CC95008E04EC /* TRTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C3DC0B2500CC95008E04EC /* TRTabBarController.swift */; };
 		40C3DC0F2500CCF3008E04EC /* RequestCreatorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C3DC0E2500CCF3008E04EC /* RequestCreatorVC.swift */; };
 		40C3DC112500CD00008E04EC /* MechanismPickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C3DC102500CD00008E04EC /* MechanismPickerVC.swift */; };
@@ -50,8 +49,6 @@
 		402DF21E2508C56A00799D47 /* TRError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TRError.swift; sourceTree = "<group>"; };
 		402DF2202508CCE900799D47 /* TRRequestCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TRRequestCell.swift; sourceTree = "<group>"; };
 		402DF2232508D6C300799D47 /* TRAlertContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TRAlertContainerView.swift; sourceTree = "<group>"; };
-		402DF2262508D71C00799D47 /* TRAlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TRAlertVC.swift; sourceTree = "<group>"; };
-		402DF2282508D7F100799D47 /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
 		402DF22B2508D95A00799D47 /* TRTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TRTitleLabel.swift; sourceTree = "<group>"; };
 		402DF22D2508D96800799D47 /* TRBodyLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TRBodyLabel.swift; sourceTree = "<group>"; };
 		402DF2302508D9A100799D47 /* TRButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TRButton.swift; sourceTree = "<group>"; };
@@ -68,6 +65,7 @@
 		40911C8A250219A4009A1A14 /* UITableView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Ext.swift"; sourceTree = "<group>"; };
 		40911C8D25022892009A1A14 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		40911C8F2502717B009A1A14 /* TRMechanismCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TRMechanismCell.swift; sourceTree = "<group>"; };
+		40A1EB7F250BB166002E6F06 /* SuccessCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessCheck.swift; sourceTree = "<group>"; };
 		40C3DC0B2500CC95008E04EC /* TRTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TRTabBarController.swift; sourceTree = "<group>"; };
 		40C3DC0E2500CCF3008E04EC /* RequestCreatorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestCreatorVC.swift; sourceTree = "<group>"; };
 		40C3DC102500CD00008E04EC /* MechanismPickerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MechanismPickerVC.swift; sourceTree = "<group>"; };
@@ -106,6 +104,7 @@
 		402DF2222508D6A800799D47 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				40A1EB7F250BB166002E6F06 /* SuccessCheck.swift */,
 				402DF2232508D6C300799D47 /* TRAlertContainerView.swift */,
 			);
 			path = Views;
@@ -114,7 +113,6 @@
 		402DF2252508D70400799D47 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				402DF2262508D71C00799D47 /* TRAlertVC.swift */,
 				40304336250A1C520031B355 /* TRNamingVC.swift */,
 			);
 			path = ViewControllers;
@@ -219,7 +217,6 @@
 			children = (
 				40C3DC172500DBCB008E04EC /* UIView+Ext.swift */,
 				40911C8A250219A4009A1A14 /* UITableView+Ext.swift */,
-				402DF2282508D7F100799D47 /* UIViewController+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -365,6 +362,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40A1EB80250BB166002E6F06 /* SuccessCheck.swift in Sources */,
 				40911C89250216BB009A1A14 /* TRParagraphCell.swift in Sources */,
 				40911C902502717B009A1A14 /* TRMechanismCell.swift in Sources */,
 				40C3DC182500DBCB008E04EC /* UIView+Ext.swift in Sources */,
@@ -383,7 +381,6 @@
 				402DF22E2508D96800799D47 /* TRBodyLabel.swift in Sources */,
 				406A269424F402D90040C599 /* 20.swift in Sources */,
 				40FE8D8F24F3D9E70082CB19 /* AppDelegate.swift in Sources */,
-				402DF2272508D71C00799D47 /* TRAlertVC.swift in Sources */,
 				402DF2212508CCE900799D47 /* TRRequestCell.swift in Sources */,
 				402DF2312508D9A100799D47 /* TRButton.swift in Sources */,
 				402DF2242508D6C300799D47 /* TRAlertContainerView.swift in Sources */,
@@ -397,7 +394,6 @@
 				40C3DC112500CD00008E04EC /* MechanismPickerVC.swift in Sources */,
 				406A269824F405070040C599 /* 22.swift in Sources */,
 				40C3DC0C2500CC95008E04EC /* TRTabBarController.swift in Sources */,
-				402DF2292508D7F200799D47 /* UIViewController+Ext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

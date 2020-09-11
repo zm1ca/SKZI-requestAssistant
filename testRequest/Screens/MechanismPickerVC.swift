@@ -46,6 +46,9 @@ class MechanismPickerVC: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         title = "Проверка"
         
+        let infoButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(resetBarButtonTapped))
+        navigationItem.rightBarButtonItem = infoButton
+        
         configureSearchController()
         configureTableView()
         configureActionButton()
@@ -55,13 +58,65 @@ class MechanismPickerVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        updateActionButtonVisibility()
+        updateButtonsVisibility()
     }
     
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         scrollToTop()
+    }
+    
+    
+    @objc func resetBarButtonTapped() {
+        //TODO: REFACTOR
+        self.request = Request(named: self.request?.productName, by: self.request?.organizationName, with: [])
+        updateMechanisms()
+        updateButtonsVisibility()
+        tableView.reloadData()
+    }
+    
+    
+    @objc func actionButtonTapped() {
+        guard !chosenMechanisms.isEmpty else { return }
+        var destVC: ResultsVC
+        
+        if request != nil {
+            request!.mechanisms = Set(chosenMechanisms)
+            destVC = ResultsVC(request: request!)
+        } else {
+            let newRequest = Request(named: nil, by: nil, with: Set(chosenMechanisms))
+            destVC = ResultsVC(request: newRequest)
+        }
+        
+        navigationController?.pushViewController(destVC, animated: true)
+    }
+    
+    
+    func scrollToTop() {
+        if !chosenMechanisms.isEmpty {
+            tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+        }
+    }
+    
+    
+    func updateButtonsVisibility() {
+        guard let resetButton = self.navigationItem.rightBarButtonItem else { return }
+        
+        UIView.animate(withDuration: 0.25) { [weak self] in
+            guard let self = self else { return }
+            
+            if self.chosenMechanisms.isEmpty {
+                self.actionButton.alpha = 0
+                resetButton.isEnabled = false
+                resetButton.tintColor = UIColor.clear
+                
+            } else {
+                self.actionButton.alpha = 1
+                resetButton.isEnabled = true
+                resetButton.tintColor = UIColor.systemBlue
+            }
+        }
     }
     
     
@@ -91,8 +146,6 @@ class MechanismPickerVC: UIViewController {
     
     
     func configureTableView() {
-        view.addSubview(tableView)
-        tableView.frame             = view.bounds
         tableView.rowHeight         = 60
         tableView.separatorStyle    = .singleLine
         tableView.allowsSelection   = false
@@ -101,22 +154,6 @@ class MechanismPickerVC: UIViewController {
         tableView.dataSource        = self
         tableView.delegate          = self
         tableView.register(TRMechanismCell.self, forCellReuseIdentifier: TRMechanismCell.reuseID)
-    }
-    
-    
-    @objc func actionButtonTapped() {
-        guard !chosenMechanisms.isEmpty else { return }
-        var destVC: ResultsVC
-        
-        if request != nil {
-            request!.mechanisms = Set(chosenMechanisms)
-            destVC = ResultsVC(request: request!)
-        } else {
-            let newRequest = Request(named: nil, by: nil, with: Set(chosenMechanisms))
-            destVC = ResultsVC(request: newRequest)
-        }
-        
-        navigationController?.pushViewController(destVC, animated: true)
     }
     
     
@@ -130,6 +167,9 @@ class MechanismPickerVC: UIViewController {
     
     
     func layoutUI() {
+        view.addSubview(tableView)
+        tableView.frame = view.bounds
+        
         view.addSubview(actionButton)
         actionButton.translatesAutoresizingMaskIntoConstraints = false
         
@@ -139,19 +179,6 @@ class MechanismPickerVC: UIViewController {
             actionButton.widthAnchor.constraint(equalToConstant: 80),
             actionButton.heightAnchor.constraint(equalToConstant: 80)
         ])
-    }
-    
-    func scrollToTop() {
-        if !chosenMechanisms.isEmpty {
-            tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
-        }
-    }
-    
-    
-    func updateActionButtonVisibility() {
-        UIView.animate(withDuration: 0.5) {
-            self.actionButton.alpha = self.chosenMechanisms.isEmpty ? 0 : 1
-        }
     }
 }
 
@@ -224,7 +251,7 @@ extension MechanismPickerVC: UITableViewDelegate {
             tableView.deleteRows(at: [indexPath], with: .right)
         }
         
-        updateActionButtonVisibility()
+        updateButtonsVisibility()
     }
     
     

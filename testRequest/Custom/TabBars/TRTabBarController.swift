@@ -36,7 +36,7 @@ class TRTabBarController: UITabBarController {
     
     func createListVC() -> UINavigationController {
         let listVC = SavedRequestsVC()
-        listVC.tabBarItem = UITabBarItem(title: "История", image: .actions, tag: 2)
+        listVC.tabBarItem = UITabBarItem(title: "Сохраненные", image: .actions, tag: 2)
 
         return UINavigationController(rootViewController: listVC)
     }

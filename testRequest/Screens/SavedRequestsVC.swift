@@ -31,7 +31,7 @@ class SavedRequestsVC: UIViewController {
         view.backgroundColor = .secondarySystemGroupedBackground
         
         navigationController?.navigationBar.prefersLargeTitles = true
-        title = "История"
+        title = "Сохранённые"
     }
     
     
@@ -59,7 +59,7 @@ class SavedRequestsVC: UIViewController {
                     self.view.bringSubviewToFront(self.tableView)
                 }
             case .failure(let error):
-                self.presentTRAlertOnMainThread(title: TRAlertConstants.sadErrorTitle, message: error.rawValue)
+                print(error.rawValue)
             }
         }
     }
@@ -91,7 +91,7 @@ extension SavedRequestsVC: UITableViewDataSource, UITableViewDelegate {
                 return
             }
             
-            self.presentTRAlertOnMainThread(title: TRAlertConstants.sadErrorTitle, message: error.rawValue)
+            print(error.rawValue)
         }
     }
     

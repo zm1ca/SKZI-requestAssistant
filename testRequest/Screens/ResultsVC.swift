@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol SuccessCheckmarkDelegate {
+    func drawSuccessCheckmark(at view: UIView)
+}
+
 
 class ResultsVC: UIViewController {
     
@@ -37,14 +41,20 @@ class ResultsVC: UIViewController {
         title = "Результаты"
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButtonTapped))
+        let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(presentTRNamingVCOnMainThread))
         navigationItem.rightBarButtonItem = saveButton
     }
     
     
-    @objc func saveButtonTapped() { 
-        self.presentTRNamingOnMainThread(productName: request.productName, organizationName: request.organizationName, delegate: self)
+    @objc func presentTRNamingVCOnMainThread() {
+        DispatchQueue.main.async {
+            let alertVC = TRNamingVC(productName: self.request.productName, organizationName: self.request.organizationName, request: self.request)
+            alertVC.modalPresentationStyle  = .overFullScreen
+            alertVC.modalTransitionStyle    = .crossDissolve
+            self.present(alertVC, animated: true)
+        }
     }
+
     
     
     func configureTableView(){
@@ -94,25 +104,5 @@ extension ResultsVC: UITableViewDataSource {
         }
 
         return cell
-    }
-}
-
-
-extension ResultsVC: TRNamingVCDelegate {
-    
-    func updateRequest(with productName: String, organizationName: String) {
-        request.set(productName: productName, organizationName: organizationName)
-    }
-    
-    
-    func saveRequest() {
-        PersistenceManager.updateWith(request: self.request, actionType: .add) { error in
-            guard let error = error else {
-                self.presentTRAlertOnMainThread(title: TRAlertConstants.noErrorsTitle, message: TRAlertConstants.requsetSavedMessage)
-                return
-            }
-            
-            self.presentTRAlertOnMainThread(title: TRAlertConstants.sadErrorTitle, message: error.rawValue)
-        }
     }
 }

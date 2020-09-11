@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SafariServices
 
 class RequestCreatorVC: UIViewController {
     
@@ -28,10 +29,10 @@ class RequestCreatorVC: UIViewController {
     
     @objc func infoButtonTapped() {
         guard let url = URLConstants.order77Table else {
-            self.presentTRAlertOnMainThread(title: TRAlertConstants.sadErrorTitle, message: TRAlertConstants.cantOpenWebsite)
+            print(TRAlertConstants.cantOpenWebsite)
             return
         }
         
-        self.presentSafariVC(with: url)
+        present(SFSafariViewController(url: url), animated: true)
     }
 }

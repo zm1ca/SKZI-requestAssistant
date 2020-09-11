@@ -7,13 +7,10 @@
 
 import UIKit
 
-protocol TRNamingVCDelegate {
-    func updateRequest(with productName: String, organizationName: String)
-    func saveRequest()
-}
-
 
 class TRNamingVC: UIViewController {
+    
+    var request: Request!
     
     let containerView             = TRAlertContainerView()
     let titleLabel                = TRTitleLabel(textAlignment: .center, fontSize: 20)
@@ -25,7 +22,6 @@ class TRNamingVC: UIViewController {
     var productName:        String?
     var organizationName:   String?
     
-    var delegate: TRNamingVCDelegate!
     let padding: CGFloat          = 20
     
     var actionButtonIsActive      = false {
@@ -41,11 +37,11 @@ class TRNamingVC: UIViewController {
     }
     
     
-    init(productName: String?, organizationName: String?, delegate: TRNamingVCDelegate) {
+    init(productName: String?, organizationName: String?, request: Request) {
         super.init(nibName: nil, bundle: nil)
         self.productName        = productName
         self.organizationName   = organizationName
-        self.delegate           = delegate
+        self.request            = request
     }
     
     
@@ -165,8 +161,25 @@ class TRNamingVC: UIViewController {
     
     
     @objc func saveRequestAndDismissVC() {
-        delegate.updateRequest(with: productNameTextField.text!, organizationName: organizationNameTextField.text!)
-        dismiss(animated: true, completion: nil)
-        delegate.saveRequest()
+        request.set(productName: productNameTextField.text!, organizationName: organizationNameTextField.text!)
+        
+        PersistenceManager.updateWith(request: self.request, actionType: .add) { error in
+            guard error != nil else {
+                self.presentCheckmarkAndDismiss()
+                return
+            }
+            
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    
+    func presentCheckmarkAndDismiss() {
+        let scView = SuccessCheck(frame: CGRect(x: 40, y: 14, width: 200, height: 200))
+        self.containerView.addSubview(scView)
+        scView.initWithTime(withDuration: 0.001, bgCcolor: UIColor.green.withAlphaComponent(0), colorOfStroke: UIColor.green.withAlphaComponent(8), widthOfTick: 5) {
+            self.dismiss(animated: true, completion: nil)
+            //TODO: перейти на SavedRequestsVC вместо ResultsVC
+        }
     }
 }
