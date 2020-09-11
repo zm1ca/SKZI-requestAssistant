@@ -14,7 +14,7 @@ class TRAlertVC: UIViewController {
     let containerView   = TRAlertContainerView()
     let titleLabel      = TRTitleLabel(textAlignment: .center, fontSize: 20)
     let messageLabel    = TRBodyLabel(textAlignment: .center)
-    let actionButton    = TRButton(backgroundColor: .systemPink)
+    let actionButton    = TRButton(backgroundColor: .systemPink, titleColor: .label)
     
     var alertTitle: String?
     var alertMessage: String?

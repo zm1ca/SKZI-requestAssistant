@@ -22,7 +22,7 @@ class TRRequestCell: UITableViewCell {
     
     
     func set(for request: Request) {
-        textLabel?.text = "\(request.productName ?? "Unnamed") by \(request.organizationName ?? "Unknown")"
+        textLabel?.text = "\(request.productName!) by \(request.organizationName!)"
 
         if !request.matchingParagraphs.isEmpty {
             detailTextLabel?.text = request.matchingParagraphs.reduce("Соответствует:", { $0 + " " + $1.shortName })

@@ -14,6 +14,9 @@ class TRTabBarController: UITabBarController {
         self.viewControllers = [createTestRequestNC(), createMakeRequestNC(), createListVC()]
     }
     
+    //TODO: Make good TabBarItems
+    //MARK: titles don't work fine here
+    
     
     func createTestRequestNC() -> UINavigationController {
         let testRequestVC = MechanismPickerVC()
@@ -25,8 +28,7 @@ class TRTabBarController: UITabBarController {
 
     func createMakeRequestNC() -> UINavigationController {
         let makeRequestVC = RequestCreatorVC()
-        makeRequestVC.title = "Составление"
-        makeRequestVC.tabBarItem = UITabBarItem(title: "Составить", image: .add, tag: 1)
+        makeRequestVC.tabBarItem = UITabBarItem(title: "Составление", image: .add, tag: 1)
 
         return UINavigationController(rootViewController: makeRequestVC)
     }

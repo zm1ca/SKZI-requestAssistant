@@ -12,38 +12,52 @@ protocol TRNamingVCDelegate {
     func saveRequest()
 }
 
-class TRNamingVC: UIViewController {
 
+class TRNamingVC: UIViewController {
+    
     let containerView             = TRAlertContainerView()
     let titleLabel                = TRTitleLabel(textAlignment: .center, fontSize: 20)
     let productNameTextField      = TRTextField()
     let organizationNameTextField = TRTextField()
-    let cancelButton              = TRButton(backgroundColor: .tertiarySystemBackground)
-    let actionButton              = TRButton(backgroundColor: .systemGray4)
-    
-    var productName: String?
-    var organizationName: String?
+    let cancelButton              = TRButton(backgroundColor: .tertiarySystemBackground, titleColor: .secondaryLabel)
+    let actionButton              = TRButton(backgroundColor: .systemGray4, titleColor: .label)
+        
+    var productName:        String?
+    var organizationName:   String?
     
     var delegate: TRNamingVCDelegate!
+    let padding: CGFloat          = 20
     
-    let padding: CGFloat = 20
+    var actionButtonIsActive      = false {
+        didSet {
+            if actionButtonIsActive {
+                actionButton.isEnabled  = true
+                actionButton.alpha      = 1
+            } else {
+                actionButton.isEnabled  = false
+                actionButton.alpha      = 0.25
+            }
+        }
+    }
+    
     
     init(productName: String?, organizationName: String?, delegate: TRNamingVCDelegate) {
         super.init(nibName: nil, bundle: nil)
-        
         self.productName        = productName
         self.organizationName   = organizationName
         self.delegate           = delegate
     }
     
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.black.withAlphaComponent(0.75)
-        view.addSubviews(containerView, titleLabel, productNameTextField, organizationNameTextField, cancelButton, actionButton)
+        view.addSubviews(containerView)
         
         configureContainerView()
         configureTitleLabel()
@@ -52,12 +66,16 @@ class TRNamingVC: UIViewController {
         configureCancelButton()
         configureActionButton()
     }
-    
+
     
     func configureContainerView() {
+        containerView.addSubviews(titleLabel, productNameTextField, organizationNameTextField, cancelButton, actionButton)
+        
+        //TODO: Get keyboard height instead of 300
+        //FIX: does not conform to UITextInput protocol
         NSLayoutConstraint.activate([
             containerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            containerView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            containerView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -150 ),
             containerView.heightAnchor.constraint(equalToConstant: 238),
             containerView.widthAnchor.constraint(equalToConstant: 280)
         ])
@@ -78,7 +96,8 @@ class TRNamingVC: UIViewController {
     
     func configureProductNameTextField() {
         productNameTextField.text = productName ?? ""
-        productNameTextField.placeholder = "Название продукта"
+        productNameTextField.placeholder = "Название СКЗИ"
+        productNameTextField.addTarget(self, action: #selector(updateActionButtonState), for: .editingChanged)
         
         NSLayoutConstraint.activate([
             productNameTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: padding),
@@ -86,12 +105,15 @@ class TRNamingVC: UIViewController {
             productNameTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -padding),
             productNameTextField.heightAnchor.constraint(equalToConstant: 44)
         ])
+        
+        productNameTextField.becomeFirstResponder()
     }
     
     
     func configureOrganizationNameTextField() {
         organizationNameTextField.text = organizationName ?? ""
         organizationNameTextField.placeholder = "Организация"
+        organizationNameTextField.addTarget(self, action: #selector(updateActionButtonState), for: .editingChanged)
         
         NSLayoutConstraint.activate([
             organizationNameTextField.topAnchor.constraint(equalTo: productNameTextField.bottomAnchor, constant: 8),
@@ -99,6 +121,13 @@ class TRNamingVC: UIViewController {
             organizationNameTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -padding),
             organizationNameTextField.heightAnchor.constraint(equalToConstant: 44)
         ])
+    }
+    
+    
+    @objc func updateActionButtonState() {
+        guard productNameTextField.text != nil, organizationNameTextField.text != nil else { return }
+        
+        actionButtonIsActive = !productNameTextField.text!.isEmpty && !organizationNameTextField.text!.isEmpty
     }
     
     
@@ -131,27 +160,13 @@ class TRNamingVC: UIViewController {
             actionButton.heightAnchor.constraint(equalToConstant: 34)
         ])
         
-        //actionButton.alpha = 0.3
+        updateActionButtonState()
     }
     
     
     @objc func saveRequestAndDismissVC() {
-        //TODO: block button and visually present it
-        guard let productNameText = productNameTextField.text, let organizationNameText = organizationNameTextField.text, !productNameText.isEmpty, !organizationNameText.isEmpty  else {
-            return
-        }
-        
-        delegate.updateRequest(with: productNameText, organizationName: organizationNameText)
+        delegate.updateRequest(with: productNameTextField.text!, organizationName: organizationNameTextField.text!)
         dismiss(animated: true, completion: nil)
         delegate.saveRequest()
     }
 }
-
-
-//extension TRNamingVC: UITextFieldDelegate {
-//
-//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        saveRequestAndDismissVC()
-//        return true
-//    }
-//}
