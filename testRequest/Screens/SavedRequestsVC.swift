@@ -55,7 +55,7 @@ class SavedRequestsVC: UIViewController {
             case .success(let Requests):
                 self.requests = Requests
                 DispatchQueue.main.async {
-                    self.tableView.reloadData()
+                    self.tableView.reloadDataOnMainThread()
                     self.view.bringSubviewToFront(self.tableView)
                 }
             case .failure(let error):

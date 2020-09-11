@@ -110,14 +110,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		402DF2252508D70400799D47 /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				40304336250A1C520031B355 /* TRNamingVC.swift */,
-			);
-			path = ViewControllers;
-			sourceTree = "<group>";
-		};
 		402DF22A2508D93100799D47 /* Labels */ = {
 			isa = PBXGroup;
 			children = (
@@ -181,6 +173,7 @@
 			children = (
 				40C3DC102500CD00008E04EC /* MechanismPickerVC.swift */,
 				40C3DC20250122C2008E04EC /* ResultsVC.swift */,
+				40304336250A1C520031B355 /* TRNamingVC.swift */,
 				40C3DC0E2500CCF3008E04EC /* RequestCreatorVC.swift */,
 				40C3DC122500CE34008E04EC /* SavedRequestsVC.swift */,
 			);
@@ -193,7 +186,6 @@
 				407D4D81250B550E00CB1EA8 /* TextFields */,
 				402DF22F2508D97F00799D47 /* Buttons */,
 				402DF22A2508D93100799D47 /* Labels */,
-				402DF2252508D70400799D47 /* ViewControllers */,
 				402DF2222508D6A800799D47 /* Views */,
 				402DF21A2508C38300799D47 /* Managers */,
 				40911C8C25022885009A1A14 /* Utilities */,

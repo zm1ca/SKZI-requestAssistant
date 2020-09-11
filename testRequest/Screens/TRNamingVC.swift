@@ -165,7 +165,7 @@ class TRNamingVC: UIViewController {
         
         PersistenceManager.updateWith(request: self.request, actionType: .add) { error in
             guard error != nil else {
-                self.presentCheckmarkAndDismiss()
+                self.indicateSuccessAndDismiss()
                 return
             }
             
@@ -174,7 +174,10 @@ class TRNamingVC: UIViewController {
     }
     
     
-    func presentCheckmarkAndDismiss() {
+    func indicateSuccessAndDismiss() {
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.success)
+
         let scView = SuccessCheck(frame: CGRect(x: 40, y: 14, width: 200, height: 200))
         self.containerView.addSubview(scView)
         scView.initWithTime(withDuration: 0.001, bgCcolor: UIColor.green.withAlphaComponent(0), colorOfStroke: UIColor.green.withAlphaComponent(8), widthOfTick: 5) {

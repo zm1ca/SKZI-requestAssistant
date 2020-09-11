@@ -73,7 +73,7 @@ class MechanismPickerVC: UIViewController {
         self.request = Request(named: self.request?.productName, by: self.request?.organizationName, with: [])
         updateMechanisms()
         updateButtonsVisibility()
-        tableView.reloadData()
+        tableView.reloadDataOnMainThread()
     }
     
     
@@ -271,12 +271,12 @@ extension MechanismPickerVC: UISearchResultsUpdating {
         guard let filter = searchController.searchBar.text, !filter.isEmpty else {
             filteredLeftMechanisms.removeAll()
             isSearching = false
-            tableView.reloadData()
+            tableView.reloadDataOnMainThread()
             return
         }
 
         isSearching = true
         filteredLeftMechanisms = leftMechanisms.filter({ $0.shortName.lowercased().contains(filter.lowercased()) || $0.rawValue.lowercased().contains(filter.lowercased()) })
-        tableView.reloadData()
+        tableView.reloadDataOnMainThread()
     }
 }

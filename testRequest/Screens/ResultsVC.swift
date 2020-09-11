@@ -41,6 +41,7 @@ class ResultsVC: UIViewController {
         title = "Результаты"
         navigationController?.navigationBar.prefersLargeTitles = true
         
+        //TODO: Заменить save на сохранить
         let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(presentTRNamingVCOnMainThread))
         navigationItem.rightBarButtonItem = saveButton
     }
