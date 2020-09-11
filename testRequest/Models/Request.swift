@@ -7,24 +7,28 @@
 
 import Foundation
 
-//TODO: Add date created and date modified
+
 struct Request: Codable, Hashable {
     
     var productName:        String?
     var organizationName:   String?
     var mechanisms:         Set<Mechanism>
     
+    var dateModified: Date!
+    
     
     init(named productName: String?, by organization: String?, with mechanisms: Set<Mechanism>) {
         self.productName        = productName
         self.organizationName   = organization
         self.mechanisms         = mechanisms
+        self.dateModified       = Date()
     }
     
     
     mutating func set(productName: String, organizationName: String) {
         self.productName        = productName
         self.organizationName   = organizationName
+        self.dateModified       = Date()
     }
 
     

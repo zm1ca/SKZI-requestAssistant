@@ -11,14 +11,14 @@ class TRTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.viewControllers = [createTestRequestNC(), createMakeRequestNC(), createListVC()]
+        self.viewControllers = [createMechanismPickerNC(), createRequestCreatorNC(), createSavedRequestsNC()]
     }
     
     //TODO: Make good TabBarItems
     //MARK: titles don't work fine here
     
     
-    func createTestRequestNC() -> UINavigationController {
+    func createMechanismPickerNC() -> UINavigationController {
         let testRequestVC = MechanismPickerVC()
         testRequestVC.tabBarItem = UITabBarItem(title: "Проверить", image: .strokedCheckmark, tag: 0)
         
@@ -26,7 +26,7 @@ class TRTabBarController: UITabBarController {
     }
     
 
-    func createMakeRequestNC() -> UINavigationController {
+    func createRequestCreatorNC() -> UINavigationController {
         let makeRequestVC = RequestCreatorVC()
         makeRequestVC.tabBarItem = UITabBarItem(title: "Составление", image: .add, tag: 1)
 
@@ -34,7 +34,7 @@ class TRTabBarController: UITabBarController {
     }
     
     
-    func createListVC() -> UINavigationController {
+    func createSavedRequestsNC() -> UINavigationController {
         let listVC = SavedRequestsVC()
         listVC.tabBarItem = UITabBarItem(title: "Сохраненные", image: .actions, tag: 2)
 

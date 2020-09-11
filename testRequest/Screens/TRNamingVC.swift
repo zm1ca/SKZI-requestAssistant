@@ -8,6 +8,11 @@
 import UIKit
 
 
+protocol TRNamingVCDelegate {
+    func resetVCAndTransferToSaved()
+}
+
+
 class TRNamingVC: UIViewController {
     
     var request: Request!
@@ -23,6 +28,8 @@ class TRNamingVC: UIViewController {
     var organizationName:   String?
     
     let padding: CGFloat          = 20
+    
+    var delegate: TRNamingVCDelegate!
     
     var actionButtonIsActive      = false {
         didSet {
@@ -163,9 +170,11 @@ class TRNamingVC: UIViewController {
     @objc func saveRequestAndDismissVC() {
         request.set(productName: productNameTextField.text!, organizationName: organizationNameTextField.text!)
         
-        PersistenceManager.updateWith(request: self.request, actionType: .add) { error in
+        PersistenceManager.updateWith(request: self.request, actionType: .add) { [weak self] error in
+            guard let self = self else { return }
             guard error != nil else {
                 self.indicateSuccessAndDismiss()
+                self.delegate.resetVCAndTransferToSaved()
                 return
             }
             
@@ -182,7 +191,6 @@ class TRNamingVC: UIViewController {
         self.containerView.addSubview(scView)
         scView.initWithTime(withDuration: 0.001, bgCcolor: UIColor.green.withAlphaComponent(0), colorOfStroke: UIColor.systemGreen.withAlphaComponent(0.8), widthOfTick: 5) {
             self.dismiss(animated: true, completion: nil)
-            //TODO: перейти на SavedRequestsVC вместо ResultsVC
         }
     }
 }

@@ -7,10 +7,6 @@
 
 import UIKit
 
-protocol SuccessCheckmarkDelegate {
-    func drawSuccessCheckmark(at view: UIView)
-}
-
 
 class ResultsVC: UIViewController {
     
@@ -50,8 +46,10 @@ class ResultsVC: UIViewController {
     @objc func presentTRNamingVCOnMainThread() {
         DispatchQueue.main.async {
             let alertVC = TRNamingVC(productName: self.request.productName, organizationName: self.request.organizationName, request: self.request)
+            alertVC.delegate = self
             alertVC.modalPresentationStyle  = .overFullScreen
             alertVC.modalTransitionStyle    = .crossDissolve
+    
             self.present(alertVC, animated: true)
         }
     }
@@ -105,5 +103,19 @@ extension ResultsVC: UITableViewDataSource {
         }
 
         return cell
+    }
+}
+
+
+extension ResultsVC: TRNamingVCDelegate {
+    //TODO: might be improved:
+    //1. clear request in MechanissmPicker before segue
+    //2. pop root controller for SavedRequestsNC
+    func resetVCAndTransferToSaved() {
+        if tabBarController?.selectedIndex == 0 {
+            tabBarController?.selectedIndex = 2
+        } else {
+            navigationController?.popToRootViewController(animated: false)
+        }
     }
 }

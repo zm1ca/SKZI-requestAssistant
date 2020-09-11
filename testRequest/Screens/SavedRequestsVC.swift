@@ -7,7 +7,7 @@
 
 import UIKit
 
-//TODO: Sort by date and by name
+
 class SavedRequestsVC: UIViewController {
     
     let tableView           = UITableView()
@@ -32,6 +32,24 @@ class SavedRequestsVC: UIViewController {
         
         navigationController?.navigationBar.prefersLargeTitles = true
         title = "Сохранённые"
+        
+        let removeAllBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(removeAllButtonTapped))
+        navigationItem.rightBarButtonItem = removeAllBarButtonItem
+    }
+    
+    
+    @objc func removeAllButtonTapped() {
+        //TODO: Show precaution: Are you sure?
+        
+        for request in requests {
+            PersistenceManager.updateWith(request: request, actionType: .remove) { error in
+                guard let error = error else { return }
+                print(error)
+            }
+        }
+        
+        requests.removeAll()
+        self.tableView.reloadDataOnMainThread()
     }
     
     
@@ -53,7 +71,7 @@ class SavedRequestsVC: UIViewController {
             
             switch result {
             case .success(let Requests):
-                self.requests = Requests
+                self.requests = Requests.sorted{ $0.dateModified > $1.dateModified }
                 DispatchQueue.main.async {
                     self.tableView.reloadDataOnMainThread()
                     self.view.bringSubviewToFront(self.tableView)
