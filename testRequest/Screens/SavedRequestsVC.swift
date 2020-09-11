@@ -7,10 +7,10 @@
 
 import UIKit
 
-
+//TODO: Add Favorites section at top
 class SavedRequestsVC: UIViewController {
     
-    let tableView           = UITableView()
+    let tableView           = UITableView(frame: CGRect.zero, style: .insetGrouped)
     var requests: [Request] = []
     
 
@@ -28,7 +28,7 @@ class SavedRequestsVC: UIViewController {
     
     
     func configureVC() {
-        view.backgroundColor = .secondarySystemGroupedBackground
+        view.backgroundColor = .systemBackground
         
         navigationController?.navigationBar.prefersLargeTitles = true
         title = "Сохранённые"
@@ -55,10 +55,10 @@ class SavedRequestsVC: UIViewController {
     
     func configureTableView() {
         view.addSubview(tableView)
-        tableView.frame         = view.bounds
-        tableView.rowHeight     = 60
-        tableView.delegate      = self
-        tableView.dataSource    = self
+        tableView.frame             = view.bounds
+        tableView.rowHeight         = 90
+        tableView.delegate          = self
+        tableView.dataSource        = self
         tableView.removeAccessCells()
         
         tableView.register(TRRequestCell.self, forCellReuseIdentifier: TRRequestCell.reuseID)

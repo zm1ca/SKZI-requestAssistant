@@ -9,7 +9,7 @@ import UIKit
 
 class MechanismPickerVC: UIViewController {
 
-    let tableView               = UITableView(frame: CGRect.zero, style: .grouped)
+    let tableView               = UITableView(frame: CGRect.zero, style: .insetGrouped)
     let actionButton            = UIButton()
     
     var request: Request?
@@ -41,7 +41,7 @@ class MechanismPickerVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .secondarySystemGroupedBackground
+        view.backgroundColor = .systemBackground
         
         navigationController?.navigationBar.prefersLargeTitles = true
         title = "Проверка"

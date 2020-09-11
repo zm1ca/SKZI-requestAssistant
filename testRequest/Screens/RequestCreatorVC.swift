@@ -17,7 +17,7 @@ class RequestCreatorVC: UIViewController {
     
     
     func configureVC() {
-        view.backgroundColor = .secondarySystemGroupedBackground
+        view.backgroundColor = .systemBackground
         
         navigationController?.navigationBar.prefersLargeTitles = true
         title = "Составление"

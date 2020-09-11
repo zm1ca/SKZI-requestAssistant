@@ -17,7 +17,14 @@ class TRBodyLabel: UILabel {
     
     convenience init(textAlignment: NSTextAlignment) {
         self.init(frame: .zero)
-        self.textAlignment = textAlignment
+        self.textAlignment  = textAlignment
+    }
+    
+    
+    convenience init(textAlignment: NSTextAlignment, font: UIFont) {
+        self.init(frame: .zero)
+        self.textAlignment  = textAlignment
+        self.font           = font
     }
     
     
@@ -26,8 +33,8 @@ class TRBodyLabel: UILabel {
         adjustsFontForContentSizeCategory   = true
         textColor                           = .secondaryLabel
         adjustsFontSizeToFitWidth           = true
-        minimumScaleFactor                  = 0.75
-        lineBreakMode                       = .byWordWrapping
+        minimumScaleFactor                  = 0.85
+        lineBreakMode                       = .byTruncatingTail
 
         translatesAutoresizingMaskIntoConstraints = false
     }

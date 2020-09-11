@@ -96,8 +96,8 @@ extension ResultsVC: UITableViewDataSource {
         
         let baseTitle = "\(indexPath.row + 1). "
         if let neededMechanisms = request.results[paragraph] {
-            let details = neededMechanisms.reduce("Добавьте что-то из:", { $0 + " " + $1.shortName })
-            cell.set(title: baseTitle + "Не соответствует", details: details, backgroundColor: UIColor.systemRed.withAlphaComponent(0.75))
+            let details = neededMechanisms.reduce("Добавьте что-то из:", { $0 + " " + $1.shortName + "," }).dropLast()
+            cell.set(title: baseTitle + "Не соответствует", details: String(details), backgroundColor: UIColor.systemRed.withAlphaComponent(0.75))
         } else {
             cell.set(title: baseTitle + "Соответствует", details: "", backgroundColor: UIColor.systemGreen.withAlphaComponent(0.75))
         }
