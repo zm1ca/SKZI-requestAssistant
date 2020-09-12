@@ -18,6 +18,9 @@ class TRParagraphCell: UITableViewCell {
         textLabel?.font                 = UIFont.systemFont(ofSize: 20, weight: .bold)
         detailTextLabel?.textColor      = .secondaryLabel
         detailTextLabel?.numberOfLines  = 2
+        
+        accessoryType   = .detailButton
+        tintColor       = .label
     }
     
     

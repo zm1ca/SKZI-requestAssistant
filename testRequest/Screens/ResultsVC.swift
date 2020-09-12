@@ -37,9 +37,8 @@ class ResultsVC: UIViewController {
         title = "Результаты"
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        //TODO: Заменить save на сохранить
-        let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(presentTRNamingVCOnMainThread))
-        navigationItem.rightBarButtonItem = saveButton
+        let saveBarButttonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(presentTRNamingVCOnMainThread))
+        navigationItem.rightBarButtonItem = saveBarButttonItem
     }
     
     
@@ -96,11 +95,10 @@ extension ResultsVC: UITableViewDataSource {
         
         let baseTitle = "\(indexPath.row + 1). "
         if let neededMechanisms = request.results[paragraph] {
-            //TODO: add func to join array with commas and call twice
             let details = neededMechanisms.reduce("Добавьте что-то из:", { $0 + " " + $1.shortName + "," }).dropLast()
-            cell.set(title: baseTitle + "Не соответствует", details: String(details), backgroundColor: UIColor.systemRed.withAlphaComponent(0.75))
+            cell.set(title: baseTitle + "Не соответствует", details: String(details), backgroundColor: UIColor.systemRed.withAlphaComponent(0.5))
         } else {
-            cell.set(title: baseTitle + "Соответствует", details: "", backgroundColor: UIColor.systemGreen.withAlphaComponent(0.75))
+            cell.set(title: baseTitle + "Соответствует", details: "", backgroundColor: UIColor.systemGreen.withAlphaComponent(0.5))
         }
 
         return cell
