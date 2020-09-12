@@ -96,6 +96,7 @@ extension ResultsVC: UITableViewDataSource {
         
         let baseTitle = "\(indexPath.row + 1). "
         if let neededMechanisms = request.results[paragraph] {
+            //TODO: add func to join array with commas and call twice
             let details = neededMechanisms.reduce("Добавьте что-то из:", { $0 + " " + $1.shortName + "," }).dropLast()
             cell.set(title: baseTitle + "Не соответствует", details: String(details), backgroundColor: UIColor.systemRed.withAlphaComponent(0.75))
         } else {
