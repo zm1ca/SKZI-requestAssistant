@@ -7,9 +7,10 @@
 
 import UIKit
 
-//TODO: Add Favorites section at top
+
 class SavedRequestsVC: UIViewController {
     
+    let emptyStateLabel     = TRTitleLabel()
     let tableView           = UITableView(frame: CGRect.zero, style: .insetGrouped)
     var requests: [Request] = []
     
@@ -18,6 +19,7 @@ class SavedRequestsVC: UIViewController {
         super.viewDidLoad()
         configureVC()
         configureTableView()
+        configureEmptyStateLabel()
     }
     
     
@@ -39,17 +41,47 @@ class SavedRequestsVC: UIViewController {
     
     
     @objc func removeAllButtonTapped() {
-        //TODO: Show precaution: Are you sure?
+        let alertController = UIAlertController(title: "Удалить все заявки?", message: nil, preferredStyle: .alert)
         
-        for request in requests {
-            PersistenceManager.updateWith(request: request, actionType: .remove) { error in
-                guard let error = error else { return }
-                print(error)
+        let approveAction = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
+            guard let self = self else { return }
+            
+            for request in self.requests {
+                PersistenceManager.updateWith(request: request, actionType: .remove) { error in
+                    guard let error = error else { return }
+                    print(error)
+                }
             }
+            
+            self.requests.removeAll()
+            self.tableView.reloadDataOnMainThread()
+            self.updateHasNothingSavedStatus()
         }
+        alertController.addAction(approveAction)
         
-        requests.removeAll()
-        self.tableView.reloadDataOnMainThread()
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    
+    func updateHasNothingSavedStatus() {
+        guard let trashButton = self.navigationItem.rightBarButtonItem else {
+            return
+        }
+
+        if self.requests.isEmpty {
+            trashButton.isEnabled = false
+            trashButton.tintColor = UIColor.clear
+            self.emptyStateLabel.isHidden = false
+            self.tableView.isHidden = true
+        } else {
+            trashButton.isEnabled = true
+            trashButton.tintColor = UIColor.systemBlue
+            self.emptyStateLabel.isHidden = true
+            self.tableView.isHidden = false
+        }
     }
     
     
@@ -65,6 +97,20 @@ class SavedRequestsVC: UIViewController {
     }
     
     
+    func configureEmptyStateLabel() {
+        view.addSubview(emptyStateLabel)
+        emptyStateLabel.text = "Здесь будут отображён список всех сохраненных заявок."
+        emptyStateLabel.numberOfLines = 2
+        
+        NSLayoutConstraint.activate([
+            emptyStateLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            emptyStateLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            emptyStateLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            emptyStateLabel.heightAnchor.constraint(equalToConstant: 40)
+        ])
+    }
+    
+    
     func getRequests() {
         PersistenceManager.retrieveRequests { [weak self] result in
             guard let self = self else { return }
@@ -74,6 +120,7 @@ class SavedRequestsVC: UIViewController {
                 self.requests = Requests.sorted{ $0.dateModified > $1.dateModified }
                 DispatchQueue.main.async {
                     self.tableView.reloadDataOnMainThread()
+                    self.updateHasNothingSavedStatus()
                     self.view.bringSubviewToFront(self.tableView)
                 }
             case .failure(let error):
@@ -106,6 +153,7 @@ extension SavedRequestsVC: UITableViewDataSource, UITableViewDelegate {
             guard let error = error else {
                 self.requests.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .left)
+                self.updateHasNothingSavedStatus()
                 return
             }
             
