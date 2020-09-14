@@ -41,7 +41,7 @@ class SavedRequestsVC: UIViewController {
                 self.updateHasNothingSavedStatus()
                 
             case .failure(let error):
-                print(error.rawValue)
+                self.presentAlertOnMainThread(with: error.rawValue)
             }
         }
     }
@@ -56,7 +56,7 @@ class SavedRequestsVC: UIViewController {
             for request in self.requests {
                 PersistenceManager.updateWith(request: request, actionType: .remove) { error in
                     guard let error = error else { return }
-                    print(error)
+                    self.presentAlertOnMainThread(with: error.rawValue)
                 }
             }
             
@@ -147,7 +147,9 @@ extension SavedRequestsVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else { return }
         
-        PersistenceManager.updateWith(request: requests[indexPath.row], actionType: .remove) { error in
+        PersistenceManager.updateWith(request: requests[indexPath.row], actionType: .remove) { [weak self] error in
+            guard let self = self else { return }
+            
             guard let error = error else {
                 self.requests.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .left)
@@ -155,7 +157,7 @@ extension SavedRequestsVC: UITableViewDataSource, UITableViewDelegate {
                 return
             }
             
-            print(error.rawValue)
+            self.presentAlertOnMainThread(with: error.rawValue)
         }
     }
     

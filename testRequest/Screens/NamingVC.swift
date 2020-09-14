@@ -17,7 +17,7 @@ class NamingVC: UIViewController {
     
     var request: Request!
     
-    let containerView             = TRAlertContainerView()
+    let containerView             = TRNamingContainer()
     let titleLabel                = TRTitleLabel(textAlignment: .center, fontSize: 20)
     let productNameTextField      = TRTextField()
     let organizationNameTextField = TRTextField()

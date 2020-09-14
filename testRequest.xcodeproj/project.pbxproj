@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		401BCA50250F5D9E009A45DF /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401BCA4F250F5D9E009A45DF /* UIViewController+Ext.swift */; };
 		402DF2192508BEEC00799D47 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402DF2182508BEEC00799D47 /* Request.swift */; };
 		402DF21C2508C39300799D47 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402DF21B2508C39300799D47 /* PersistenceManager.swift */; };
 		402DF21F2508C56A00799D47 /* TRError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402DF21E2508C56A00799D47 /* TRError.swift */; };
 		402DF2212508CCE900799D47 /* TRRequestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402DF2202508CCE900799D47 /* TRRequestCell.swift */; };
-		402DF2242508D6C300799D47 /* TRAlertContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402DF2232508D6C300799D47 /* TRAlertContainerView.swift */; };
+		402DF2242508D6C300799D47 /* TRNamingContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402DF2232508D6C300799D47 /* TRNamingContainer.swift */; };
 		402DF22C2508D95A00799D47 /* TRTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402DF22B2508D95A00799D47 /* TRTitleLabel.swift */; };
 		402DF22E2508D96800799D47 /* TRBodyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402DF22D2508D96800799D47 /* TRBodyLabel.swift */; };
 		402DF2312508D9A100799D47 /* TRButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402DF2302508D9A100799D47 /* TRButton.swift */; };
@@ -44,11 +45,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		401BCA4F250F5D9E009A45DF /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
 		402DF2182508BEEC00799D47 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		402DF21B2508C39300799D47 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		402DF21E2508C56A00799D47 /* TRError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TRError.swift; sourceTree = "<group>"; };
 		402DF2202508CCE900799D47 /* TRRequestCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TRRequestCell.swift; sourceTree = "<group>"; };
-		402DF2232508D6C300799D47 /* TRAlertContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TRAlertContainerView.swift; sourceTree = "<group>"; };
+		402DF2232508D6C300799D47 /* TRNamingContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TRNamingContainer.swift; sourceTree = "<group>"; };
 		402DF22B2508D95A00799D47 /* TRTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TRTitleLabel.swift; sourceTree = "<group>"; };
 		402DF22D2508D96800799D47 /* TRBodyLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TRBodyLabel.swift; sourceTree = "<group>"; };
 		402DF2302508D9A100799D47 /* TRButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TRButton.swift; sourceTree = "<group>"; };
@@ -105,7 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				40A1EB7F250BB166002E6F06 /* SuccessCheck.swift */,
-				402DF2232508D6C300799D47 /* TRAlertContainerView.swift */,
+				402DF2232508D6C300799D47 /* TRNamingContainer.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -209,6 +211,7 @@
 			children = (
 				40C3DC172500DBCB008E04EC /* UIView+Ext.swift */,
 				40911C8A250219A4009A1A14 /* UITableView+Ext.swift */,
+				401BCA4F250F5D9E009A45DF /* UIViewController+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -368,6 +371,7 @@
 				40C3DC21250122C2008E04EC /* ResultsVC.swift in Sources */,
 				406A269224F3FFE80040C599 /* 19.swift in Sources */,
 				407D4D83250B551D00CB1EA8 /* TRTextField.swift in Sources */,
+				401BCA50250F5D9E009A45DF /* UIViewController+Ext.swift in Sources */,
 				40911C8B250219A5009A1A14 /* UITableView+Ext.swift in Sources */,
 				402DF21C2508C39300799D47 /* PersistenceManager.swift in Sources */,
 				402DF22E2508D96800799D47 /* TRBodyLabel.swift in Sources */,
@@ -375,7 +379,7 @@
 				40FE8D8F24F3D9E70082CB19 /* AppDelegate.swift in Sources */,
 				402DF2212508CCE900799D47 /* TRRequestCell.swift in Sources */,
 				402DF2312508D9A100799D47 /* TRButton.swift in Sources */,
-				402DF2242508D6C300799D47 /* TRAlertContainerView.swift in Sources */,
+				402DF2242508D6C300799D47 /* TRNamingContainer.swift in Sources */,
 				406A269024F3FDED0040C599 /* 18.swift in Sources */,
 				406A268E24F3FCDF0040C599 /* 17.swift in Sources */,
 				40FE8D9124F3D9E70082CB19 /* SceneDelegate.swift in Sources */,

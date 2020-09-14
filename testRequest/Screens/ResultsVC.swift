@@ -89,15 +89,15 @@ extension ResultsVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TRParagraphCell.reuseID, for: indexPath) as! TRParagraphCell
-        
         let paragraph = Paragraph.getParagraph(for: indexPath)
-        
         let baseTitle = "\(indexPath.row + 1). "
+        
         if let neededMechanisms = request.results[paragraph] {
             let details = neededMechanisms.reduce("Добавьте что-то из:", { $0 + " " + $1.shortName + "," }).dropLast()
-            cell.set(title: baseTitle + "Не соответствует", details: String(details), backgroundColor: UIColor.systemRed.withAlphaComponent(0.5))
+            cell.set(title: baseTitle + "Не соответствует", details: String(details), backgroundColor: TRColors.failure)
+            
         } else {
-            cell.set(title: baseTitle + "Соответствует", details: "", backgroundColor: UIColor.systemGreen.withAlphaComponent(0.5))
+            cell.set(title: baseTitle + "Соответствует", details: nil, backgroundColor: TRColors.success)
         }
 
         return cell

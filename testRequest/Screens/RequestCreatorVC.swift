@@ -19,7 +19,7 @@ class RequestCreatorVC: UIViewController {
     
     @objc func infoButtonTapped() {
         guard let url = URLConstants.order77Table else {
-            print(TRAlertConstants.cantOpenWebsite)
+            presentAlertOnMainThread(with: TRAlertConstants.cantOpenWebsite)
             return
         }
         

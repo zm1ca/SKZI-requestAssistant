@@ -29,9 +29,9 @@ class TRParagraphCell: UITableViewCell {
     }
     
     
-    func set(title: String, details: String, backgroundColor: UIColor) {
+    func set(title: String, details: String?, backgroundColor: UIColor) {
         self.backgroundColor    = backgroundColor
         textLabel?.text         = title
-        detailTextLabel?.text   = details
+        detailTextLabel?.text   = details ?? ""
     }
 }
