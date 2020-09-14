@@ -35,10 +35,6 @@ func test18_1(for request: Set<Mechanism>) ->  Set<Mechanism>? {
         return [.beltKwp]
     }
     
-    /*guard request.contains(.csr) else {
-        return [.csr]
-    }*/
-    
     return nil
 }
 

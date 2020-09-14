@@ -247,13 +247,13 @@ extension MechanismPickerVC: UITableViewDelegate {
             
         } else {
             guard editingStyle == .insert else { return }
-            let chosenMechanismName = filteredLeftMechanisms[indexPath.row].shortName
-        
-            filteredLeftMechanisms = filteredLeftMechanisms.filter { $0.shortName != chosenMechanismName }
-            leftMechanisms = leftMechanisms.filter { $0.shortName != chosenMechanismName }
-            chosenMechanisms.append(getMechanism(for: chosenMechanismName)!)
+            
+            let chosenMechanism = filteredLeftMechanisms.remove(at: indexPath.row)
+            chosenMechanisms.append(chosenMechanism)
+            leftMechanisms = leftMechanisms.filter { $0.shortName != chosenMechanism.shortName }
             
             tableView.deleteRows(at: [indexPath], with: .right)
+            //TODO: dismiss search if filtered.isEmpty
         }
         
         updateButtonsVisibility()

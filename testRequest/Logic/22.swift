@@ -53,8 +53,12 @@ func test22_3(for request: Set<Mechanism>) ->  Set<Mechanism>? {
         return [.brng]
     }
     
-    guard request.contains(.bignGenkeypair) && request.contains(.bignGenk) else {
-        return [.bignGenkeypair, .bignGenk]
+    guard request.contains(.bignGenkeypair) else {
+        return [.bignGenkeypair]
+    }
+    
+    guard request.contains(.bignGenk) else {
+        return [.bignGenk]
     }
     
     guard request.contains(.hardware) || request.contains(.software) else {

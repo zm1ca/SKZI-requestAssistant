@@ -108,7 +108,7 @@ extension ResultsVC: UITableViewDataSource {
 extension ResultsVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         let paragraph = Paragraph.getParagraph(for: indexPath)
-        print(paragraph.rawValue)
+        presentAlertOnMainThread(with: "\(TRAlertConstants.paragraphInfo) \(paragraph.shortName)", and: paragraph.rawValue)
     }
 }
 

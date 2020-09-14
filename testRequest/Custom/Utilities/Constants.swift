@@ -21,6 +21,8 @@ struct ResultsTableViewConstants {
 
 
 struct TRAlertConstants {
+    static let somethingWrong       = "Что-то пошло не так ☹️"
+    static let paragraphInfo        = "Примечание к пункту"
     static let cantOpenWebsite      = "Не удаётся открыть веб-сайт. Возможно, ссылка устарела."
     static let paragraphError       = "Ошибка при распознавании пунктов приказа."
 }

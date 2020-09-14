@@ -41,7 +41,7 @@ class SavedRequestsVC: UIViewController {
                 self.updateHasNothingSavedStatus()
                 
             case .failure(let error):
-                self.presentAlertOnMainThread(with: error.rawValue)
+                self.presentAlertOnMainThread(with: TRAlertConstants.somethingWrong, and: error.rawValue)
             }
         }
     }
@@ -56,7 +56,7 @@ class SavedRequestsVC: UIViewController {
             for request in self.requests {
                 PersistenceManager.updateWith(request: request, actionType: .remove) { error in
                     guard let error = error else { return }
-                    self.presentAlertOnMainThread(with: error.rawValue)
+                    self.presentAlertOnMainThread(with: TRAlertConstants.somethingWrong, and: error.rawValue)
                 }
             }
             
@@ -116,8 +116,8 @@ class SavedRequestsVC: UIViewController {
     
     func configureEmptyStateLabel() {
         view.addSubview(emptyStateLabel)
-        emptyStateLabel.text = "Здесь будут отображён список всех сохранённых заявок."
-        emptyStateLabel.numberOfLines = 2
+        emptyStateLabel.text = "Здесь будет отображён список сохранённых заявок."
+        emptyStateLabel.numberOfLines = 0
         
         NSLayoutConstraint.activate([
             emptyStateLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
@@ -157,7 +157,7 @@ extension SavedRequestsVC: UITableViewDataSource, UITableViewDelegate {
                 return
             }
             
-            self.presentAlertOnMainThread(with: error.rawValue)
+            self.presentAlertOnMainThread(with: TRAlertConstants.somethingWrong, and: error.rawValue)
         }
     }
     

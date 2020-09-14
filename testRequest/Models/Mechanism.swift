@@ -17,11 +17,11 @@ enum Mechanism: String, CaseIterable, Codable {
     case beltMac        = "СТБ 34.101.31-2011 (п. 6.6)"
     case beltDwp        = "СТБ 34.101.31-2011 (п. 6.7)"
     case beltHash       = "СТБ 34.101.31-2011 (п. 6.9)"
-    case beltKeyrep     = "СТБ 34.101.31-2011 (п. 6.9 или 7.2)" //FIX: пересечение с .beltHash
     case bashHash       = "СТБ 34.101.77-2016 (1=128 или 1=192 или 1=256)"
+    case beltKeyrep     = "СТБ 34.101.31-2011 (п. 6.9 или 7.2)" //TODO: исправить пересечение с .beltHash
+    case bignKeyt       = "СТБ 34.101.45-2013 (п. 7.2)"
     case bignGenkeypair = "СТБ 34.101.45-2013 (п. 6.2)"
     case bignGenk       = "СТБ 34.101.45-2013 (п. 6.3)"
-    case bignKeyt       = "СТБ 34.101.45-2013 (п. 7.2)"
     case brngHmac       = "СТБ 34.101.47-2017 (п. 6.1)"
     case beltKwp        = "СТБ 34.101.45-2013 (приложение Е)"
     case bakeDh         = "СТБ 34.101.66-2014 (приложение А)"
