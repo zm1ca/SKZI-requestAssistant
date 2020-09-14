@@ -1,6 +1,6 @@
 //
 //  ResultsVC.swift
-//  testRequest
+//  SKZI-requestAssistant
 //
 //  Created by Źmicier Fiedčanka on 3.09.20.
 //
@@ -33,7 +33,31 @@ class ResultsVC: UIViewController {
     }
     
     
-    @objc func presentTRNamingVCOnMainThread() {
+    @objc func saveBarButtonTapped() {
+        if !request.unusedMechanisms.isEmpty {
+            let alertController = UIAlertController(title: "Выявлена избыточность!", message: "\(request.unusedMechanisms.reduce("", { $0 + " " + $1.shortName + "," }).dropLast())", preferredStyle: .alert)
+            
+            let cancelAction = UIAlertAction(title: "Назад", style: .cancel) { [weak self] _ in
+                guard let self = self else { return }
+                self.navigationController?.popViewController(animated: true)
+            }
+            
+            let forwardAction = UIAlertAction(title: "Игнорировать", style: .default) {[weak self] _ in
+                guard let self = self else { return }
+                alertController.dismiss(animated: true, completion: { self.presentTRNamingVCOnMainThread() })
+            }
+            
+            alertController.addAction(cancelAction)
+            alertController.addAction(forwardAction)
+            present(alertController, animated: true)
+            
+        } else {
+            presentTRNamingVCOnMainThread()
+        }
+    }
+    
+    
+    func presentTRNamingVCOnMainThread() {
         DispatchQueue.main.async {
             let namingVC = NamingVC(productName: self.request.productName, organizationName: self.request.organizationName, request: self.request)
             namingVC.delegate = self
@@ -50,7 +74,7 @@ class ResultsVC: UIViewController {
         title = "Результаты"
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        let saveBarButttonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(presentTRNamingVCOnMainThread))
+        let saveBarButttonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(saveBarButtonTapped))
         navigationItem.rightBarButtonItem = saveBarButttonItem
     }
     
@@ -93,7 +117,7 @@ extension ResultsVC: UITableViewDataSource {
         let baseTitle = "\(indexPath.row + 1). "
         
         if let neededMechanisms = request.results[paragraph] {
-            let details = neededMechanisms.reduce("Добавьте что-то из:", { $0 + " " + $1.shortName + "," }).dropLast()
+            let details = neededMechanisms!.reduce("Добавьте что-то из:", { $0 + " " + $1.shortName + "," }).dropLast()
             cell.set(title: baseTitle + "Не соответствует", details: String(details), backgroundColor: TRColors.failure)
             
         } else {
@@ -108,7 +132,7 @@ extension ResultsVC: UITableViewDataSource {
 extension ResultsVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         let paragraph = Paragraph.getParagraph(for: indexPath)
-        presentAlertOnMainThread(with: "\(TRAlertConstants.paragraphInfo) \(paragraph.shortName)", and: paragraph.rawValue)
+        presentAlertOnMainThread(with: "\(TRAlertConstants.paragraphInfo) \(paragraph.shortName)", and: paragraph.info.details)
     }
 }
 

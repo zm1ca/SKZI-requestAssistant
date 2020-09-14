@@ -1,6 +1,6 @@
 //
 //  TRBodyLabel.swift
-//  testRequest
+//  SKZI-requestAssistant
 //
 //  Created by Źmicier Fiedčanka on 9.09.20.
 //

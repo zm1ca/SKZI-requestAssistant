@@ -1,6 +1,6 @@
 //
-//  21.swift
-//  testRequest
+//  TestsForP21.swift
+//  SKZI-requestAssistant
 //
 //  Created by Źmicier Fiedčanka on 24.08.20.
 //

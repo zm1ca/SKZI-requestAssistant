@@ -1,6 +1,6 @@
 //
 //  Mechanism.swift
-//  testRequest
+//  SKZI-requestAssistant
 //
 //  Created by Źmicier Fiedčanka on 24.08.20.
 //

@@ -1,6 +1,6 @@
 //
 //  UITableView+Ext.swift
-//  testRequest
+//  SKZI-requestAssistant
 //
 //  Created by Źmicier Fiedčanka on 4.09.20.
 //

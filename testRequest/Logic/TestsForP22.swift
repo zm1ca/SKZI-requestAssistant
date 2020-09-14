@@ -1,6 +1,6 @@
 //
-//  22.swift
-//  testRequest
+//  TestsForP22.swift
+//  SKZI-requestAssistant
 //
 //  Created by Źmicier Fiedčanka on 24.08.20.
 //

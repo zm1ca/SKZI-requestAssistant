@@ -1,6 +1,6 @@
 //
-//  18.swift
-//  testRequest
+//  TestsForP18.swift
+//  SKZI-requestAssistant
 //
 //  Created by Źmicier Fiedčanka on 24.08.20.
 //

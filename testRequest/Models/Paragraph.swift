@@ -1,27 +1,27 @@
 //
 //  Paragraph.swift
-//  testRequest
+//  SKZI-requestAssistant
 //
 //  Created by Źmicier Fiedčanka on 9.09.20.
 //
 
 import Foundation
 
-enum Paragraph: String, CaseIterable, Codable {
-    case p16_1 = "Для СКЗИ применяющих предварительное распределение ключей."
-    case p16_2 = "Для СКЗИ в которых доверие к ключам шифрования устанавливается посредством ЭЦП."
-    case p17_1 = "Для линейных шифраторов с предварительным распределением секретов."
-    case p17_2 = "Для линейных шифраторов с протоколом Диффи-Хеллмана усиленным ЭЦП."
-    case p17_3 = "Для линейных шифраторов реализующих протокол TLS."
-    case p17_4 = "Для линейных шифраторов применяющих альтернативное усиление протокола Диффи-Хеллмана."
-    case p18_1 = "Для программных средств выработки ЭЦП."
-    case p18_2 = "Для аппаратных средств выработки ЭЦП."
-    case p19_1 = "Для защищённого аппаратного хранилища личного ключа."
-    case p20_1 = "Для СКЗИ осуществляющих проверку ЭЦП."
-    case p21_1 = "Для СКЗИ осуществляющих выработку личных и открытых ключей ЭЦП."
-    case p22_1 = "Для контроля целостности с помощью бесключевых хэш-функций."
-    case p22_2 = "Для контроля целостности с помощью ключевых хэш-функций"
-    case p22_3 = "Для контроля целостности с помощью ЭЦП."
+enum Paragraph: CaseIterable {
+    case p16_1
+    case p16_2
+    case p17_1
+    case p17_2
+    case p17_3
+    case p17_4
+    case p18_1
+    case p18_2
+    case p19_1
+    case p20_1
+    case p21_1
+    case p22_1
+    case p22_2
+    case p22_3
         
     var shortName: String {
         var latin = String(describing: self)
@@ -30,41 +30,41 @@ enum Paragraph: String, CaseIterable, Codable {
         return latin
     }
     
-    func getNeededMechanisms(for mechanisms: Set<Mechanism>) -> Set<Mechanism>? {
-        guard let testFunction = self.getTestFunction else { fatalError("Error getting test function") }
+    func neededMechanisms(for mechanisms: Set<Mechanism>) -> Set<Mechanism>? {
+        guard let testFunction = self.info.testFunc else { fatalError("Error getting test function") }
         return testFunction(mechanisms)
     }
     
-    var getTestFunction: ((Set<Mechanism>) -> Set<Mechanism>?)? {
+    var info: ParagraphInfo {
         switch self {
         case .p16_1:
-            return test16_1
+            return ParagraphInfo(testFunc: test16_1, details: ParagraphDetails.p16_1, involvedMechanisms: [.beltModes, .beltMac, .brngHmac, .beltDwp, .brng, .software, .hardware, .beltKeyrep, .beltHash, .bignKeyt])
         case .p16_2:
-            return test16_2
+            return ParagraphInfo(testFunc: test16_2, details: ParagraphDetails.p16_2, involvedMechanisms: [.beltModes, .beltMac, .brngHmac, .beltDwp, .brng, .software, .hardware, .bakeBsts, .bakeBmqv, .bignKeyt, .x509, .x509Crl, .ocsp])
         case .p17_1:
-            return test17_1
+            return ParagraphInfo(testFunc: test17_1, details: ParagraphDetails.p17_1, involvedMechanisms: [.beltModes, .beltMac, .brngHmac, .beltDwp, .brng, .software, .hardware, .bakeBpace, .dhePskBign, .beltKeyrep, .beltHash, .bignKeyt])
         case .p17_2:
-            return test17_2
+            return ParagraphInfo(testFunc: test17_2, details: ParagraphDetails.p17_2, involvedMechanisms: [.beltModes, .beltMac, .brngHmac, .beltDwp, .brng, .software, .hardware, .bakeBsts, .bakeBmqv, .bakeDh, .dheBign, .dhtPskBign, .dhtPskBign, .bignKeyt, .x509, .x509Crl, .ocsp])
         case .p17_3:
-            return test17_3
+            return ParagraphInfo(testFunc: test17_3, details: ParagraphDetails.p17_3, involvedMechanisms: [.beltModes, .beltMac, .brngHmac, .beltDwp, .brng, .software, .hardware, .btls])
         case .p17_4:
-            return test17_4
+            return ParagraphInfo(testFunc: test17_4, details: ParagraphDetails.p17_4, involvedMechanisms: [.beltModes, .beltMac, .brngHmac, .beltDwp, .brng, .software, .hardware, .bakeDh, .beltHash, .beltKeyrep, .bignCurves ])
         case .p18_1:
-            return test18_1
+            return ParagraphInfo(testFunc: test18_1, details: ParagraphDetails.p18_1, involvedMechanisms: [.bignSign, .beltHash, .bashHash, .brng, .bignGenk, .software, .bpkiContainer, .beltKwp])
         case .p18_2:
-            return test18_2
+            return ParagraphInfo(testFunc: test18_2, details: ParagraphDetails.p18_2, involvedMechanisms: [.bignSign, .beltHash, .bashHash, .brng, .bignGenk, .hardware])
         case .p19_1:
-            return test19_1
+            return ParagraphInfo(testFunc: test19_1, details: ParagraphDetails.p19_1, involvedMechanisms: [.bignSign, .beltHash, .bashHash, .brng, .hardware, .bakeBpace, .btokBpace, .cryptoki, .bignGenkeypair, .bignGenk, .bignKeyt, .csr, .x509])
         case .p20_1:
-            return test20_1
+            return ParagraphInfo(testFunc: test20_1, details: ParagraphDetails.p20_1, involvedMechanisms: [.bignSign, .beltHash, .bashHash, .hardware, .software, .x509, .x509Crl, .ocsp])
         case .p21_1:
-            return test21_1
+            return ParagraphInfo(testFunc: test21_1, details: ParagraphDetails.p21_1, involvedMechanisms: [.brng, .bignSign, .hardware, .software])
         case .p22_1:
-            return test22_1
+            return ParagraphInfo(testFunc: test22_1, details: ParagraphDetails.p22_1, involvedMechanisms: [.beltHash, .bashHash])
         case .p22_2:
-            return test22_2
+            return ParagraphInfo(testFunc: test22_2, details: ParagraphDetails.p22_2, involvedMechanisms: [.beltMac, .brngHmac, .brng, .beltKeyrep, .beltHash, .hardware, .software])
         case .p22_3:
-            return test22_3
+            return ParagraphInfo(testFunc: test22_3, details: ParagraphDetails.p22_2, involvedMechanisms: [.bignSign, .beltHash, .bashHash, .brng, .hardware, .software, .bignGenk, .bignGenkeypair])
         }
     }
     
@@ -77,4 +77,11 @@ enum Paragraph: String, CaseIterable, Codable {
         
         return paragraph
     }
+}
+
+
+struct ParagraphInfo {
+    let testFunc: ((Set<Mechanism>) -> Set<Mechanism>?)?
+    let details: String
+    let involvedMechanisms: [Mechanism]
 }

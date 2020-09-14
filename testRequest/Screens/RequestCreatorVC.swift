@@ -1,6 +1,6 @@
 //
 //  RequestCreatorVC.swift
-//  testRequest
+//  SKZI-requestAssistant
 //
 //  Created by Źmicier Fiedčanka on 3.09.20.
 //

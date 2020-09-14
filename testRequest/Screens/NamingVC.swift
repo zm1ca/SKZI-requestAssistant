@@ -1,6 +1,6 @@
 //
 //  NamingVC.swift
-//  testRequest
+//  SKZI-requestAssistant
 //
 //  Created by Źmicier Fiedčanka on 10.09.20.
 //
