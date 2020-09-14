@@ -9,12 +9,12 @@ import UIKit
 
 class MechanismPickerVC: UIViewController {
 
-    let tableView               = UITableView(frame: CGRect.zero, style: .insetGrouped)
-    let actionButton            = UIButton()
+    let tableView       = UITableView(frame: CGRect.zero, style: .insetGrouped)
+    let actionButton    = UIButton()
     
-    var request: Request?
-    var chosenMechanisms: [Mechanism]!
-    var leftMechanisms:  [Mechanism]!
+    var request:            Request?
+    var chosenMechanisms:   [Mechanism]!
+    var leftMechanisms:     [Mechanism]!
     
     var filteredLeftMechanisms  = [Mechanism]()
     var isSearching             = false
@@ -41,17 +41,12 @@ class MechanismPickerVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
         
-        navigationController?.navigationBar.prefersLargeTitles = true
-        title = "Проверка"
-        
-        let infoButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(resetBarButtonTapped))
-        navigationItem.rightBarButtonItem = infoButton
-        
-        configureSearchController()
-        configureTableView()
+        configureVC()
         configureActionButton()
+        configureTableView()
+        configureSearchController()
+        
         layoutUI()
     }
     
@@ -107,13 +102,13 @@ class MechanismPickerVC: UIViewController {
             
             if self.chosenMechanisms.isEmpty {
                 self.actionButton.alpha = 0
-                resetButton.isEnabled = false
-                resetButton.tintColor = UIColor.clear
+                resetButton.isEnabled   = false
+                resetButton.tintColor   = UIColor.clear
                 
             } else {
                 self.actionButton.alpha = 1
-                resetButton.isEnabled = true
-                resetButton.tintColor = UIColor.systemBlue
+                resetButton.isEnabled   = true
+                resetButton.tintColor   = UIColor.systemBlue
             }
         }
     }
@@ -124,9 +119,19 @@ class MechanismPickerVC: UIViewController {
             chosenMechanisms    = Array(request.mechanisms)
             leftMechanisms      = Mechanism.allCases.filter{ !self.chosenMechanisms.contains($0) }
         } else {
-            chosenMechanisms = []
-            leftMechanisms = Mechanism.allCases
+            chosenMechanisms    = []
+            leftMechanisms      = Mechanism.allCases
         }
+    }
+    
+    
+    func configureVC() {
+        view.backgroundColor = .systemBackground
+        title = "Проверка"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
+        let infoButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(resetBarButtonTapped))
+        navigationItem.rightBarButtonItem = infoButton
     }
 
     
@@ -220,7 +225,6 @@ extension MechanismPickerVC: UITableViewDataSource {
         
         let mechanism = mechanisms[indexPath.row]
         cell.set(for: mechanism)
-   
         return cell
     }
 }
@@ -234,11 +238,13 @@ extension MechanismPickerVC: UITableViewDelegate {
                 chosenMechanisms.append(leftMechanisms[indexPath.row])
                 leftMechanisms.remove(at: indexPath.row)
                 tableView.moveRow(at: indexPath, to: IndexPath(row: chosenMechanisms.count - 1, section: 0))
+                
             } else if editingStyle == .delete {
                 leftMechanisms.insert(chosenMechanisms[indexPath.row], at: leftMechanisms.count)
                 chosenMechanisms.remove(at: indexPath.row)
                 tableView.moveRow(at: indexPath, to: IndexPath(row: leftMechanisms.count - 1, section: 1))
             }
+            
         } else {
             guard editingStyle == .insert else { return }
             let chosenMechanismName = filteredLeftMechanisms[indexPath.row].shortName
@@ -255,10 +261,10 @@ extension MechanismPickerVC: UITableViewDelegate {
     
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        if isSearching {
-            return .insert
+        if indexPath.section == 0 && !isSearching {
+            return .delete
         } else {
-            return indexPath.section == 0 ? .delete : .insert
+            return .insert
         }
     }
 }

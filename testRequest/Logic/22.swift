@@ -27,8 +27,8 @@ func test22_2(for request: Set<Mechanism>) ->  Set<Mechanism>? {
         return [.brng]
     }
     
-    guard request.contains(.beltKeyrep) else {
-        return [.beltKeyrep]
+    guard request.contains(.beltKeyrep) || request.contains(.beltHash) else {
+        return [.beltKeyrep, .beltHash]
     }
     
     guard request.contains(.hardware) || request.contains(.software) else {

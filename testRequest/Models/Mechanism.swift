@@ -17,8 +17,8 @@ enum Mechanism: String, CaseIterable, Codable {
     case beltMac        = "СТБ 34.101.31-2011 (п. 6.6)"
     case beltDwp        = "СТБ 34.101.31-2011 (п. 6.7)"
     case beltHash       = "СТБ 34.101.31-2011 (п. 6.9)"
+    case beltKeyrep     = "СТБ 34.101.31-2011 (п. 6.9 или 7.2)" //FIX: пересечение с .beltHash
     case bashHash       = "СТБ 34.101.77-2016 (1=128 или 1=192 или 1=256)"
-    case beltKeyrep     = "СТБ 34.101.31-2011 (п. 6.9 или 7.2)"
     case bignGenkeypair = "СТБ 34.101.45-2013 (п. 6.2)"
     case bignGenk       = "СТБ 34.101.45-2013 (п. 6.3)"
     case bignKeyt       = "СТБ 34.101.45-2013 (п. 7.2)"

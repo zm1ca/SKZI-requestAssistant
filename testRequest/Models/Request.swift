@@ -13,8 +13,7 @@ struct Request: Codable, Hashable {
     var productName:        String?
     var organizationName:   String?
     var mechanisms:         Set<Mechanism>
-    
-    var dateModified: Date!
+    var dateModified:       Date!
     
     
     init(named productName: String?, by organization: String?, with mechanisms: Set<Mechanism>) {

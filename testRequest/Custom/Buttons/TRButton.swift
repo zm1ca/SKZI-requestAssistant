@@ -27,14 +27,9 @@ class TRButton: UIButton {
 
     
     private func configure() {
+        translatesAutoresizingMaskIntoConstraints = false
+        
         layer.cornerRadius      = 10
         titleLabel?.font        = UIFont.preferredFont(forTextStyle: .headline)
-        setTitleColor(.label, for: .normal)
-        translatesAutoresizingMaskIntoConstraints = false
-    }
-    
-    
-    func set(backgroundColor: UIColor) {
-        self.backgroundColor = backgroundColor
     }
 }

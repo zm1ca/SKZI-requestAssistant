@@ -10,7 +10,7 @@ import UIKit
 class TRParagraphCell: UITableViewCell {
     
     static let reuseID  = "ParagraphCell"
-    var testFunc: (([Mechanism]) -> [Mechanism]?)?
+    
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
@@ -19,8 +19,8 @@ class TRParagraphCell: UITableViewCell {
         detailTextLabel?.textColor      = .secondaryLabel
         detailTextLabel?.numberOfLines  = 2
         
-        accessoryType   = .detailButton
-        tintColor       = .label
+        accessoryType                   = .detailButton
+        tintColor                       = .label
     }
     
     
@@ -30,8 +30,8 @@ class TRParagraphCell: UITableViewCell {
     
     
     func set(title: String, details: String, backgroundColor: UIColor) {
+        self.backgroundColor    = backgroundColor
         textLabel?.text         = title
         detailTextLabel?.text   = details
-        self.backgroundColor    = backgroundColor
     }
 }

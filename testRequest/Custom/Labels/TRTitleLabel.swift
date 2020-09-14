@@ -22,18 +22,18 @@ class TRTitleLabel: UILabel {
     }
     
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
     private func configure() {
+        translatesAutoresizingMaskIntoConstraints = false
+        
         textColor                   = .label
         adjustsFontSizeToFitWidth   = true
         minimumScaleFactor          = 0.9
         lineBreakMode               = .byTruncatingTail
-        
-        translatesAutoresizingMaskIntoConstraints = false
-    }
-    
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
 

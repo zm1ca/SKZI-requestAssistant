@@ -27,8 +27,8 @@ func test17_1(for request: Set<Mechanism>) ->  Set<Mechanism>? {
     }
     
     //Требования к криптографическим протоколам
-    guard request.contains(.bakeBpace) || request.contains(.dhePskBign) || request.contains(.beltKeyrep) || request.contains(.bignKeyt) else {
-        return [.bakeBpace, .dhePskBign, .beltKeyrep, .bignKeyt]
+    guard request.contains(.bakeBpace) || request.contains(.dhePskBign) || request.contains(.beltKeyrep) || request.contains(.beltHash) || request.contains(.bignKeyt) else {
+        return [.bakeBpace, .dhePskBign, .beltKeyrep, .beltHash, .bignKeyt]
     }
     
     return nil

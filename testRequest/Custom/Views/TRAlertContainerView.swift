@@ -22,10 +22,11 @@ class TRAlertContainerView: UIView {
     
     
     private func configure() {
+        translatesAutoresizingMaskIntoConstraints = false
+        
         backgroundColor       = .tertiarySystemBackground
         layer.cornerRadius    = 10
         layer.borderWidth     = 2
         layer.borderColor     = UIColor.secondaryLabel.cgColor
-        translatesAutoresizingMaskIntoConstraints = false
     }
 }

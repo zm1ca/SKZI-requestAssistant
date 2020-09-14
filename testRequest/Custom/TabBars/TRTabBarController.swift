@@ -13,31 +13,28 @@ class TRTabBarController: UITabBarController {
         super.viewDidLoad()
         self.viewControllers = [createMechanismPickerNC(), createRequestCreatorNC(), createSavedRequestsNC()]
     }
-    
-    //TODO: Make good TabBarItems
-    //MARK: titles don't work fine here
-    
+
     
     func createMechanismPickerNC() -> UINavigationController {
-        let testRequestVC = MechanismPickerVC()
-        testRequestVC.tabBarItem = UITabBarItem(title: "Проверить", image: .strokedCheckmark, tag: 0)
+        let mechanismPickerVC = MechanismPickerVC()
+        mechanismPickerVC.tabBarItem = UITabBarItem(title: "Проверить", image: UIImage(named: "check")!, tag: 0)
         
-        return UINavigationController(rootViewController: testRequestVC)
+        return UINavigationController(rootViewController: mechanismPickerVC)
     }
     
 
     func createRequestCreatorNC() -> UINavigationController {
-        let makeRequestVC = RequestCreatorVC()
-        makeRequestVC.tabBarItem = UITabBarItem(title: "Составление", image: .add, tag: 1)
+        let requestCreatorVC = RequestCreatorVC()
+        requestCreatorVC.tabBarItem = UITabBarItem(title: "Составление", image: UIImage(named: "create")!, tag: 1)
 
-        return UINavigationController(rootViewController: makeRequestVC)
+        return UINavigationController(rootViewController: requestCreatorVC)
     }
     
     
     func createSavedRequestsNC() -> UINavigationController {
-        let listVC = SavedRequestsVC()
-        listVC.tabBarItem = UITabBarItem(title: "Сохраненные", image: .actions, tag: 2)
+        let savedRequestsVC = SavedRequestsVC()
+        savedRequestsVC.tabBarItem = UITabBarItem(title: "Сохраненные", image: UIImage(named: "saved")!, tag: 2)
 
-        return UINavigationController(rootViewController: listVC)
+        return UINavigationController(rootViewController: savedRequestsVC)
     }
 }

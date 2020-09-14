@@ -12,27 +12,25 @@ enum PersistenceActionType {
 }
 
 enum PersistenceManager {
-    static private let defaults = UserDefaults.standard
     
+    static private let defaults = UserDefaults.standard
     enum Keys { static let requests = "requests" }
+    
     
     static func updateWith(request: Request, actionType: PersistenceActionType, completed: @escaping (TRError?) -> Void) {
         retrieveRequests { result in
             switch result {
-            
             case .success(var requests):
-
                 switch actionType {
                 case .add:
                     requests = requests.filter({ $0.productName != request.productName || $0.organizationName != request.organizationName })
-                    
                     requests.append(request)
                     
                 case .remove:
                     requests.removeAll { $0.hashValue == request.hashValue }
                 }
                 
-                 completed(save(requests: requests))
+                completed(save(requests: requests))
                 
             case .failure(let error):
                 completed(error)
@@ -49,9 +47,9 @@ enum PersistenceManager {
         
         do {
             let decoder = JSONDecoder()
-            
             let requests = try decoder.decode([Request].self, from: requestsData)
             completed(.success(requests))
+            
         } catch {
             completed(.failure(.unableToSave))
         }

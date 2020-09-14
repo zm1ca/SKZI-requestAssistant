@@ -9,5 +9,4 @@ import Foundation
 
 enum TRError: String, Error {
     case unableToSave = "Не удалось сохранить заявку."
-    case alreadySaved = "В точности такая заявка уже сохранена."
 }

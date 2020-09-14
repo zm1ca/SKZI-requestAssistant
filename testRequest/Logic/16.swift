@@ -27,8 +27,8 @@ func test16_1(for request: Set<Mechanism>) -> Set<Mechanism>? {
     }
     
     //Требования к криптографическим протоколам
-    guard request.contains(.beltKeyrep) || request.contains(.bignKeyt) else {
-        return [.beltKeyrep, .bignKeyt]
+    guard request.contains(.beltKeyrep) || request.contains(.beltHash) || request.contains(.bignKeyt) else {
+        return [.beltKeyrep, .beltHash, .bignKeyt]
     }
     
     return nil

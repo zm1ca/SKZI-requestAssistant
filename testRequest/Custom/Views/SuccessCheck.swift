@@ -24,21 +24,24 @@ class SuccessCheck: UIView {
     var strokeColor: UIColor!
     var tickWidth: CGFloat = 3
     
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
+    
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
+    
     override func updateConstraints() {
         if(shouldSetupConstraints) {
-            // AutoLayout constraints
             shouldSetupConstraints = false
         }
         super.updateConstraints()
     }
+    
     
     override func draw(_ rect: CGRect) {
         let path1 = UIBezierPath()
@@ -71,6 +74,7 @@ class SuccessCheck: UIView {
         }
     }
     
+    
     func initWithTime(withDuration timerValue: Double, bgCcolor: UIColor, colorOfStroke: UIColor, widthOfTick: CGFloat, completionHandler successCompletion: @escaping () -> Void) {
         if (timer != nil) {
             timer.invalidate()
@@ -88,6 +92,7 @@ class SuccessCheck: UIView {
         tickWidth = widthOfTick
         timer = Timer.scheduledTimer(timeInterval: timerValue, target: self, selector: #selector(updateView(_:)), userInfo: nil, repeats: true)
     }
+    
     
     @objc func updateView(_ timerObject: Timer) {
         if (movePoint.y < (frame.size.width * 32)/100) {
@@ -117,13 +122,14 @@ class SuccessCheck: UIView {
         }
     }
     
+    
     func updateSecondLine(withEnd second: CGPoint) {
         secondEndPoint = second
     }
     
+    
     func updatePoint(withMove move: CGPoint, withEnd end: CGPoint) {
         endPoint = end
     }
-    
 }
 

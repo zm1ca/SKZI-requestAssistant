@@ -27,12 +27,25 @@ class ResultsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureViewController()
+        
+        configureVС()
         configureTableView()
     }
     
     
-    func configureViewController() {
+    @objc func presentTRNamingVCOnMainThread() {
+        DispatchQueue.main.async {
+            let namingVC = NamingVC(productName: self.request.productName, organizationName: self.request.organizationName, request: self.request)
+            namingVC.delegate = self
+            namingVC.modalPresentationStyle  = .overFullScreen
+            namingVC.modalTransitionStyle    = .crossDissolve
+    
+            self.present(namingVC, animated: true)
+        }
+    }
+
+    
+    func configureVС() {
         view.backgroundColor = .secondarySystemBackground
         title = "Результаты"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -40,19 +53,6 @@ class ResultsVC: UIViewController {
         let saveBarButttonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(presentTRNamingVCOnMainThread))
         navigationItem.rightBarButtonItem = saveBarButttonItem
     }
-    
-    
-    @objc func presentTRNamingVCOnMainThread() {
-        DispatchQueue.main.async {
-            let alertVC = TRNamingVC(productName: self.request.productName, organizationName: self.request.organizationName, request: self.request)
-            alertVC.delegate = self
-            alertVC.modalPresentationStyle  = .overFullScreen
-            alertVC.modalTransitionStyle    = .crossDissolve
-    
-            self.present(alertVC, animated: true)
-        }
-    }
-
     
     
     func configureTableView(){
@@ -63,6 +63,8 @@ class ResultsVC: UIViewController {
         tableView.separatorStyle  = .singleLine
         
         tableView.dataSource      = self
+        tableView.delegate        = self
+        
         tableView.register(TRParagraphCell.self, forCellReuseIdentifier: TRParagraphCell.reuseID)
     }
 }
@@ -88,10 +90,7 @@ extension ResultsVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TRParagraphCell.reuseID, for: indexPath) as! TRParagraphCell
         
-        let shortNameForIndexPath = "\(indexPath.section + 16).\(indexPath.row + 1)"
-        guard let paragraph = Paragraph.allCases.filter({ $0.shortName == shortNameForIndexPath }).first else {
-            fatalError(TRAlertConstants.paragraphError)
-        }
+        let paragraph = Paragraph.getParagraph(for: indexPath)
         
         let baseTitle = "\(indexPath.row + 1). "
         if let neededMechanisms = request.results[paragraph] {
@@ -102,6 +101,14 @@ extension ResultsVC: UITableViewDataSource {
         }
 
         return cell
+    }
+}
+
+
+extension ResultsVC: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        let paragraph = Paragraph.getParagraph(for: indexPath)
+        print(paragraph.rawValue)
     }
 }
 

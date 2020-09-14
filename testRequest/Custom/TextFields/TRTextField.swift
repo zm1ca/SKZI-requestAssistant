@@ -7,7 +7,7 @@
 
 import UIKit
 
-//TODO: does not conform to UITextInput protocol?
+
 class TRTextField: UITextField {
 
     override init(frame: CGRect) {
@@ -36,6 +36,5 @@ class TRTextField: UITextField {
         
         backgroundColor             = .tertiarySystemBackground
         autocorrectionType          = .no
-        //clearButtonMode             = .whileEditing
     }
 }

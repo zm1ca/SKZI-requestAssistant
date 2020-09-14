@@ -17,6 +17,7 @@ class SavedRequestsVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         configureVC()
         configureTableView()
         configureEmptyStateLabel()
@@ -29,14 +30,20 @@ class SavedRequestsVC: UIViewController {
     }
     
     
-    func configureVC() {
-        view.backgroundColor = .systemBackground
-        
-        navigationController?.navigationBar.prefersLargeTitles = true
-        title = "Сохранённые"
-        
-        let removeAllBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(removeAllButtonTapped))
-        navigationItem.rightBarButtonItem = removeAllBarButtonItem
+    func getRequests() {
+        PersistenceManager.retrieveRequests { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let Requests):
+                self.requests = Requests.sorted{ $0.dateModified > $1.dateModified }
+                self.tableView.reloadDataOnMainThread()
+                self.updateHasNothingSavedStatus()
+                
+            case .failure(let error):
+                print(error.rawValue)
+            }
+        }
     }
     
     
@@ -85,6 +92,16 @@ class SavedRequestsVC: UIViewController {
     }
     
     
+    func configureVC() {
+        view.backgroundColor = .systemBackground
+        title = "Сохранённые"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
+        let removeAllBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(removeAllButtonTapped))
+        navigationItem.rightBarButtonItem = removeAllBarButtonItem
+    }
+    
+    
     func configureTableView() {
         view.addSubview(tableView)
         tableView.frame             = view.bounds
@@ -99,7 +116,7 @@ class SavedRequestsVC: UIViewController {
     
     func configureEmptyStateLabel() {
         view.addSubview(emptyStateLabel)
-        emptyStateLabel.text = "Здесь будут отображён список всех сохраненных заявок."
+        emptyStateLabel.text = "Здесь будут отображён список всех сохранённых заявок."
         emptyStateLabel.numberOfLines = 2
         
         NSLayoutConstraint.activate([
@@ -108,25 +125,6 @@ class SavedRequestsVC: UIViewController {
             emptyStateLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             emptyStateLabel.heightAnchor.constraint(equalToConstant: 40)
         ])
-    }
-    
-    
-    func getRequests() {
-        PersistenceManager.retrieveRequests { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case .success(let Requests):
-                self.requests = Requests.sorted{ $0.dateModified > $1.dateModified }
-                DispatchQueue.main.async {
-                    self.tableView.reloadDataOnMainThread()
-                    self.updateHasNothingSavedStatus()
-                    self.view.bringSubviewToFront(self.tableView)
-                }
-            case .failure(let error):
-                print(error.rawValue)
-            }
-        }
     }
 }
 

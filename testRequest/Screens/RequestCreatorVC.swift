@@ -12,18 +12,8 @@ class RequestCreatorVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         configureVC()
-    }
-    
-    
-    func configureVC() {
-        view.backgroundColor = .systemBackground
-        
-        navigationController?.navigationBar.prefersLargeTitles = true
-        title = "Составление"
-        
-        let infoButton = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(infoButtonTapped))
-        navigationItem.rightBarButtonItem = infoButton
     }
     
     
@@ -34,5 +24,15 @@ class RequestCreatorVC: UIViewController {
         }
         
         present(SFSafariViewController(url: url), animated: true)
+    }
+    
+    
+    func configureVC() {
+        view.backgroundColor = .systemBackground
+        title = "Составление"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
+        let infoButton = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(infoButtonTapped))
+        navigationItem.rightBarButtonItem = infoButton
     }
 }
