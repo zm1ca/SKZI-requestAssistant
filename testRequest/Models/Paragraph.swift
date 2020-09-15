@@ -30,10 +30,22 @@ enum Paragraph: CaseIterable {
         return latin
     }
     
+    
     func neededMechanisms(for mechanisms: Set<Mechanism>) -> Set<Mechanism>? {
         guard let testFunction = self.info.testFunc else { fatalError("Error getting test function") }
         return testFunction(mechanisms)
     }
+    
+    
+    static func getParagraph(for indexPath: IndexPath) -> Paragraph {
+        let shortNameForIndexPath = "\(indexPath.section + 16).\(indexPath.row + 1)"
+        guard let paragraph = Paragraph.allCases.filter({ $0.shortName == shortNameForIndexPath }).first else {
+            fatalError(TRAlertConstants.paragraphError)
+        }
+        
+        return paragraph
+    }
+    
     
     var info: ParagraphInfo {
         switch self {
@@ -66,16 +78,6 @@ enum Paragraph: CaseIterable {
         case .p22_3:
             return ParagraphInfo(testFunc: test22_3, details: ParagraphDetails.p22_2, involvedMechanisms: [.bignSign, .beltHash, .bashHash, .brng, .hardware, .software, .bignGenk, .bignGenkeypair])
         }
-    }
-    
-    
-    static func getParagraph(for indexPath: IndexPath) -> Paragraph {
-        let shortNameForIndexPath = "\(indexPath.section + 16).\(indexPath.row + 1)"
-        guard let paragraph = Paragraph.allCases.filter({ $0.shortName == shortNameForIndexPath }).first else {
-            fatalError(TRAlertConstants.paragraphError)
-        }
-        
-        return paragraph
     }
 }
 

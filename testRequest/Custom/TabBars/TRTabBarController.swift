@@ -11,7 +11,7 @@ class TRTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.viewControllers = [createMechanismPickerNC(), createRequestCreatorNC(), createSavedRequestsNC()]
+        self.viewControllers = [createMechanismPickerNC(), createSavedRequestsNC()]
     }
 
     
@@ -23,17 +23,17 @@ class TRTabBarController: UITabBarController {
     }
     
 
-    func createRequestCreatorNC() -> UINavigationController {
-        let requestCreatorVC = RequestCreatorVC()
-        requestCreatorVC.tabBarItem = UITabBarItem(title: "Составление", image: UIImage(named: "create")!, tag: 1)
-
-        return UINavigationController(rootViewController: requestCreatorVC)
-    }
+//    func createRequestCreatorNC() -> UINavigationController {
+//        let requestCreatorVC = RequestCreatorVC()
+//        requestCreatorVC.tabBarItem = UITabBarItem(title: "Составление", image: UIImage(named: "create")!, tag: 1)
+//
+//        return UINavigationController(rootViewController: requestCreatorVC)
+//    }
     
     
     func createSavedRequestsNC() -> UINavigationController {
         let savedRequestsVC = SavedRequestsVC()
-        savedRequestsVC.tabBarItem = UITabBarItem(title: "Сохраненные", image: UIImage(named: "saved")!, tag: 2)
+        savedRequestsVC.tabBarItem = UITabBarItem(title: "Сохраненные", image: UIImage(named: "saved")!, tag: 1)
 
         return UINavigationController(rootViewController: savedRequestsVC)
     }

@@ -49,6 +49,7 @@ class TRRequestCell: UITableViewCell {
     
     func configure() {
         accessoryType   = .disclosureIndicator
+        paragraphsLabel.numberOfLines = 2
         
         let views = [titleLabel, paragraphsLabel, dateModifiedLabel]
         for view in views {
@@ -62,13 +63,13 @@ class TRRequestCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-            titleLabel.heightAnchor.constraint(equalToConstant: 30),
+            titleLabel.heightAnchor.constraint(equalToConstant: 25),
             
             dateModifiedLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
             dateModifiedLabel.heightAnchor.constraint(equalToConstant: 15),
             
             paragraphsLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),
-            paragraphsLabel.heightAnchor.constraint(equalToConstant: 20)
+            paragraphsLabel.heightAnchor.constraint(equalToConstant: 32)
         ])
     }
 }

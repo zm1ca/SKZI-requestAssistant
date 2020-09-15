@@ -27,7 +27,6 @@ class ResultsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         configureVС()
         configureTableView()
     }
