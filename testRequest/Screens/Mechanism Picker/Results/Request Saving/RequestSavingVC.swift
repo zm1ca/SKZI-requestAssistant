@@ -1,5 +1,5 @@
 //
-//  NamingVC.swift
+//  RequestSavingVC.swift
 //  SKZI-requestAssistant
 //
 //  Created by Źmicier Fiedčanka on 10.09.20.
@@ -8,12 +8,12 @@
 import UIKit
 
 
-protocol TRNamingVCDelegate {
+protocol RequestSavingVCDelegate {
     func resetVCAndTransferToSaved()
 }
 
 
-class NamingVC: UIViewController {
+class RequestSavingVC: UIViewController {
     
     var request: Request!
     
@@ -27,9 +27,9 @@ class NamingVC: UIViewController {
     var productName:        String?
     var organizationName:   String?
     
-    var delegate: TRNamingVCDelegate!
+    var delegate: RequestSavingVCDelegate!
     
-    var actionButtonIsActive      = false {
+    private var actionButtonIsActive = false {
         didSet {
             if actionButtonIsActive {
                 actionButton.isEnabled  = true
@@ -40,20 +40,7 @@ class NamingVC: UIViewController {
             }
         }
     }
-    
-    
-    init(productName: String?, organizationName: String?, request: Request) {
-        super.init(nibName: nil, bundle: nil)
-        self.productName        = productName
-        self.organizationName   = organizationName
-        self.request            = request
-    }
-    
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,7 +58,10 @@ class NamingVC: UIViewController {
     
 
     @objc func saveRequest() {
-        request.set(productName: productNameTextField.text!, organizationName: organizationNameTextField.text!)
+        guard let productName = productNameTextField.text, let organizationName = organizationNameTextField.text else { return }
+        
+        request.productName = productName
+        request.organizationName = organizationName
         
         PersistenceManager.updateWith(request: self.request, actionType: .add) { [weak self] error in
             guard let self = self else { return }
@@ -92,7 +82,7 @@ class NamingVC: UIViewController {
 
         let scView = SuccessCheck(frame: CGRect(x: 40, y: 14, width: 200, height: 200))
         self.containerView.addSubview(scView)
-        scView.initWithTime(withDuration: 0.001, bgCcolor: UIColor.green.withAlphaComponent(0), colorOfStroke: UIColor.systemGreen.withAlphaComponent(0.8), widthOfTick: 5) {
+        scView.initWithTime(withDuration: 0.005, bgCcolor: UIColor.green.withAlphaComponent(0), colorOfStroke: UIColor.systemGreen.withAlphaComponent(0.8), widthOfTick: 5) {
             self.dismiss(animated: true, completion: nil)
         }
     }

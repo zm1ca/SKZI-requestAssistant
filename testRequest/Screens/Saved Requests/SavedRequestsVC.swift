@@ -26,12 +26,12 @@ class SavedRequestsVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        getRequests()
+        loadRequests()
     }
     
     
-    func getRequests() {
-        PersistenceManager.retrieveRequests { [weak self] result in
+    func loadRequests() {
+        PersistenceManager.loadRequests { [weak self] result in
             guard let self = self else { return }
             
             switch result {
@@ -41,7 +41,7 @@ class SavedRequestsVC: UIViewController {
                 self.updateHasNothingSavedStatus()
                 
             case .failure(let error):
-                self.presentAlertOnMainThread(with: TRAlertConstants.somethingWrong, and: error.rawValue)
+                self.presentAlertOnMainThread(with: TRErrorVerbouseConstants.somethingWrong, and: error.rawValue)
             }
         }
     }
@@ -56,7 +56,7 @@ class SavedRequestsVC: UIViewController {
             for request in self.requests {
                 PersistenceManager.updateWith(request: request, actionType: .remove) { error in
                     guard let error = error else { return }
-                    self.presentAlertOnMainThread(with: TRAlertConstants.somethingWrong, and: error.rawValue)
+                    self.presentAlertOnMainThread(with: TRErrorVerbouseConstants.somethingWrong, and: error.rawValue)
                 }
             }
             
@@ -125,46 +125,5 @@ class SavedRequestsVC: UIViewController {
             emptyStateLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             emptyStateLabel.heightAnchor.constraint(equalToConstant: 40)
         ])
-    }
-}
-
-
-extension SavedRequestsVC: UITableViewDataSource, UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return requests.count
-    }
-    
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TRRequestCell.reuseID) as! TRRequestCell
-        let request = requests[indexPath.row]
-        cell.set(for: request)
-        return cell
-    }
-    
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        guard editingStyle == .delete else { return }
-        
-        PersistenceManager.updateWith(request: requests[indexPath.row], actionType: .remove) { [weak self] error in
-            guard let self = self else { return }
-            
-            guard let error = error else {
-                self.requests.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .left)
-                self.updateHasNothingSavedStatus()
-                return
-            }
-            
-            self.presentAlertOnMainThread(with: TRAlertConstants.somethingWrong, and: error.rawValue)
-        }
-    }
-    
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let request = requests[indexPath.row]
-        let destinationVC  = MechanismPickerVC(request: request)
-        navigationController?.pushViewController(destinationVC, animated: true)
     }
 }
