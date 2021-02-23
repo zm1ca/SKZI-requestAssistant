@@ -18,7 +18,7 @@ enum Mechanism: String, CaseIterable, Codable {
     case beltDwp        = "СТБ 34.101.31-2011 (п. 6.7)"
     case beltHash       = "СТБ 34.101.31-2011 (п. 6.9)"
     case bashHash       = "СТБ 34.101.77-2016 (1=128 или 1=192 или 1=256)"
-    case beltKeyrep     = "СТБ 34.101.31-2011 (п. 6.9 или 7.2)" //TODO: исправить пересечение с .beltHash
+    case beltKeyrep     = "СТБ 34.101.31-2011 (п. 7.2)"
     case bignKeyt       = "СТБ 34.101.45-2013 (п. 7.2)"
     case bignGenkeypair = "СТБ 34.101.45-2013 (п. 6.2)"
     case bignGenk       = "СТБ 34.101.45-2013 (п. 6.3)"
@@ -58,13 +58,4 @@ enum Mechanism: String, CaseIterable, Codable {
     var shortName: String {
         return String(describing: self)
     }
-}
-
-
-func getMechanism(for name: String) -> Mechanism? {
-    guard let mechanism = Mechanism.allCases.filter({ $0.shortName == name }).first else {
-        return  nil
-    }
-
-    return mechanism
 }

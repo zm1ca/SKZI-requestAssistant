@@ -9,59 +9,73 @@ import Foundation
 
 
 struct Request: Codable, Hashable {
-    
-    var mechanisms:         Set<Mechanism>
-    var productName:        String?
-    var organizationName:   String?
-    var dateModified:       Date!
-    
-    
-    init(named productName: String?, by organization: String?, with mechanisms: Set<Mechanism>) {
-        self.productName        = productName
-        self.organizationName   = organization
-        self.mechanisms         = mechanisms
-        self.dateModified       = Date()
-    }
-    
-    
-    mutating func set(productName: String, organizationName: String) {
-        self.productName        = productName
-        self.organizationName   = organizationName
-        self.dateModified       = Date()
-    }
 
+    var declaredMechanisms: [Mechanism] { didSet { dateModified = Date() } }
+    var productName:        String { didSet { dateModified = Date() } }
+    var organizationName:   String { didSet { dateModified = Date() } }
+    var dateModified = Date()
     
-    var results: [Paragraph: Set<Mechanism>?] {
-        var results = [Paragraph: Set<Mechanism>]()
-        for paragraph in Paragraph.allCases {
-            results[paragraph] = paragraph.neededMechanisms(for: mechanisms)
-        }
+    
+    var missingMechanisms: [Paragraph: [Mechanism]?] {
+        var mechanisms = [Paragraph: [Mechanism]]()
         
-        return results
-    }
-    
-    
-    var matchingParagraphs: [Paragraph] {
-        var matchingParagraphs: [Paragraph] = []
         for paragraph in Paragraph.allCases {
-            if results[paragraph] == nil {
-                matchingParagraphs.append(paragraph)
+            for mechanismsBlock in paragraph.demandedMechanisms {
+                if self.contains(anyOf: mechanismsBlock) {
+                    continue
+                } else {
+                    mechanisms[paragraph] = mechanismsBlock
+                }
             }
         }
         
-        return matchingParagraphs.sorted { $0.shortName < $1.shortName }
+        return mechanisms
     }
     
     
-    var unusedMechanisms: Set<Mechanism> {
-        var unusedMechanisms = mechanisms
+    var unusedMechanisms: [Mechanism] {
+        var unusedMechanisms = declaredMechanisms
         
-        for paragraph in Paragraph.allCases.filter({ results[$0] == nil }) {
-            for involvedMechanism in paragraph.info.involvedMechanisms {
-                unusedMechanisms.remove(involvedMechanism)
+        for paragraph in matchingParagraphs {
+            for mechanismsBlock in paragraph.demandedMechanisms {
+                for mechanism in mechanismsBlock {
+                    if let mechanismIndex = unusedMechanisms.firstIndex(of: mechanism) {
+                        unusedMechanisms.remove(at: mechanismIndex)
+                    }
+                }
             }
         }
         
         return unusedMechanisms
+    }
+    
+    
+    var matchingParagraphs: [Paragraph] {
+        let matchingParagraphs: [Paragraph] = Paragraph.allCases.filter { missingMechanisms[$0] == nil }
+        return matchingParagraphs.sorted { $0.shortName < $1.shortName }
+    }
+
+    
+    init(named productName: String, by organization: String, with mechanisms: [Mechanism]) {
+        self.productName        = productName
+        self.organizationName   = organization
+        self.declaredMechanisms = mechanisms
+        self.dateModified       = Date()
+    }
+    
+    
+    init() {
+        self.init(named: "Draft Product", by: "Draft Org", with: [])
+    }
+     
+    
+    private func contains(anyOf mechanisms: [Mechanism]) -> Bool {
+        for mechanism in mechanisms {
+            if self.declaredMechanisms.contains(mechanism) {
+                return true
+            }
+        }
+        
+        return false
     }
 }

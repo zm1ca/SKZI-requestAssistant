@@ -18,7 +18,7 @@ enum PersistenceManager {
     
     
     static func updateWith(request: Request, actionType: PersistenceActionType, completed: @escaping (TRError?) -> Void) {
-        retrieveRequests { result in
+        loadRequests { result in
             switch result {
             case .success(var requests):
                 switch actionType {
@@ -39,7 +39,7 @@ enum PersistenceManager {
     }
     
     
-    static func retrieveRequests(completed: @escaping (Result<[Request], TRError>) -> Void) {
+    static func loadRequests(completed: @escaping (Result<[Request], TRError>) -> Void) {
         guard let requestsData = defaults.object(forKey: Keys.requests) as? Data else {
             completed(.success([]))
             return

@@ -28,7 +28,7 @@ class TRRequestCell: UITableViewCell {
     
     
     func set(for request: Request) {
-        titleLabel.text          = "\(request.productName!) от «\(request.organizationName!)»"
+        titleLabel.text = "\(request.productName) от «\(request.organizationName)»"
     
         paragraphsLabel.text    = !request.matchingParagraphs.isEmpty ?
             String(request.matchingParagraphs.reduce("Соответствует:", { $0 + " " + $1.shortName + "," }).dropLast()) :
