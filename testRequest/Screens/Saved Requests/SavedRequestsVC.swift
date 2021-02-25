@@ -10,9 +10,31 @@ import UIKit
 
 class SavedRequestsVC: UIViewController {
     
-    let emptyStateLabel     = TRTitleLabel()
-    let tableView           = UITableView(frame: CGRect.zero, style: .insetGrouped)
-    var requests: [Request] = []
+    let emptyStateLabel: TRTitleLabel = {
+        let label = TRTitleLabel()
+        label.text = "Здесь будет отображён список сохранённых заявок."
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
+    var requests: [Request] = [] {
+        didSet {
+            guard let trashButton = self.navigationItem.rightBarButtonItem else { return }
+
+            if self.requests.isEmpty {
+                trashButton.isEnabled = false
+                trashButton.tintColor = UIColor.clear
+                self.emptyStateLabel.isHidden = false
+                self.tableView.isHidden = true
+            } else {
+                trashButton.isEnabled = true
+                trashButton.tintColor = UIColor.systemBlue
+                self.emptyStateLabel.isHidden = true
+                self.tableView.isHidden = false
+            }
+        }
+    }
     
 
     override func viewDidLoad() {
@@ -30,7 +52,7 @@ class SavedRequestsVC: UIViewController {
     }
     
     
-    func loadRequests() {
+    private func loadRequests() {
         PersistenceManager.loadRequests { [weak self] result in
             guard let self = self else { return }
             
@@ -38,7 +60,6 @@ class SavedRequestsVC: UIViewController {
             case .success(let Requests):
                 self.requests = Requests.sorted{ $0.dateModified > $1.dateModified }
                 self.tableView.reloadDataOnMainThread()
-                self.updateHasNothingSavedStatus()
                 
             case .failure(let error):
                 self.presentAlertOnMainThread(with: TRErrorVerbouseConstants.somethingWrong, and: error.rawValue)
@@ -47,7 +68,7 @@ class SavedRequestsVC: UIViewController {
     }
     
     
-    @objc func removeAllButtonTapped() {
+    @objc private func removeAllButtonTapped() {
         let alertController = UIAlertController(title: "Удалить все заявки?", message: nil, preferredStyle: .alert)
         
         let approveAction = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
@@ -62,7 +83,6 @@ class SavedRequestsVC: UIViewController {
             
             self.requests.removeAll()
             self.tableView.reloadDataOnMainThread()
-            self.updateHasNothingSavedStatus()
         }
         alertController.addAction(approveAction)
         
@@ -73,26 +93,7 @@ class SavedRequestsVC: UIViewController {
     }
     
     
-    func updateHasNothingSavedStatus() {
-        guard let trashButton = self.navigationItem.rightBarButtonItem else {
-            return
-        }
-
-        if self.requests.isEmpty {
-            trashButton.isEnabled = false
-            trashButton.tintColor = UIColor.clear
-            self.emptyStateLabel.isHidden = false
-            self.tableView.isHidden = true
-        } else {
-            trashButton.isEnabled = true
-            trashButton.tintColor = UIColor.systemBlue
-            self.emptyStateLabel.isHidden = true
-            self.tableView.isHidden = false
-        }
-    }
-    
-    
-    func configureVC() {
+    private func configureVC() {
         view.backgroundColor = .systemBackground
         title = "Сохранённые"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -102,7 +103,7 @@ class SavedRequestsVC: UIViewController {
     }
     
     
-    func configureTableView() {
+    private func configureTableView() {
         view.addSubview(tableView)
         tableView.frame             = view.bounds
         tableView.rowHeight         = 100
@@ -114,11 +115,8 @@ class SavedRequestsVC: UIViewController {
     }
     
     
-    func configureEmptyStateLabel() {
+    private func configureEmptyStateLabel() {
         view.addSubview(emptyStateLabel)
-        emptyStateLabel.text = "Здесь будет отображён список сохранённых заявок."
-        emptyStateLabel.numberOfLines = 0
-        
         NSLayoutConstraint.activate([
             emptyStateLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             emptyStateLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),

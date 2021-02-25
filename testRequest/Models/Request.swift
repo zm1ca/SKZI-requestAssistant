@@ -75,7 +75,6 @@ struct Request: Codable, Hashable {
                 return true
             }
         }
-        
         return false
     }
 }

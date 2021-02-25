@@ -32,7 +32,6 @@ extension SavedRequestsVC: UITableViewDataSource {
             guard let error = error else {
                 self.requests.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .left)
-                self.updateHasNothingSavedStatus()
                 return
             }
             
