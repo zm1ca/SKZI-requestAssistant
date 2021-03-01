@@ -30,17 +30,8 @@ enum Paragraph: String, CaseIterable {
         name = name.replacingOccurrences(of: "_", with: ".")
         name = name.replacingOccurrences(of: "p", with: "")
         return name
-    }    
-    
-    //FIX: Review func (it might be moved to ViewModel)
-    static func getParagraph(for indexPath: IndexPath) -> Paragraph {
-        let shortNameForIndexPath = "\(indexPath.section + 16).\(indexPath.row + 1)"
-        guard let paragraph = Paragraph.allCases.filter({ $0.shortName == shortNameForIndexPath }).first else {
-            fatalError(TRErrorVerbouseConstants.paragraphError)
-        }
-        
-        return paragraph
     }
+    
      
     var demandedMechanisms: [[Mechanism]] {
         switch self {
@@ -81,7 +72,7 @@ enum Paragraph: String, CaseIterable {
                 [.x509Crl, .ocsp]
             ]
         case .p17_3:
-            return [
+            return [ 
                 [.beltModes],
                 [.beltMac, .brngHmac, .beltDwp],
                 [.brng],

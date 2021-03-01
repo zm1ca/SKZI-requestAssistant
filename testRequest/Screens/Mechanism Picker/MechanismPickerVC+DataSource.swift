@@ -58,9 +58,11 @@ extension MechanismPickerVC: UITableViewDataSource {
         if isSearching {
             guard editingStyle == .insert else { return }
             
-            let chosenMechanism = filteredLeftMechanisms[indexPath.row]
+            let chosenMechanism = filteredLeftMechanisms.remove(at: indexPath.row)
             request.declaredMechanisms.append(chosenMechanism)
-            tableView.reloadDataOnMainThread() //Review
+            
+            tableView.reloadData()
+            
             
         } else {
             if editingStyle == .insert {
@@ -69,7 +71,7 @@ extension MechanismPickerVC: UITableViewDataSource {
                 
             } else if editingStyle == .delete {
                 request.declaredMechanisms.remove(at: indexPath.row)
-                tableView.reloadDataOnMainThread() //Review
+                tableView.moveRow(at: indexPath, to: IndexPath(row: 0, section: 1))
             }
         }
     }

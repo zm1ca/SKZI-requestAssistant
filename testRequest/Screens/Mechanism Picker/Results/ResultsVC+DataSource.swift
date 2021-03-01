@@ -10,33 +10,28 @@ import UIKit
 extension ResultsVC: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return ResultsTableViewConstants.numberOfSections
+        return viewModel!.numberOfSections
     }
     
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "\(16 + section). \(ResultsTableViewConstants.sectionHeaders[section])"
+        return viewModel!.titleForHeader(in: section)
     }
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ResultsTableViewConstants.sectionSizes[section]
+        return viewModel!.numberOfRows(in: section)
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TRParagraphCell.reuseID, for: indexPath) as! TRParagraphCell
-        let paragraph = Paragraph.getParagraph(for: indexPath)
-        let baseTitle = "\(indexPath.row + 1). "
         
-        if let neededMechanisms = request.missingMechanisms[paragraph] {
-            let details = neededMechanisms!.reduce("Добавьте", { $0 + " " + $1.shortName + " или" }).dropLast(4)
-            cell.set(title: baseTitle + "Не соответствует", details: String(details), backgroundColor: TRColors.failure)
-            
-        } else {
-            cell.set(title: baseTitle + "Соответствует", details: nil, backgroundColor: TRColors.success)
-        }
-
+        let (title, details, color): (String, String?, UIColor) =
+            viewModel!.paragraphCellInfo(for: indexPath)
+        
+        cell.set(title: title, details: details, backgroundColor: color)
+        
         return cell
     }
 }

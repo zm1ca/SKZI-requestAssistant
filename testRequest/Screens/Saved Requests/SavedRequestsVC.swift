@@ -18,6 +18,7 @@ class SavedRequestsVC: UIViewController {
     }()
     
     let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
+    
     var requests: [Request] = [] {
         didSet {
             guard let trashButton = self.navigationItem.rightBarButtonItem else { return }
@@ -39,10 +40,9 @@ class SavedRequestsVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         configureVC()
         configureTableView()
-        configureEmptyStateLabel()
+        layoutUI()
     }
     
     
@@ -105,17 +105,17 @@ class SavedRequestsVC: UIViewController {
     
     private func configureTableView() {
         view.addSubview(tableView)
-        tableView.frame             = view.bounds
-        tableView.rowHeight         = 100
-        tableView.delegate          = self
-        tableView.dataSource        = self
+        tableView.frame      = view.bounds
+        tableView.rowHeight  = 100
+        tableView.delegate   = self
+        tableView.dataSource = self
         tableView.removeAccessCells()
         
         tableView.register(TRRequestCell.self, forCellReuseIdentifier: TRRequestCell.reuseID)
     }
     
     
-    private func configureEmptyStateLabel() {
+    private func layoutUI() {
         view.addSubview(emptyStateLabel)
         NSLayoutConstraint.activate([
             emptyStateLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),

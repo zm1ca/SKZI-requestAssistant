@@ -9,8 +9,9 @@ import UIKit
 
 class MechanismPickerVC: UIViewController, UITableViewDelegate {
     
+    //Make request a singleton?
     var request = Request() { didSet { updateButtonsVisibility() } }
-    var filteredLeftMechanisms: [Mechanism] = [] //Move to UISearch... ?
+    var filteredLeftMechanisms: [Mechanism] = [] //Move to UISearchResults somehow?
 
     let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
     
@@ -34,8 +35,9 @@ class MechanismPickerVC: UIViewController, UITableViewDelegate {
     
     @objc private func actionButtonTapped() {
         let destVC = ResultsVC()
-        destVC.request = request
+        destVC.viewModel = ResultsViewModel(request: request)
         navigationController?.pushViewController(destVC, animated: true)
+        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
     }
 
 
@@ -51,7 +53,6 @@ class MechanismPickerVC: UIViewController, UITableViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateButtonsVisibility()
-        //tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
     }
     
     
@@ -94,9 +95,9 @@ class MechanismPickerVC: UIViewController, UITableViewDelegate {
     
     
     private func configureTableView() {
-        tableView.rowHeight         = 60
-        tableView.separatorStyle    = .singleLine
-        tableView.allowsSelection   = false
+        tableView.rowHeight       = 60
+        tableView.separatorStyle  = .singleLine
+        tableView.allowsSelection = false
         tableView.setEditing(true, animated: false)
     }
     

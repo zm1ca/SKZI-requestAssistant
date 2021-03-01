@@ -14,9 +14,10 @@ class TRButton: UIButton {
         configure()
     }
     
-    convenience init(backgroundColor: UIColor, titleColor: UIColor) {
+    convenience init(backgroundColor: UIColor, titleColor: UIColor, title: String) {
         self.init(frame: .zero)
         self.backgroundColor = backgroundColor
+        self.setTitle(title, for: .normal)
         setTitleColor(titleColor, for: .normal)
     }
     

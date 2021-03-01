@@ -15,19 +15,56 @@ protocol RequestSavingVCDelegate {
 
 class RequestSavingVC: UIViewController {
     
-    var request: Request!
-    
-    let containerView             = TRNamingContainer()
-    let titleLabel                = TRTitleLabel(textAlignment: .center, fontSize: 20)
-    let productNameTextField      = TRTextField()
-    let organizationNameTextField = TRTextField()
-    let cancelButton              = TRButton(backgroundColor: .tertiarySystemBackground, titleColor: .secondaryLabel)
-    let actionButton              = TRButton(backgroundColor: .systemGray4, titleColor: .label)
-        
-    var productName:        String?
-    var organizationName:   String?
+    var request: Request? {
+        didSet {
+            guard let request = request else { return }
+            productNameTextField.text = request.productName
+            organizationNameTextField.text = request.organizationName
+            updateActionButtonState()
+        }
+    }
     
     var delegate: RequestSavingVCDelegate!
+    
+    
+    //MARK: UI Elements
+    
+    let containerView = TRNamingContainer()
+    
+    let titleLabel : TRTitleLabel = {
+        let label = TRTitleLabel(textAlignment: .center, fontSize: 20)
+        label.text = "Сохранение заявки"
+        return label
+    }()
+    
+    let productNameTextField: TRTextField = {
+        let tf = TRTextField()
+        tf.text = ""
+        tf.placeholder = "Название СКЗИ"
+        tf.addTarget(self, action: #selector(updateActionButtonState), for: .editingChanged)
+        tf.becomeFirstResponder()
+        return tf
+    }()
+    
+    let organizationNameTextField: TRTextField = {
+        let tf = TRTextField()
+        tf.text = ""
+        tf.placeholder = "Организация"
+        tf.addTarget(self, action: #selector(updateActionButtonState), for: .editingChanged)
+        return tf
+    }()
+    
+    var cancelButton = TRButton(
+        backgroundColor: .tertiarySystemBackground,
+        titleColor: .secondaryLabel,
+        title: "Отмена"
+    )
+    
+    var actionButton = TRButton(
+        backgroundColor: .systemGray4,
+        titleColor: .label,
+        title: "Ок"
+    )
     
     private var actionButtonIsActive = false {
         didSet {
@@ -42,28 +79,24 @@ class RequestSavingVC: UIViewController {
     }
 
     
+    //MARK: -
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.black.withAlphaComponent(0.75)
-        view.addSubview(containerView)
-        
-        configureTitleLabel()
-        configureProductNameTextField()
-        configureOrganizationNameTextField()
-        configureCancelButton()
-        configureActionButton()
-        
+        actionButton.addTarget(self, action: #selector(saveRequest), for: .touchUpInside)
+        cancelButton.addTarget(self, action: #selector(dismissVC), for: .touchUpInside)
         layoutUI()
     }
     
 
-    @objc func saveRequest() {
-        guard let productName = productNameTextField.text, let organizationName = organizationNameTextField.text else { return }
+    @objc private func saveRequest() {
+        guard let productName = productNameTextField.text, let organizationName = organizationNameTextField.text, request != nil else { return }
         
-        request.productName = productName
-        request.organizationName = organizationName
+        request!.productName = productName
+        request!.organizationName = organizationName
         
-        PersistenceManager.updateWith(request: self.request, actionType: .add) { [weak self] error in
+        PersistenceManager.updateWith(request: request!, actionType: .add) { [weak self] error in
             guard let self = self else { return }
             guard error != nil else {
                 self.indicateSuccessAndDismiss()
@@ -76,7 +109,7 @@ class RequestSavingVC: UIViewController {
     }
     
     
-    func indicateSuccessAndDismiss() {
+    private func indicateSuccessAndDismiss() {
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(.success)
 
@@ -88,61 +121,27 @@ class RequestSavingVC: UIViewController {
     }
     
     
-    @objc func updateActionButtonState() {
+    @objc private func updateActionButtonState() {
         guard productNameTextField.text != nil, organizationNameTextField.text != nil else { return }
         actionButtonIsActive = !productNameTextField.text!.isEmpty && !organizationNameTextField.text!.isEmpty
     }
     
     
-    @objc func dismissVC() {
+    @objc private func dismissVC() {
         dismiss(animated: true, completion: nil)
     }
     
     
-    func configureTitleLabel() {
-        containerView.addSubview(titleLabel)
-        titleLabel.text = "Сохранение заявки"
-    }
-    
-    
-    func configureProductNameTextField() {
-        containerView.addSubview(productNameTextField)
-        
-        productNameTextField.text = productName ?? ""
-        productNameTextField.placeholder = "Название СКЗИ"
-        productNameTextField.addTarget(self, action: #selector(updateActionButtonState), for: .editingChanged)
-        productNameTextField.becomeFirstResponder()
-    }
-    
-    
-    func configureOrganizationNameTextField() {
-        containerView.addSubview(organizationNameTextField)
-        
-        organizationNameTextField.text = organizationName ?? ""
-        organizationNameTextField.placeholder = "Организация"
-        organizationNameTextField.addTarget(self, action: #selector(updateActionButtonState), for: .editingChanged)
-    }
-    
-    
-    func configureCancelButton() {
-        containerView.addSubview(cancelButton)
-        
-        cancelButton.setTitle("Отмена", for: .normal)
-        cancelButton.addTarget(self, action: #selector(dismissVC), for: .touchUpInside)
-    }
-    
-    
-    func configureActionButton() {
-        containerView.addSubview(actionButton)
-        
-        actionButton.setTitle("Ок", for: .normal)
-        actionButton.addTarget(self, action: #selector(saveRequest), for: .touchUpInside)
-        updateActionButtonState()
-    }
-    
-    
-    func layoutUI() {
+    //TODO: Consider SnapKit
+    private func layoutUI() {
         let padding: CGFloat = 20
+        
+        view.addSubview(containerView)
+        containerView.addSubview(titleLabel)
+        containerView.addSubview(productNameTextField)
+        containerView.addSubview(organizationNameTextField)
+        containerView.addSubview(cancelButton)
+        containerView.addSubview(actionButton)
         
         NSLayoutConstraint.activate([
             containerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),

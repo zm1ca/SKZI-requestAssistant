@@ -10,7 +10,7 @@ import UIKit
 extension ResultsVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
-        let paragraph = Paragraph.getParagraph(for: indexPath)
-        presentAlertOnMainThread(with: "\(TRErrorVerbouseConstants.paragraphInfo) \(paragraph.shortName)", and: paragraph.rawValue)
+        let (title, message): (String, String) = viewModel!.paragraphAccessoryInfo(for: indexPath)
+        presentAlertOnMainThread(with: title, and: message)
     }
 }

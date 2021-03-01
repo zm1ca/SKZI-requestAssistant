@@ -13,7 +13,7 @@ extension ResultsVC: RequestSavingVCDelegate {
     //2. pop root controller for SavedRequestsNC
     func resetVCAndTransferToSaved() {
         if tabBarController?.selectedIndex == 0 {
-            tabBarController?.selectedIndex = 2
+            tabBarController?.selectedIndex = 2 //FIX: doesn't seem to work
         } else {
             navigationController?.popToRootViewController(animated: false)
         }

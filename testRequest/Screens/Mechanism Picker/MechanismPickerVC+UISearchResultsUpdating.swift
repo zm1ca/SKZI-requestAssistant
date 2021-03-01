@@ -14,11 +14,11 @@ extension MechanismPickerVC: UISearchResultsUpdating {
     }
     
     func configureSearchController() {
-        let searchController                                    = UISearchController()
-        searchController.searchResultsUpdater                   = self
-        searchController.searchBar.placeholder                  = "Найти механизм"
-        searchController.obscuresBackgroundDuringPresentation   = false
-        navigationItem.searchController                         = searchController
+        let searchController                                  = UISearchController()
+        searchController.searchResultsUpdater                 = self
+        searchController.searchBar.placeholder                = "Найти механизм"
+        searchController.obscuresBackgroundDuringPresentation = false
+        navigationItem.searchController                       = searchController
     }
     
     

@@ -30,9 +30,12 @@ class TRRequestCell: UITableViewCell {
     func set(for request: Request) {
         titleLabel.text = "\(request.productName) от «\(request.organizationName)»"
     
-        paragraphsLabel.text    = !request.matchingParagraphs.isEmpty ?
-            String(request.matchingParagraphs.reduce("Соответствует:", { $0 + " " + $1.shortName + "," }).dropLast()) :
-            "Не соответствует приказу №77 ОАЦ."
+        //FIX: hard to read
+//        paragraphsLabel.text    = !request.matchingParagraphs.isEmpty ?
+//            String(request.matchingParagraphs.reduce("Соответствует:", { $0 + " " + $1.shortName + "," }).dropLast()) :
+//            "Не соответствует приказу №77 ОАЦ."
+        
+        paragraphsLabel.text = "Placeholder" //tmp
         
         dateModifiedLabel.text  = dateString(from: request.dateModified)
     }
