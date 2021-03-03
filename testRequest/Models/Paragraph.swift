@@ -8,7 +8,7 @@
 import Foundation
 
 enum Paragraph: String, CaseIterable {
-    
+
     case p16_1 = "Для СКЗИ применяющих предварительное распределение ключей."
     case p16_2 = "Для СКЗИ в которых доверие к ключам шифрования устанавливается посредством ЭЦП."
     case p17_1 = "Для линейных шифраторов с предварительным распределением секретов."
@@ -23,16 +23,14 @@ enum Paragraph: String, CaseIterable {
     case p22_1 = "Для контроля целостности с помощью бесключевых хэш-функций."
     case p22_2 = "Для контроля целостности с помощью ключевых хэш-функций"
     case p22_3 = "Для контроля целостности с помощью ЭЦП."
-        
-    
+
     var shortName: String {
         var name = String(describing: self)
         name = name.replacingOccurrences(of: "_", with: ".")
         name = name.replacingOccurrences(of: "p", with: "")
         return name
     }
-    
-     
+
     var demandedMechanisms: [[Mechanism]] {
         switch self {
         case .p16_1:
@@ -72,7 +70,7 @@ enum Paragraph: String, CaseIterable {
                 [.x509Crl, .ocsp]
             ]
         case .p17_3:
-            return [ 
+            return [
                 [.beltModes],
                 [.beltMac, .brngHmac, .beltDwp],
                 [.brng],

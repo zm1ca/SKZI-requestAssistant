@@ -9,30 +9,33 @@ import UIKit
 import SafariServices
 
 class RequestCreatorVC: UIViewController {
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         configureVC()
     }
-    
-    
+
     @objc func infoButtonTapped() {
         guard let url = URLConstants.order77Table else {
             presentAlertOnMainThread(with: TRAlertConstants.somethingWrong, and: TRAlertConstants.cantOpenWebsite)
             return
         }
-        
+
         present(SFSafariViewController(url: url), animated: true)
     }
-    
-    
+
     func configureVC() {
         view.backgroundColor = .systemBackground
         title = "Составление"
         navigationController?.navigationBar.prefersLargeTitles = true
-        
-        let infoButton = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(infoButtonTapped))
+
+        let infoButton = UIBarButtonItem(
+            barButtonSystemItem: .bookmarks,
+            target: self,
+            action: #selector(infoButtonTapped)
+        )
+
         navigationItem.rightBarButtonItem = infoButton
     }
 }

@@ -7,9 +7,8 @@
 
 import UIKit
 
-
 enum Mechanism: String, CaseIterable, Codable {
-    
+
     case software       = "СТБ 34.101.27-2011 (класс 1 или 2)"
     case hardware       = "СТБ 34.101.1-2014, СТБ 34.101.2-2014, СТБ 34.101.3-2014"
     case brng           = "СТБ 34.101.27-2011 (п. 5.6) или СТБ 34.101.47-2017 (п. 6.2 или 6.3)"
@@ -55,7 +54,7 @@ enum Mechanism: String, CaseIterable, Codable {
     case dvcs           = "СТБ 34.101.81-2019, СТБ 34.101.78-2019 (п. 8.10)"
     case tsp            = "СТБ 34.101.82-2019, СТБ 34.101.78-2019 (п. 8.9)"
     case stb1176Sign    = "СТБ 1176.1-99, СТБ 1176.2-99 (разделы 5, 6), СТБ 34.101.50-2019 (приложение В)"
-    
+
     var shortName: String {
         return String(describing: self)
     }

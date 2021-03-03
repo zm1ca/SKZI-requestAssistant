@@ -7,9 +7,8 @@
 
 import UIKit
 
-
 extension SavedRequestsVC: UITableViewDelegate {
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let request = requests[indexPath.row]
         let destinationVC = MechanismPickerVC()

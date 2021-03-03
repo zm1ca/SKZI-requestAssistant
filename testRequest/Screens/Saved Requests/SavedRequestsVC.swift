@@ -7,18 +7,17 @@
 
 import UIKit
 
-
 class SavedRequestsVC: UIViewController {
-    
+
     let emptyStateLabel: TRTitleLabel = {
         let label = TRTitleLabel()
         label.text = "Здесь будет отображён список сохранённых заявок."
         label.numberOfLines = 0
         return label
     }()
-    
+
     let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
-    
+
     var requests: [Request] = [] {
         didSet {
             guard let trashButton = self.navigationItem.rightBarButtonItem else { return }
@@ -36,7 +35,6 @@ class SavedRequestsVC: UIViewController {
             }
         }
     }
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,65 +42,60 @@ class SavedRequestsVC: UIViewController {
         configureTableView()
         layoutUI()
     }
-    
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadRequests()
     }
-    
-    
+
     private func loadRequests() {
         PersistenceManager.loadRequests { [weak self] result in
             guard let self = self else { return }
-            
+
             switch result {
-            case .success(let Requests):
-                self.requests = Requests.sorted{ $0.dateModified > $1.dateModified }
+            case .success(let requests):
+                self.requests = requests.sorted { $0.dateModified > $1.dateModified }
                 self.tableView.reloadDataOnMainThread()
-                
+
             case .failure(let error):
                 self.presentAlertOnMainThread(with: TRErrorVerbouseConstants.somethingWrong, and: error.rawValue)
             }
         }
     }
-    
-    
+
     @objc private func removeAllButtonTapped() {
         let alertController = UIAlertController(title: "Удалить все заявки?", message: nil, preferredStyle: .alert)
-        
+
         let approveAction = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
             guard let self = self else { return }
-            
+
             for request in self.requests {
                 PersistenceManager.updateWith(request: request, actionType: .remove) { error in
                     guard let error = error else { return }
                     self.presentAlertOnMainThread(with: TRErrorVerbouseConstants.somethingWrong, and: error.rawValue)
                 }
             }
-            
+
             self.requests.removeAll()
             self.tableView.reloadDataOnMainThread()
         }
         alertController.addAction(approveAction)
-        
+
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alertController.addAction(cancelAction)
-        
+
         present(alertController, animated: true, completion: nil)
     }
-    
-    
+
     private func configureVC() {
         view.backgroundColor = .systemBackground
         title = "Сохранённые"
         navigationController?.navigationBar.prefersLargeTitles = true
-        
+
         let removeAllBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(removeAllButtonTapped))
         navigationItem.rightBarButtonItem = removeAllBarButtonItem
     }
-    
-    
+
     private func configureTableView() {
         view.addSubview(tableView)
         tableView.frame      = view.bounds
@@ -110,11 +103,10 @@ class SavedRequestsVC: UIViewController {
         tableView.delegate   = self
         tableView.dataSource = self
         tableView.removeAccessCells()
-        
+
         tableView.register(TRRequestCell.self, forCellReuseIdentifier: TRRequestCell.reuseID)
     }
-    
-    
+
     private func layoutUI() {
         view.addSubview(emptyStateLabel)
         NSLayoutConstraint.activate([

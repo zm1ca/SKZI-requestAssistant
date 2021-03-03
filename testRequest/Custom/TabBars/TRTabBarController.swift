@@ -14,14 +14,12 @@ class TRTabBarController: UITabBarController {
         self.viewControllers = [createMechanismPickerNC(), createSavedRequestsNC()]
     }
 
-    
     func createMechanismPickerNC() -> UINavigationController {
         let mechanismPickerVC = MechanismPickerVC()
         mechanismPickerVC.tabBarItem = UITabBarItem(title: "Проверить", image: UIImage(named: "check")!, tag: 0)
-        
+
         return UINavigationController(rootViewController: mechanismPickerVC)
     }
-    
 
 //    func createRequestCreatorNC() -> UINavigationController {
 //        let requestCreatorVC = RequestCreatorVC()
@@ -29,8 +27,7 @@ class TRTabBarController: UITabBarController {
 //
 //        return UINavigationController(rootViewController: requestCreatorVC)
 //    }
-    
-    
+
     func createSavedRequestsNC() -> UINavigationController {
         let savedRequestsVC = SavedRequestsVC()
         savedRequestsVC.tabBarItem = UITabBarItem(title: "Сохраненные", image: UIImage(named: "saved")!, tag: 1)
