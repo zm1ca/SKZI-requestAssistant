@@ -1,0 +1,7 @@
+line_length: 140
+
+disabled_rules:
+- force_cast
+- identifier_name
+- todo
+- large_tuple
