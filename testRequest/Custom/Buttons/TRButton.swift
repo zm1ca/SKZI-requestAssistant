@@ -26,8 +26,6 @@ class TRButton: UIButton {
     }
 
     private func configure() {
-        translatesAutoresizingMaskIntoConstraints = false
-
         layer.cornerRadius      = 10
         titleLabel?.font        = UIFont.preferredFont(forTextStyle: .headline)
     }

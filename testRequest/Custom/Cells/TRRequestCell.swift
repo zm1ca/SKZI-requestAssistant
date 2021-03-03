@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class TRRequestCell: UITableViewCell {
 
@@ -27,7 +28,7 @@ class TRRequestCell: UITableViewCell {
     func set(for request: Request) {
         titleLabel.text = "\(request.productName) от «\(request.organizationName)»"
 
-        // FIX: hard to read
+        // TODO: hard to read
 //        paragraphsLabel.text    = !request.matchingParagraphs.isEmpty ?
 //            String(request.matchingParagraphs.reduce("Соответствует:", { $0 + " " + $1.shortName + "," }).dropLast()) :
 //            "Не соответствует приказу №77 ОАЦ."
@@ -49,25 +50,27 @@ class TRRequestCell: UITableViewCell {
         accessoryType   = .disclosureIndicator
         paragraphsLabel.numberOfLines = 2
 
-        let views = [titleLabel, paragraphsLabel, dateModifiedLabel]
-        for view in views {
-            addSubview(view)
+        addSubviews(titleLabel, paragraphsLabel, dateModifiedLabel)
 
-            NSLayoutConstraint.activate([
-                view.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-                view.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -40)
-            ])
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(10)
+            make.height.equalTo(25)
+            make.leading.equalToSuperview().inset(15)
+            make.trailing.equalToSuperview().inset(40)
         }
 
-        NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-            titleLabel.heightAnchor.constraint(equalToConstant: 25),
+        dateModifiedLabel.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().inset(10)
+            make.height.equalTo(15)
+            make.leading.equalToSuperview().inset(15)
+            make.trailing.equalToSuperview().inset(40)
+        }
 
-            dateModifiedLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
-            dateModifiedLabel.heightAnchor.constraint(equalToConstant: 15),
-
-            paragraphsLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),
-            paragraphsLabel.heightAnchor.constraint(equalToConstant: 32)
-        ])
+        paragraphsLabel.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).inset(5)
+            make.height.equalTo(32)
+            make.leading.equalToSuperview().inset(15)
+            make.trailing.equalToSuperview().inset(40)
+        }
     }
 }

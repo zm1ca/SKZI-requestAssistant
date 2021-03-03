@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class SavedRequestsVC: UIViewController {
 
@@ -109,11 +110,9 @@ class SavedRequestsVC: UIViewController {
 
     private func layoutUI() {
         view.addSubview(emptyStateLabel)
-        NSLayoutConstraint.activate([
-            emptyStateLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            emptyStateLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            emptyStateLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            emptyStateLabel.heightAnchor.constraint(equalToConstant: 40)
-        ])
+        emptyStateLabel.snp.makeConstraints { make in
+            make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
+            make.height.equalTo(40)
+        }
     }
 }

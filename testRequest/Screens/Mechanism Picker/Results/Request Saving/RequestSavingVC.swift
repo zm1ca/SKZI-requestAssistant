@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 protocol RequestSavingVCDelegate: class {
     func resetVCAndTransferToSaved()
@@ -129,47 +130,49 @@ class RequestSavingVC: UIViewController {
         dismiss(animated: true, completion: nil)
     }
 
-    // TODO: Consider SnapKit
     private func layoutUI() {
         let padding: CGFloat = 20
 
         view.addSubview(containerView)
-        containerView.addSubview(titleLabel)
-        containerView.addSubview(productNameTextField)
-        containerView.addSubview(organizationNameTextField)
-        containerView.addSubview(cancelButton)
-        containerView.addSubview(actionButton)
+        containerView.addSubviews(titleLabel, productNameTextField, organizationNameTextField, cancelButton, actionButton)
 
-        NSLayoutConstraint.activate([
-            containerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            containerView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -150 ),
-            containerView.heightAnchor.constraint(equalToConstant: 238),
-            containerView.widthAnchor.constraint(equalToConstant: 280),
+        containerView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview().inset(150)
+            make.height.equalTo(238)
+            make.width.equalTo(280)
+        }
 
-            titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: padding),
-            titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: padding),
-            titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -padding),
-            titleLabel.heightAnchor.constraint(equalToConstant: 24),
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(padding)
+            make.centerX.equalToSuperview()
+            make.height.equalTo(24)
+        }
 
-            productNameTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: padding),
-            productNameTextField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: padding),
-            productNameTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -padding),
-            productNameTextField.heightAnchor.constraint(equalToConstant: 44),
+        productNameTextField.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(8)
+            make.leading.trailing.equalToSuperview().inset(padding)
+            make.height.equalTo(44)
+        }
 
-            organizationNameTextField.topAnchor.constraint(equalTo: productNameTextField.bottomAnchor, constant: 8),
-            organizationNameTextField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: padding),
-            organizationNameTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -padding),
-            organizationNameTextField.heightAnchor.constraint(equalToConstant: 44),
+        organizationNameTextField.snp.makeConstraints { make in
+            make.top.equalTo(productNameTextField.snp.bottom).offset(8)
+            make.leading.trailing.equalToSuperview().inset(padding)
+            make.height.equalTo(44)
+        }
 
-            cancelButton.topAnchor.constraint(equalTo: organizationNameTextField.bottomAnchor, constant: padding),
-            cancelButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: padding),
-            cancelButton.widthAnchor.constraint(equalToConstant: 115),
-            cancelButton.heightAnchor.constraint(equalToConstant: 34),
+        cancelButton.snp.makeConstraints { make in
+            make.top.equalTo(organizationNameTextField.snp.bottom).offset(padding)
+            make.leading.equalToSuperview().inset(padding)
+            make.width.equalTo(115)
+            make.height.equalTo(34)
+        }
 
-            actionButton.centerYAnchor.constraint(equalTo: cancelButton.centerYAnchor),
-            actionButton.leadingAnchor.constraint(equalTo: cancelButton.trailingAnchor, constant: 10),
-            actionButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -padding),
-            actionButton.heightAnchor.constraint(equalToConstant: 34)
-        ])
+        actionButton.snp.makeConstraints { make in
+            make.centerY.equalTo(cancelButton.snp.centerY)
+            make.leading.equalTo(cancelButton.snp.trailing).inset(10)
+            make.trailing.equalToSuperview().inset(padding)
+            make.height.equalTo(34)
+        }
     }
 }

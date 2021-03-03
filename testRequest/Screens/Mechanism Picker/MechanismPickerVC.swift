@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class MechanismPickerVC: UIViewController, UITableViewDelegate {
 
@@ -17,7 +18,6 @@ class MechanismPickerVC: UIViewController, UITableViewDelegate {
 
     let actionButton: UIButton = {
         let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.alpha = 0
 
         button.backgroundColor = UIColor.secondarySystemBackground.withAlphaComponent(0.9)
@@ -99,11 +99,9 @@ class MechanismPickerVC: UIViewController, UITableViewDelegate {
         tableView.frame = view.bounds
 
         view.addSubview(actionButton)
-        NSLayoutConstraint.activate([
-            actionButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
-            actionButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            actionButton.widthAnchor.constraint(equalToConstant: 80),
-            actionButton.heightAnchor.constraint(equalToConstant: 80)
-        ])
+        actionButton.snp.makeConstraints { make in
+            make.bottom.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
+            make.width.height.equalTo(80)
+        }
     }
 }

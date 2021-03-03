@@ -25,8 +25,6 @@ class TRBodyLabel: UILabel {
     }
 
     private func configure() {
-        translatesAutoresizingMaskIntoConstraints = false
-
         font = UIFont.preferredFont(forTextStyle: .body)
         adjustsFontForContentSizeCategory   = true
         textColor                           = .secondaryLabel

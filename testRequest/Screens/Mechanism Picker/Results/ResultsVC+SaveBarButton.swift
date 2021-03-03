@@ -34,8 +34,15 @@ extension ResultsVC {
             alertController.dismiss(animated: true, completion: { self.presentRequestSavingVCOnMainThread() })
         }
 
+        // TODO: add "fix" button logic
+//        let fixAction = UIAlertAction(title: "Исправить", style: .default) {[weak self] _ in
+//            guard let self = self else { return }
+//
+//        }
+
         alertController.addAction(cancelAction)
         alertController.addAction(forwardAction)
+//        alertController.addAction(fixAction)
         present(alertController, animated: true)
     }
 
