@@ -14,7 +14,6 @@ protocol UnusedMechanismsFixable {
 
 extension ResultsVC {
 
-    // TODO: Create UITest
     @objc func saveBarButtonTapped() {
 
         viewModel!.requestHasUnusedMechanisms

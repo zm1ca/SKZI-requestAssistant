@@ -22,7 +22,7 @@ struct SavedRequestsViewModel: RequestPresentable {
     }
 
     var paragraphs: String {
-        // TODO: Usage of ResultsViewModel seems to be a totally wrong decision
+        // Q: Usage of ResultsViewModel seems to be a totally wrong decision
 
         let resultsViewModel = ResultsViewModel(request: request)
         let matchingParagraphs = resultsViewModel.matchingParagraphs
