@@ -10,9 +10,9 @@ import SnapKit
 
 class MechanismPickerVC: UIViewController, UITableViewDelegate {
 
-    // Make request a singleton?
+    // Q: Make request a singleton?
     var request = Request() { didSet { updateButtonsVisibility() } }
-    var filteredLeftMechanisms: [Mechanism] = [] // Move to UISearchResults somehow?
+    var filteredLeftMechanisms: [Mechanism] = [] // Q: Move to UISearchResults somehow?
 
     let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
 
@@ -95,10 +95,10 @@ class MechanismPickerVC: UIViewController, UITableViewDelegate {
     }
 
     private func layoutUI() {
-        view.addSubview(tableView)
+        view.addSubviews(tableView, actionButton)
+
         tableView.frame = view.bounds
 
-        view.addSubview(actionButton)
         actionButton.snp.makeConstraints { make in
             make.bottom.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
             make.width.height.equalTo(80)

@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol UnusedMechanismsFixable {
+
+    func removeUnusedDeclarations(of mechanisms: [Mechanism])
+}
+
 extension ResultsVC {
 
     // TODO: Create UITest
@@ -24,9 +29,8 @@ extension ResultsVC {
             preferredStyle: .alert
         )
 
-        let cancelAction = UIAlertAction(title: "Назад", style: .cancel) { [weak self] _ in
-            guard let self = self else { return }
-            self.navigationController?.popViewController(animated: true)
+        let cancelAction = UIAlertAction(title: "Назад", style: .cancel) { _ in
+            alertController.dismiss(animated: true)
         }
 
         let forwardAction = UIAlertAction(title: "Игнорировать", style: .default) {[weak self] _ in
@@ -34,15 +38,18 @@ extension ResultsVC {
             alertController.dismiss(animated: true, completion: { self.presentRequestSavingVCOnMainThread() })
         }
 
-        // TODO: add "fix" button logic
-//        let fixAction = UIAlertAction(title: "Исправить", style: .default) {[weak self] _ in
-//            guard let self = self else { return }
-//
-//        }
+        let fixAction = UIAlertAction(title: "Исправить", style: .default) {[weak self] _ in
+            guard let self = self else { return }
+
+            self.navigationController?.popToRootViewController(animated: true)
+            let vc = self.navigationController?.visibleViewController as! UnusedMechanismsFixable
+
+            vc.removeUnusedDeclarations(of: self.viewModel!.unusedMechanisms)
+        }
 
         alertController.addAction(cancelAction)
         alertController.addAction(forwardAction)
-//        alertController.addAction(fixAction)
+        alertController.addAction(fixAction)
         present(alertController, animated: true)
     }
 
