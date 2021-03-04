@@ -42,9 +42,17 @@ extension ResultsVC {
             guard let self = self else { return }
 
             self.navigationController?.popToRootViewController(animated: true)
-            let vc = self.navigationController?.visibleViewController as! UnusedMechanismsFixable
 
-            vc.removeUnusedDeclarations(of: self.viewModel!.unusedMechanisms)
+            let visibleVC = self.navigationController?.visibleViewController
+
+            if let mechanismPickerVC = visibleVC as? UnusedMechanismsFixable {
+                mechanismPickerVC.removeUnusedDeclarations(of: self.viewModel!.unusedMechanisms)
+            } else {
+                let vc = MechanismPickerVC()
+                vc.request = self.viewModel!.request
+                vc.removeUnusedDeclarations(of: self.viewModel!.unusedMechanisms)
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
         }
 
         alertController.addAction(cancelAction)
