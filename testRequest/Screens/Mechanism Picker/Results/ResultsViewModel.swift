@@ -58,6 +58,11 @@ struct ResultsViewModel {
         "\(unusedMechanisms.reduce("", { $0 + " " + $1.shortName + "," }).dropLast())"
     }
 
+    var matchingParagraphs: [Paragraph] {
+        let matchingParagraphs = Paragraph.allCases.filter { missingMechanisms(for: $0) == nil }
+        return matchingParagraphs.sorted { $0.shortName < $1.shortName }
+    }
+
     // MARK: Public functions
 
     func paragraphAccessoryInfo(for indexPath: IndexPath) -> (String, String) {
@@ -82,10 +87,6 @@ struct ResultsViewModel {
     }
 
     // MARK: Private
-
-    private var matchingParagraphs: [Paragraph] {
-        Paragraph.allCases.filter { missingMechanisms(for: $0) == nil } // matchingParagraphs.sorted { $0.shortName < $1.shortName }
-    }
 
     private func getParagraph(for indexPath: IndexPath) -> Paragraph {
         let shortNameForIndexPath = "\(indexPath.section + 16).\(indexPath.row + 1)"

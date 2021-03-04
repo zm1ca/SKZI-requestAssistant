@@ -22,6 +22,7 @@
 		404658C625E93A8300757B0D /* ResultsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404658C525E93A8300757B0D /* ResultsViewModelTests.swift */; };
 		404658CE25E93F6000757B0D /* ResultsVC+SaveBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404658CD25E93F6000757B0D /* ResultsVC+SaveBarButton.swift */; };
 		4050121525F0BE6F007D99E0 /* MechanismPickerVC+UnusedMechanismsFixable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4050121425F0BE6F007D99E0 /* MechanismPickerVC+UnusedMechanismsFixable.swift */; };
+		4050122825F0C41A007D99E0 /* SavedRequestsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4050122725F0C41A007D99E0 /* SavedRequestsViewModel.swift */; };
 		407D4D83250B551D00CB1EA8 /* TRTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407D4D82250B551D00CB1EA8 /* TRTextField.swift */; };
 		40911C89250216BB009A1A14 /* TRParagraphCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40911C88250216BB009A1A14 /* TRParagraphCell.swift */; };
 		40911C8B250219A5009A1A14 /* UITableView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40911C8A250219A4009A1A14 /* UITableView+Ext.swift */; };
@@ -74,6 +75,7 @@
 		404658C525E93A8300757B0D /* ResultsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsViewModelTests.swift; sourceTree = "<group>"; };
 		404658CD25E93F6000757B0D /* ResultsVC+SaveBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ResultsVC+SaveBarButton.swift"; sourceTree = "<group>"; };
 		4050121425F0BE6F007D99E0 /* MechanismPickerVC+UnusedMechanismsFixable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MechanismPickerVC+UnusedMechanismsFixable.swift"; sourceTree = "<group>"; };
+		4050122725F0C41A007D99E0 /* SavedRequestsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedRequestsViewModel.swift; sourceTree = "<group>"; };
 		4071ADDB25E7910000534ED3 /* testRequestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = testRequestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4071ADDF25E7910000534ED3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		407D4D82250B551D00CB1EA8 /* TRTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TRTextField.swift; sourceTree = "<group>"; };
@@ -283,6 +285,7 @@
 				40C3DC122500CE34008E04EC /* SavedRequestsVC.swift */,
 				40A1160125E522B000E0E224 /* SavedRequestsVC+TableView.swift */,
 				40A115FE25E522A200E0E224 /* SavedRequestsVC+DataSource.swift */,
+				4050122725F0C41A007D99E0 /* SavedRequestsViewModel.swift */,
 			);
 			path = "Saved Requests";
 			sourceTree = "<group>";
@@ -475,6 +478,7 @@
 			files = (
 				40A115FF25E522A200E0E224 /* SavedRequestsVC+DataSource.swift in Sources */,
 				40A1EB80250BB166002E6F06 /* SuccessCheck.swift in Sources */,
+				4050122825F0C41A007D99E0 /* SavedRequestsViewModel.swift in Sources */,
 				40A1161025E5245100E0E224 /* MechanismPickerVC+UISearchResultsUpdating.swift in Sources */,
 				40911C89250216BB009A1A14 /* TRParagraphCell.swift in Sources */,
 				40911C902502717B009A1A14 /* TRMechanismCell.swift in Sources */,

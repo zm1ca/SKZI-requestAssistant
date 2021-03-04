@@ -12,41 +12,26 @@ class TRRequestCell: UITableViewCell {
 
     static let reuseID      = "RequestCell"
 
-    let titleLabel          = TRTitleLabel(textAlignment: .left, fontSize: 18)
-    let paragraphsLabel     = TRBodyLabel(textAlignment: .left, font: UIFont.preferredFont(forTextStyle: .footnote))
-    let dateModifiedLabel   = TRBodyLabel(textAlignment: .right, font: UIFont.preferredFont(forTextStyle: .caption2))
+    let titleLabel        = TRTitleLabel(textAlignment: .left, fontSize: 18)
+    let paragraphsLabel   = TRBodyLabel(textAlignment: .left, font: UIFont.preferredFont(forTextStyle: .footnote))
+    let dateModifiedLabel = TRBodyLabel(textAlignment: .right, font: UIFont.preferredFont(forTextStyle: .caption2))
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
-        configure()
+        layoutUI()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func set(for request: Request) {
-        titleLabel.text = "\(request.productName) от «\(request.organizationName)»"
-
-        // TODO: hard to read
-//        paragraphsLabel.text    = !request.matchingParagraphs.isEmpty ?
-//            String(request.matchingParagraphs.reduce("Соответствует:", { $0 + " " + $1.shortName + "," }).dropLast()) :
-//            "Не соответствует приказу №77 ОАЦ."
-
-        paragraphsLabel.text = "Placeholder" // tmp
-
-        dateModifiedLabel.text  = dateString(from: request.dateModified)
+    func configure(with presentable: RequestPresentable) {
+        titleLabel.text        = presentable.title
+        paragraphsLabel.text   = presentable.paragraphs
+        dateModifiedLabel.text = presentable.dateModified
     }
 
-    func dateString(from date: Date) -> String {
-        let dateFormatter        = DateFormatter()
-        dateFormatter.locale     = Locale(identifier: "ru_RU")
-        dateFormatter.dateFormat = "dd MMMM yyyy HH:mm"
-
-        return dateFormatter.string(from: date)
-    }
-
-    func configure() {
+    func layoutUI() {
         accessoryType   = .disclosureIndicator
         paragraphsLabel.numberOfLines = 2
 

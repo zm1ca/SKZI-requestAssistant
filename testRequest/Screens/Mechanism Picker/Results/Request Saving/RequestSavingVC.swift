@@ -52,13 +52,13 @@ class RequestSavingVC: UIViewController {
         return tf
     }()
 
-    var cancelButton = TRButton(
+    let cancelButton = TRButton(
         backgroundColor: .tertiarySystemBackground,
         titleColor: .secondaryLabel,
         title: "Отмена"
     )
 
-    var actionButton = TRButton(
+    let actionButton = TRButton(
         backgroundColor: .systemGray4,
         titleColor: .label,
         title: "Ок"

@@ -15,8 +15,8 @@ extension SavedRequestsVC: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TRRequestCell.reuseID) as! TRRequestCell
-        let request = requests[indexPath.row]
-        cell.set(for: request)
+        let viewModel = SavedRequestsViewModel(request: requests[indexPath.row])
+        cell.configure(with: viewModel)
         return cell
     }
 

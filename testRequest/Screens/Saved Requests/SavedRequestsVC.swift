@@ -19,23 +19,7 @@ class SavedRequestsVC: UIViewController {
 
     let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
 
-    var requests: [Request] = [] {
-        didSet {
-            guard let trashButton = self.navigationItem.rightBarButtonItem else { return }
-
-            if self.requests.isEmpty {
-                trashButton.isEnabled = false
-                trashButton.tintColor = UIColor.clear
-                self.emptyStateLabel.isHidden = false
-                self.tableView.isHidden = true
-            } else {
-                trashButton.isEnabled = true
-                trashButton.tintColor = UIColor.systemBlue
-                self.emptyStateLabel.isHidden = true
-                self.tableView.isHidden = false
-            }
-        }
-    }
+    var requests: [Request] = [] { didSet { updateUI() } }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,27 +49,8 @@ class SavedRequestsVC: UIViewController {
     }
 
     @objc private func removeAllButtonTapped() {
-        let alertController = UIAlertController(title: "Удалить все заявки?", message: nil, preferredStyle: .alert)
-
-        let approveAction = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
-            guard let self = self else { return }
-
-            for request in self.requests {
-                PersistenceManager.updateWith(request: request, actionType: .remove) { error in
-                    guard let error = error else { return }
-                    self.presentAlertOnMainThread(with: TRErrorVerbouseConstants.somethingWrong, and: error.rawValue)
-                }
-            }
-
-            self.requests.removeAll()
-            self.tableView.reloadDataOnMainThread()
-        }
-        alertController.addAction(approveAction)
-
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        alertController.addAction(cancelAction)
-
-        present(alertController, animated: true, completion: nil)
+        let ac = configureRemoveAllRequestsAlertController()
+        present(ac, animated: true, completion: nil)
     }
 
     private func configureVC() {
@@ -114,5 +79,44 @@ class SavedRequestsVC: UIViewController {
             make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
             make.height.equalTo(40)
         }
+    }
+
+    private func updateUI() {
+        guard let trashButton = self.navigationItem.rightBarButtonItem else { return }
+
+        if self.requests.isEmpty {
+            trashButton.isEnabled = false
+            trashButton.tintColor = UIColor.clear
+            self.emptyStateLabel.isHidden = false
+            self.tableView.isHidden = true
+        } else {
+            trashButton.isEnabled = true
+            trashButton.tintColor = UIColor.systemBlue
+            self.emptyStateLabel.isHidden = true
+            self.tableView.isHidden = false
+        }
+    }
+
+    private func configureRemoveAllRequestsAlertController() -> UIAlertController {
+        let alertController = UIAlertController(title: "Удалить все заявки?", message: nil, preferredStyle: .alert)
+        let approveAction = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
+            guard let self = self else { return }
+
+            for request in self.requests {
+                PersistenceManager.updateWith(request: request, actionType: .remove) { error in
+                    guard let error = error else { return }
+                    self.presentAlertOnMainThread(with: TRErrorVerbouseConstants.somethingWrong, and: error.rawValue)
+                }
+            }
+
+            self.requests.removeAll()
+            self.tableView.reloadDataOnMainThread()
+        }
+        alertController.addAction(approveAction)
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+
+        return alertController
     }
 }
