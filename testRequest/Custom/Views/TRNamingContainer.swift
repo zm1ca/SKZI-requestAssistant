@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TRNamingContainer: UIView {
+final class TRNamingContainer: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)

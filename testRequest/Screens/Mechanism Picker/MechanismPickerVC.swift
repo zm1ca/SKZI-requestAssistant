@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class MechanismPickerVC: UIViewController, UITableViewDelegate {
+final class MechanismPickerVC: UIViewController, UITableViewDelegate {
 
     // Q: Make request a singleton?
     var request = Request() { didSet { updateButtonsVisibility() } }

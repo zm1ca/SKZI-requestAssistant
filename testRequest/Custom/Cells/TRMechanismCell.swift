@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TRMechanismCell: UITableViewCell {
+final class TRMechanismCell: UITableViewCell {
 
     static let reuseID  = "MechanismCell"
 

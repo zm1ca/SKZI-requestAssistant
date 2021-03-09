@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TRParagraphCell: UITableViewCell {
+final class TRParagraphCell: UITableViewCell {
 
     static let reuseID  = "ParagraphCell"
 

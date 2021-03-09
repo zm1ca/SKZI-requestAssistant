@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ResultsVC: UIViewController {
+final class ResultsVC: UIViewController {
 
     let tableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
     var viewModel: ResultsViewModel?
@@ -19,7 +19,7 @@ class ResultsVC: UIViewController {
     }
 
     private func configureVС() {
-        view.backgroundColor = .secondarySystemBackground
+        view.backgroundColor = .systemBackground
         title = "Результаты"
         navigationController?.navigationBar.prefersLargeTitles = true
 

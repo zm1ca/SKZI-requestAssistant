@@ -10,7 +10,7 @@ import UIKit
 
 typealias SuccessCompletion = () -> Void
 
-class SuccessCheck: UIView {
+final class SuccessCheck: UIView {
 
     var shouldSetupConstraints = true
     var movePoint: CGPoint!

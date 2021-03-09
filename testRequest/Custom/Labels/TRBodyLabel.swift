@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TRBodyLabel: UILabel {
+final class TRBodyLabel: UILabel {
 
     override init(frame: CGRect) {
         super.init(frame: frame)

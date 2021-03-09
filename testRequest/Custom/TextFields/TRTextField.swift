@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TRTextField: UITextField {
+final class TRTextField: UITextField {
 
     override init(frame: CGRect) {
         super.init(frame: frame)

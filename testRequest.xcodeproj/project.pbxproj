@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		40028A8425F10339005305B3 /* ResultsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40028A8325F10339005305B3 /* ResultsUITests.swift */; };
+		40028A8C25F20591005305B3 /* RequestSavingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40028A8B25F20591005305B3 /* RequestSavingUITests.swift */; };
 		401BCA50250F5D9E009A45DF /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401BCA4F250F5D9E009A45DF /* UIViewController+Ext.swift */; };
 		402DF2192508BEEC00799D47 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402DF2182508BEEC00799D47 /* Request.swift */; };
 		402DF21C2508C39300799D47 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402DF21B2508C39300799D47 /* PersistenceManager.swift */; };
@@ -68,6 +70,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		40028A8325F10339005305B3 /* ResultsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsUITests.swift; sourceTree = "<group>"; };
+		40028A8B25F20591005305B3 /* RequestSavingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestSavingUITests.swift; sourceTree = "<group>"; };
 		401BCA4F250F5D9E009A45DF /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
 		402DF2182508BEEC00799D47 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		402DF21B2508C39300799D47 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
@@ -180,7 +184,9 @@
 			isa = PBXGroup;
 			children = (
 				4050123125F0CF67007D99E0 /* MechanismPickerUITests.swift */,
-				4050123325F0CF67007D99E0 /* Info.plist */,
+				40028A8325F10339005305B3 /* ResultsUITests.swift */,
+				40028A8B25F20591005305B3 /* RequestSavingUITests.swift */,
+				4081BFE625F0F8EC00A269F9 /* Supporting Files */,
 			);
 			path = testRequestUITests;
 			sourceTree = "<group>";
@@ -189,7 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				404658C525E93A8300757B0D /* ResultsViewModelTests.swift */,
-				4071ADDF25E7910000534ED3 /* Info.plist */,
+				4081BFE525F0F8E100A269F9 /* Supporting Files */,
 			);
 			path = testRequestTests;
 			sourceTree = "<group>";
@@ -200,6 +206,22 @@
 				407D4D82250B551D00CB1EA8 /* TRTextField.swift */,
 			);
 			path = TextFields;
+			sourceTree = "<group>";
+		};
+		4081BFE525F0F8E100A269F9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4071ADDF25E7910000534ED3 /* Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4081BFE625F0F8EC00A269F9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4050123325F0CF67007D99E0 /* Info.plist */,
+			);
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		40911C8725021688009A1A14 /* Cells */ = {
@@ -527,6 +549,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40028A8425F10339005305B3 /* ResultsUITests.swift in Sources */,
+				40028A8C25F20591005305B3 /* RequestSavingUITests.swift in Sources */,
 				4050123225F0CF67007D99E0 /* MechanismPickerUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -614,7 +638,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3Y322LSDU5;
-				INFOPLIST_FILE = testRequestUITests/Info.plist;
+				INFOPLIST_FILE = "testRequestUITests/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -634,7 +658,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3Y322LSDU5;
-				INFOPLIST_FILE = testRequestUITests/Info.plist;
+				INFOPLIST_FILE = "testRequestUITests/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -655,7 +679,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3Y322LSDU5;
-				INFOPLIST_FILE = testRequestTests/Info.plist;
+				INFOPLIST_FILE = "testRequestTests/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -676,7 +700,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3Y322LSDU5;
-				INFOPLIST_FILE = testRequestTests/Info.plist;
+				INFOPLIST_FILE = "testRequestTests/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

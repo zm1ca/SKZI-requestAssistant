@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class TRRequestCell: UITableViewCell {
+final class TRRequestCell: UITableViewCell {
 
     static let reuseID      = "RequestCell"
 

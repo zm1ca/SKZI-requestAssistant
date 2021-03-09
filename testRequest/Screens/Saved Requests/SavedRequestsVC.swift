@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class SavedRequestsVC: UIViewController {
+final class SavedRequestsVC: UIViewController {
 
     let emptyStateLabel: TRTitleLabel = {
         let label = TRTitleLabel()

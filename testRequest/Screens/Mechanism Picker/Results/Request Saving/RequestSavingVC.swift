@@ -12,7 +12,8 @@ protocol RequestSavingVCDelegate: class {
     func resetVCAndTransferToSaved()
 }
 
-class RequestSavingVC: UIViewController {
+// Q: Thick VC
+final class RequestSavingVC: UIViewController {
 
     var request: Request? {
         didSet {
