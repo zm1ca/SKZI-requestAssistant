@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-protocol RequestSavingVCDelegate: class {
+protocol RequestSavingVCDelegate: AnyObject {
     func resetVCAndTransferToSaved()
 }
 

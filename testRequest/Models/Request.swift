@@ -12,7 +12,7 @@ struct Request: Codable, Hashable {
     var declaredMechanisms: [Mechanism] { didSet { dateModified = Date() } }
     var productName: String { didSet { dateModified = Date() } }
     var organizationName: String { didSet { dateModified = Date() } }
-    var dateModified = Date()
+    private(set) var dateModified = Date()
 
     init(named productName: String, by organization: String, with mechanisms: [Mechanism]) {
         self.productName        = productName
